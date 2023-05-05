@@ -13,10 +13,10 @@ return {
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
-        local function bmap(mode, l, r, opts)
+        local function map(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
-          map(mode, l, r, opts)
+          vim.keymap.set(mode, l, r, opts)
         end
 
         map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "undo stage" })
@@ -30,9 +30,9 @@ return {
         map("n", "<leader>lm", function()
           gs.setqflist("all")
         end, { desc = "list modified in quickfix" })
-        bmap({ "n", "v" }, "<leader>hs", "<Cmd>Gitsigns stage_hunk<CR>", { desc = "stage hunk" })
-        bmap({ "n", "v" }, "<leader>hr", "<Cmd>Gitsigns reset_hunk<CR>", { desc = "reset hunk" })
-        bmap({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "select hunk" })
+        map({ "n", "v" }, "<leader>hs", "<Cmd>Gitsigns stage_hunk<CR>", { desc = "stage hunk" })
+        map({ "n", "v" }, "<leader>hr", "<Cmd>Gitsigns reset_hunk<CR>", { desc = "reset hunk" })
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "select hunk" })
 
         map("n", "[h", function()
           vim.schedule(function()
