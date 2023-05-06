@@ -12,7 +12,6 @@ local g = vim.g
 -- #         1. General         #
 -- ##############################
 
-g.mapleader = " "
 o.swapfile = false
 o.undofile = true
 o.timeout = true

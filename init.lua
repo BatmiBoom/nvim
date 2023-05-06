@@ -1,10 +1,10 @@
 vim.loader.enable()
 
+require("plugins")
+
 require("settings.options")
 require("settings.keymaps")
 require("settings.autocmds")
-
-require("plugins")
 
 -- CHANGE THEMES
 --
