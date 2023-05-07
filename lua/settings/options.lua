@@ -56,20 +56,20 @@ o.gcr = {
 }
 o.pumheight = 10
 o.cmdheight = 0
-o.scrolloff = 8
-o.splitbelow = true 
-o.splitright = true 
+o.scrolloff = 16
+o.splitbelow = true
+o.splitright = true
 o.showmode = false
 o.hlsearch = true
-o.shortmess:append "c"                    
-o.whichwrap:append "<,>,[,],h,l"
-o.iskeyword:append "-"
-o.formatoptions:remove { "c", "r", "o" } 
+o.shortmess:append("c")
+o.whichwrap:append("<,>,[,],h,l")
+o.iskeyword:append("-")
+o.formatoptions:remove({ "c", "r", "o" })
 
 -- #############################
 -- #           4. TOOLS        #
 -- #############################
-if vim.fn.executable('rg') == 1 then
-    o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
-    o.grepprg = 'rg --vimgrep --no-heading --smart-case'
+if vim.fn.executable("rg") == 1 then
+  o.grepformat = "%f:%l:%c:%m,%f:%l:%m"
+  o.grepprg = "rg --vimgrep --no-heading --smart-case"
 end
