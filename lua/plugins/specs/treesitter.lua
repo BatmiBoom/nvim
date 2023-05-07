@@ -93,9 +93,9 @@ return {
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
       { 'HiPhish/nvim-ts-rainbow2' },
+      { 'JoosepAlviste/nvim-ts-context-commentstring' },
     },
   },
-  { 'JoosepAlviste/nvim-ts-context-commentstring' },
   {
     'windwp/nvim-ts-autotag',
     ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },

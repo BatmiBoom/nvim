@@ -14,10 +14,11 @@ return {
       }
     end,
     keys = {
-        { "<leader>ft",
+        { "<leader>cf",
           function ()
             vim.lsp.buf.format({ async = true})
-          end
+          end,
+          desc = "Format"
         },
     },
   }

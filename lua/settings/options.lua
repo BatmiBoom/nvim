@@ -15,7 +15,7 @@ local g = vim.g
 o.swapfile = false
 o.undofile = true
 o.timeout = true
-o.timeoutlen = 3000
+o.timeoutlen = 500
 o.smartcase = true
 
 -- ##############################
