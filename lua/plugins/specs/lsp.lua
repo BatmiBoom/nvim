@@ -223,10 +223,10 @@ return {
         mode = { "n", "v" },
         desc = "Code Action",
       },
-      { "<leader>ld", "<cmd>Lspsaga show_line_diagnostics<CR>",   desc = "Line Diagnostics" },
-      { "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Cursor Diagnostics" },
-      {
-        "[E",
+      { "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>",   desc = "Line Diagnostics" },
+      { "<leader>cD", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Cursor Diagnostics" },
+        {
+          "[E",
         function()
           require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
         end,
