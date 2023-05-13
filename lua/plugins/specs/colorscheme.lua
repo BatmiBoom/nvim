@@ -1,5 +1,18 @@
 return {
   {
+    "ray-x/aurora",
+    config = function ()
+      vim.g.aurora_italic = "italic"
+      vim.g.aurora_transparent = "transparent"
+      vim.g.aurora_bold = "bold"
+      vim.g.aurora_darker = "darker background"
+
+      vim.api.nvim_set_hl(0, '@string', {fg='#59E343'})
+      vim.api.nvim_set_hl(0, '@field', {fg='#f93393'})
+      vim.api.nvim_set_hl(0, '@number', {fg='#e933e3'})
+    end
+  },
+  {
     "navarasu/onedark.nvim",
     lazy = true,
     -- config = function(_, opts)
@@ -32,7 +45,6 @@ return {
   },
   {
     "gbprod/nord.nvim",
-    lazy = false,
     config = function()
       require("nord").setup({
         transparent = true, -- Enable this to disable setting the background color

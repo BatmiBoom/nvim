@@ -20,6 +20,7 @@ return {
         ["<leader>u"] = { name = "+ui" },
         ["<leader>w"] = { name = "+workspace" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
+        ["<leader>p"] = { name = "+ai" },
       },
     },
     config = function(_, opts)

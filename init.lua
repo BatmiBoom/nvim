@@ -8,8 +8,11 @@ require("settings.autocmds")
 
 -- CHANGE THEMES
 --
+-- Aurora
+vim.cmd[[colorscheme aurora]]
+--
 -- Nord
-vim.cmd[[colorscheme nord]]
+-- vim.cmd[[colorscheme nord]]
 --
 -- Zephyr
 -- vim.cmd[[colorscheme zephyr]]

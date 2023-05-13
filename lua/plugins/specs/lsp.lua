@@ -225,8 +225,8 @@ return {
       },
       { "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>",   desc = "Line Diagnostics" },
       { "<leader>cD", "<cmd>Lspsaga show_cursor_diagnostics<CR>", desc = "Cursor Diagnostics" },
-        {
-          "[E",
+      {
+        "[E",
         function()
           require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
         end,
@@ -330,7 +330,6 @@ return {
         "black",
       },
     },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
     config = function(_, opts)
       require("mason").setup(opts)
       local mr = require("mason-registry")
@@ -348,5 +347,16 @@ return {
         ensure_installed()
       end
     end,
+  },
+  {
+    "ray-x/go.nvim",
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
 }
