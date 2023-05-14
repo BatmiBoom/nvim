@@ -3,7 +3,7 @@ return {
     "ray-x/aurora",
     config = function ()
       vim.g.aurora_italic = "italic"
-      vim.g.aurora_transparent = "transparent"
+      -- vim.g.aurora_transparent = "transparent"
       vim.g.aurora_bold = "bold"
       -- vim.g.aurora_darker = "darker background"
     end

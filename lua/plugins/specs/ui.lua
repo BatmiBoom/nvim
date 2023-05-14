@@ -113,7 +113,7 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     opts = {
       char = "│",
-      filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+      filetype_exclude = { "help", "alpha", "neo-tree", "Trouble", "lazy", "mason" },
       show_trailing_blankline_indent = false,
       show_current_context = false,
     },
