@@ -3,7 +3,7 @@ return {
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			"nvim-web-devicons",
+			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
 			require("lualine").setup({
@@ -28,12 +28,12 @@ return {
 				sections = {
 					lualine_a = { "mode" },
 					lualine_b = { "branch", "diagnostics" },
-					lualine_c = { 
-            {
-              "filename",
-              path = 2
-            }
-          },
+					lualine_c = {
+						{
+							"filename",
+							path = 2,
+						},
+					},
 					lualine_x = { "encoding", "fileformat", "filetype" },
 					lualine_y = { "progress" },
 					lualine_z = { "location" },
@@ -57,7 +57,7 @@ return {
 		"akinsho/bufferline.nvim",
 		event = "VeryLazy",
 		dependencies = {
-			"nvim-web-devicons",
+			"nvim-tree/nvim-web-devicons",
 			{
 				"echasnovski/mini.bufremove",
 				keys = {
@@ -114,10 +114,34 @@ return {
 		end,
 	},
 	{
-		"j-hui/fidget.nvim",
-		event = { "BufReadPost", "BufNewFile" },
+		"mvllow/modes.nvim",
+    event = "VeryLazy",
 		config = function()
-			require("fidget").setup({})
+			require("modes").setup({
+				colors = {
+					copy = "#f5c359",
+					delete = "#c75c6a",
+					insert = "#78ccc5",
+					visual = "#9745be",
+				},
+
+				-- Set opacity for cursorline and number background
+				line_opacity = 0.15,
+
+				-- Enable cursor highlights
+				set_cursor = true,
+
+				-- Enable cursorline initially, and disable cursorline for inactive windows
+				-- or ignored filetypes
+				set_cursorline = true,
+
+				-- Enable line number highlights to match cursorline
+				set_number = true,
+
+				-- Disable modes highlights in specified filetypes
+				-- Please PR commonly ignored filetypes
+				ignore_filetypes = { "NvimTree", "TelescopePrompt", "alpha" },
+			})
 		end,
 	},
 }

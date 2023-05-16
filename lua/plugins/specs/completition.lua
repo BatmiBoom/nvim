@@ -51,14 +51,11 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"lukas-reineke/cmp-rg",
-      "altermo/npairs-integrate-upair",
+			"altermo/npairs-integrate-upair",
 		},
 		opts = function()
 			local cmp = require("cmp")
 			return {
-				completion = {
-					completeopt = "menu,menuone,noinsert",
-				},
 				snippet = {
 					expand = function(args)
 						require("luasnip").lsp_expand(args.body)
@@ -77,6 +74,18 @@ return {
 						select = true,
 					}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 				}),
+				enabled = function()
+					local context = require("cmp.config.context")
+          if vim.bo.buftype == 'prompt' then
+            return false
+          end
+
+					if vim.api.nvim_get_mode().mode == "c" then
+						return true
+					else
+						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+					end
+				end,
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp", group_index = 1 },
 					{ name = "luasnip", group_index = 1 },
@@ -92,6 +101,7 @@ return {
 					{
 						name = "buffer",
 						group_index = 2,
+						keyword_length = 4,
 						options = {
 							get_bufnrs = function()
 								return vim.api.nvim_list_bufs()

@@ -3,7 +3,12 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      plugins = { spelling = true },
+      plugins = {
+        spelling = true,
+        presets = {
+          operators = false,
+        }
+      },
       defaults = {
         mode = { "n", "v" },
         ["g"] = { name = "+goto" },

@@ -5,5 +5,5 @@ return{
       { "<leader>u", vim.cmd.UndotreeToggle },
     },
     event = "TextChanged",
-  },    
+  },
 }

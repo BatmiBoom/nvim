@@ -2,7 +2,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.1",
-    event = "VimEnter",
+	   event = "VimEnter",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{
@@ -14,7 +14,7 @@ return {
 		},
 		keys = {
 			{
-				"<leader><leader>",
+				"<leader>ff",
 				function()
 					require("telescope.builtin").find_files()
 				end,

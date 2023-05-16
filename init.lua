@@ -7,9 +7,11 @@ require("settings.keymaps")
 require("settings.autocmds")
 
 -- CHANGE THEMES
+-- Abstract-IDE
+-- vim.cmd[[colorscheme abscs]]
 --
 -- Aurora
-vim.cmd[[colorscheme aurora]]
+-- vim.cmd[[colorscheme aurora]]
 --
 -- Nord
 -- vim.cmd[[colorscheme nord]]

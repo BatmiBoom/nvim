@@ -1,7 +1,7 @@
 return {
 	{
 		"echasnovski/mini.comment",
-    event = { "BufReadPost", "BufNewFile" },
+	   event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			hooks = {
 				pre = function()

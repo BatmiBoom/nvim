@@ -1,20 +1,23 @@
 return {
   {
+    "Abstract-IDE/Abstract-cs"
+  },
+  {
     "ray-x/aurora",
-    config = function ()
-      vim.g.aurora_italic = "italic"
-      vim.g.aurora_transparent = "transparent"
-      vim.g.aurora_bold = "bold"
-      -- vim.g.aurora_darker = "darker background"
-    end
+    -- config = function ()
+    --   vim.g.aurora_italic = "italic"
+    --   vim.g.aurora_transparent = "transparent"
+    --   vim.g.aurora_bold = "bold"
+    --   vim.g.aurora_darker = "darker background"
+    -- end
   },
   {
     "navarasu/onedark.nvim",
-    lazy = true,
-    -- config = function(_, opts)
-    --   require("onedark").setup(opts)
-    --   require("onedark").load()
-    -- end,
+    lazy = false,
+    config = function(_, opts)
+      require("onedark").setup(opts)
+      require("onedark").load()
+    end,
     opts = {
       style = "deep",               -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
       transparent = false,          -- Show/hide background
