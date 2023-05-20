@@ -15,6 +15,9 @@ map("i", "kk", "<Esc>", { desc = "Quit insert mode" })
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
+-- copy to clipboard
+map("v", "<leader>Y", '"+y', { desc = "Copy to clipboard" })
+
 -- Move to window using the <ctrl> hjkl keys
 map("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
