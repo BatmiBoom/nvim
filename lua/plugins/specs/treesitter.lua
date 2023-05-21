@@ -6,7 +6,9 @@ return {
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 		config = function()
-			require("nvim-treesitter.install").compilers = { "clang" }
+      if vim.fn.has("win32") then
+			  require("nvim-treesitter.install").compilers = { "clang" }
+      end
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {
 					"bash",
