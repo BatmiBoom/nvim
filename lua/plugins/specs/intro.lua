@@ -31,10 +31,10 @@ return {
       }
       dashboard.section.header.opts.hl = "DashboardHeader"
       dashboard.section.buttons.val = {
-        dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("f", "  > Find file", ":Telescope find_files<CR>"),
-        dashboard.button("g", "  > Live Grep", ":Telescope live_grep<CR>"),
-        dashboard.button("s", "  > Sessions", ':lua require("persistence").load()'),
+        dashboard.button("e", "  > New file", "<cmd>ene <BAR> startinsert <CR>"),
+        dashboard.button("f", "  > Find file", "<cmd>Telescope find_files<CR>"),
+        dashboard.button("g", "  > Live Grep", "<cmd>Telescope live_grep<CR>"),
+        dashboard.button("s", "  > Sessions", '<cmd>lua require("persistence").load()<CR>'),
         dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
       }
 
