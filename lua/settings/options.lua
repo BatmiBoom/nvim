@@ -17,7 +17,7 @@ o.undofile = true
 o.timeout = true
 o.timeoutlen = 500
 o.smartcase = true
-if vim.fn.has('macunix') then
+if vim.fn.has('macunix') == 1 then
   o.shell = "zsh"
 end
 
