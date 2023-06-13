@@ -48,7 +48,6 @@ return {
           "tsserver",
           "taplo",
           "yamlls",
-          "zls",
         },
         automatic_installtion = true,
       })
@@ -204,6 +203,11 @@ return {
           })
         end,
       })
+
+      lspconfig.zls.setup({
+        capabilities = capabilities,
+      })
+
     end,
   },
   {
