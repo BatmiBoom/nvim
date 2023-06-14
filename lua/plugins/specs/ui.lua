@@ -2,18 +2,29 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
       "rcarriga/nvim-notify",
     },
     config = function()
+      require("notify").setup({
+        background_colour = "NotifyBackground",
+        fps = 30,
+        icons = {
+          DEBUG = "",
+          ERROR = "",
+          INFO = "",
+          TRACE = "✎",
+          WARN = "",
+        },
+        level = 2,
+        minimum_width = 50,
+        render = "default",
+        stages = "slide",
+        timeout = 50,
+        top_down = true,
+      })
+
       require("noice").setup({
         lsp = {
           -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -32,6 +43,7 @@ return {
           lsp_doc_border = false,  -- add a border to hover docs and signature help
         },
       })
+
     end,
   },
   {
