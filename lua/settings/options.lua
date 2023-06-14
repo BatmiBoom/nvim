@@ -63,7 +63,6 @@ o.showmode = false
 o.hlsearch = true
 o.shortmess:append("c")
 o.iskeyword:append("-")
-o.lazyredraw = true
 o.listchars = {
   nbsp = "⦸",  -- CIRCLED REVERSE SOLIDUS (U+29B8, UTF-8: E2 A6 B8)
   extends = "»", -- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK (U+00BB, UTF-8: C2 BB)
