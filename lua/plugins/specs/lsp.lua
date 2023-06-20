@@ -7,7 +7,6 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
       "b0o/SchemaStore.nvim",
-      "jose-elias-alvarez/typescript.nvim",
       "simrat39/rust-tools.nvim",
     },
     ---@class PluginLspOpts

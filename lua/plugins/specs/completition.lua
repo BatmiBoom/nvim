@@ -92,21 +92,9 @@ return {
 					{ name = "path", group_index = 1 },
 					{ name = "nvim_lsp_signature_help", group_index = 1 },
 					{
-						name = "rg",
-						keyword_length = 4,
-						max_item_count = 10,
-						option = { additional_arguments = "--max-depth 8" },
-						group_index = 1,
-					},
-					{
 						name = "buffer",
 						group_index = 2,
 						keyword_length = 4,
-						options = {
-							get_bufnrs = function()
-								return vim.api.nvim_list_bufs()
-							end,
-						},
 					},
 				}),
 				experimental = {

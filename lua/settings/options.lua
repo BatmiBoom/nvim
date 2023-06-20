@@ -26,7 +26,6 @@ end
 -- ##############################
 
 o.autoindent = true
-o.smartindent = true
 o.shiftwidth = 2
 o.tabstop = 2
 o.expandtab = true
@@ -36,7 +35,6 @@ o.breakindent = true
 o.linebreak = true
 o.completeopt = "menuone,noselect,noinsert"
 o.updatetime = 100
-o.backspace = "indent,start,eol"
 o.showmatch = true
 
 -- Unfofile

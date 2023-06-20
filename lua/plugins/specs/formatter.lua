@@ -9,7 +9,6 @@ return {
         sources = {
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.black,
-          require("typescript.extensions.null-ls.code-actions"),
         },
       }
     end,
