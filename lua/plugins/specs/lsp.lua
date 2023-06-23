@@ -36,6 +36,7 @@ return {
         ensure_installed = {
           "clangd",
           "cssls",
+          "elmls",
           "gopls",
           "html",
           "jsonls",
@@ -293,6 +294,7 @@ return {
         "stylua",
         "black",
         "eslint_d",
+        "elm-format",
       },
     },
     config = function(_, opts)
