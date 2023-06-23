@@ -42,7 +42,7 @@ return {
           "lua_ls",
           "marksman",
           "pyright",
-          "ruff-lsp",
+          "ruff_lsp",
           "rust_analyzer",
           "svelte",
           "tsserver",

@@ -18,7 +18,6 @@ return {
           "javascript",
           "json",
           "lua",
-          "luadoc",
           "luap",
           "markdown",
           "markdown_inline",
