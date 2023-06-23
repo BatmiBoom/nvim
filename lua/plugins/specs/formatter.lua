@@ -9,6 +9,9 @@ return {
         sources = {
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.black,
+          nls.builtins.formatting.eslint_d,
+          nls.builtins.diagnostics.eslint_d,
+          nls.builtins.code_actions.eslint_d,
         },
       }
     end,

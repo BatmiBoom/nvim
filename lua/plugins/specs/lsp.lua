@@ -42,6 +42,7 @@ return {
           "lua_ls",
           "marksman",
           "pyright",
+          "ruff-lsp",
           "rust_analyzer",
           "svelte",
           "tsserver",
@@ -109,46 +110,6 @@ return {
             },
             init_options = {
               usePlaceholders = true,
-            },
-          })
-        end,
-        ["tsserver"] = function()
-          require("typescript").setup({
-            server = {
-              capabilities = capabilities,
-              on_attach = {
-                vim.keymap.set(
-                  "n",
-                  "<leader>co",
-                  "<cmd>TypescriptOrganizeImports<CR>",
-                  { buffer = buffer, desc = "Organize Imports" }
-                ),
-                vim.keymap.set(
-                  "n",
-                  "<leader>cR",
-                  "<cmd>TypescriptRenameFile<CR>",
-                  { desc = "Rename File", buffer = buffer }
-                ),
-              },
-              settings = {
-                typescript = {
-                  format = {
-                    indentSize = vim.o.shiftwidth,
-                    convertTabsToSpaces = vim.o.expandtab,
-                    tabSize = vim.o.tabstop,
-                  },
-                },
-                javascript = {
-                  format = {
-                    indentSize = vim.o.shiftwidth,
-                    convertTabsToSpaces = vim.o.expandtab,
-                    tabSize = vim.o.tabstop,
-                  },
-                },
-                completions = {
-                  completeFunctionCalls = true,
-                },
-              },
             },
           })
         end,
@@ -331,6 +292,7 @@ return {
       ensure_installed = {
         "stylua",
         "black",
+        "eslint_d",
       },
     },
     config = function(_, opts)
