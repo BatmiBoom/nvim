@@ -169,6 +169,10 @@ return {
         capabilities = capabilities,
       })
 
+      lspconfig.ols.setup({
+        capabilities = capabilities,
+      })
+
     end,
   },
   {
