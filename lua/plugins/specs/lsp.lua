@@ -41,6 +41,7 @@ return {
           "jsonls",
           "lua_ls",
           "marksman",
+          "ols",
           "pyright",
           "ruff_lsp",
           "rust_analyzer",
