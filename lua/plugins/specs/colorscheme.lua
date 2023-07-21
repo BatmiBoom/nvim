@@ -1,16 +1,16 @@
 return {
   {
     "Abstract-IDE/Abstract-cs",
-    lazy = false
+    lazy = true
   },
   {
     "ray-x/aurora",
-    -- config = function ()
-    --   vim.g.aurora_italic = "italic"
-    --   vim.g.aurora_transparent = "transparent"
-    --   vim.g.aurora_bold = "bold"
-    --   vim.g.aurora_darker = "darker background"
-    -- end
+    config = function ()
+      vim.g.aurora_italic = "italic"
+      vim.g.aurora_transparent = "transparent"
+      vim.g.aurora_bold = "bold"
+      -- vim.g.aurora_darker = "darker background"
+    end
   },
   {
     "navarasu/onedark.nvim",
