@@ -10,19 +10,11 @@ return {
           nls.builtins.formatting.stylua,
           nls.builtins.formatting.black,
           nls.builtins.formatting.eslint_d,
-          nls.builtins.formatting.elm_format,
           nls.builtins.diagnostics.eslint_d,
           nls.builtins.code_actions.eslint_d,
         },
       }
     end,
-    keys = {
-        { "<leader>cf",
-          function ()
-            vim.lsp.buf.format({ async = true})
-          end,
-          desc = "Format"
-        },
-    },
   }
 }
+

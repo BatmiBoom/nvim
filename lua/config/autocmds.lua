@@ -1,21 +1,15 @@
+-- [[ Highlight on yank ]]
+-- See `:help vim.highlight.on_yank()`
 local function augroup(name)
-  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("autocmd_" .. name, { clear = true })
 end
 
--- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-  group = augroup("highlight_yank"),
+vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
-      vim.highlight.on_yank()
+    vim.highlight.on_yank()
   end,
-})
-
--- resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
-  group = augroup("resize_splits"),
-  callback = function()
-      vim.cmd("tabdo wincmd =")
-  end,
+  group = augroup("YankHighlight"),
+  pattern = '*',
 })
 
 -- go to last loc when opening a buffer
@@ -51,12 +45,12 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- don't comment new line
 vim.api.nvim_create_autocmd(
 	{"BufEnter", "FileType"},
 	{
-		desc = "don't auto comment new line",
 		pattern = "*",
-		group = group,
+		group = augroup("DontCommentNewLine"),
 		command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
 	}
 )

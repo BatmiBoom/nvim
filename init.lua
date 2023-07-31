@@ -1,25 +1,47 @@
-vim.loader.enable()
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
-require("plugins")
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system {
+		'git',
+		'clone',
+		'--filter=blob:none',
+		'https://github.com/folke/lazy.nvim.git',
+		'--branch=stable', -- latest stable release
+		lazypath,
+	}
+end
+vim.opt.rtp:prepend(lazypath)
 
-require("settings.options")
-require("settings.keymaps")
-require("settings.autocmds")
+require "config"
 
--- CHANGE THEMES
--- Abstract-IDE
--- vim.cmd[[colorscheme abscs]]
---
--- Aurora
-vim.cmd[[colorscheme aurora]]
---
--- Nord
--- vim.cmd[[colorscheme nord]]
---
--- Zephyr
--- vim.cmd[[colorscheme zephyr]]
---
--- Oxocarbon
--- vim.opt.background = "dark" -- set this to dark or light
--- vim.cmd.colorscheme "oxocarbon"
+require("lazy").setup({
+	{ import = "plugins" },
+}, {
+		defaults = {
+			lazy = true,
+			version = false,
+		},
+		install = {
+			missing = true,
+		},
+		performance = {
+			rtp = {
+				disabled_plugins = {
+					"2html_plugins",
+					"getscript",
+					"getscriptPlugin",
+					"logipat",
+					"ftplugin",
+					"gzip",
+					"matchit",
+					"tohtml",
+					"tutor",
+					"zipPlugin",
+					"matchparent",
+				},
+			},
+		},
+	})
 
