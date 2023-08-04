@@ -10,24 +10,11 @@ return {
   'mfussenegger/nvim-dap',
   dependencies = {
     'rcarriga/nvim-dap-ui',
-    'williamboman/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
     'leoluz/nvim-dap-go',
   },
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
-
-    require('mason-nvim-dap').setup {
-      automatic_setup = true,
-
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
-      handlers = {},
-      ensure_installed = {
-        'delve',
-      },
-    }
 
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })

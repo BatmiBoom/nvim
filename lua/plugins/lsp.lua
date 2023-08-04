@@ -1,114 +1,160 @@
 return {
-	{
-		"neovim/nvim-lspconfig",
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = {
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-nvim-lua" },
-			{ "hrsh7th/cmp-buffer" },
-			{ "saadparwaiz1/cmp_luasnip" },
-			{ "rafamadriz/friendly-snippets" },
-			{
-				"williamboman/mason.nvim",
-				opt = {
-					ensure_installed = {
-						"stylua",
-						"black",
-						"eslint_d",
-					},
-				},
-			},
-			{ "williamboman/mason-lspconfig.nvim" },
-			{
-				"VonHeikemen/lsp-zero.nvim",
-				branch = "dev-v3",
-				lazy = true,
-				config = false,
-			},
-			{
-				"hrsh7th/nvim-cmp",
-				dependencies = {
-					{ "L3MON4D3/LuaSnip" },
-				},
-			},
-		},
-		config = function()
-			local lsp = require("lsp-zero").preset({})
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      { "hrsh7th/nvim-cmp" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lua" },
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-cmdline" },
+      { "petertriho/cmp-git" },
+      { "L3MON4D3/LuaSnip" },
+      { "saadparwaiz1/cmp_luasnip" },
+      { "rafamadriz/friendly-snippets" },
+    },
+    config = function()
+      local cmp = require("cmp")
 
-			lsp.extend_cmp()
+      require("luasnip.loaders.from_vscode").lazy_load()
 
-			local cmp = require("cmp")
-			local cmp_action = require("lsp-zero").cmp_action()
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+          end,
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-x>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = false }),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp", group_index = 1, max_item_count = 20 },
+          { name = "nvim_lua", group_index = 1, max_item_count = 5 },
+          { name = "luasnip",  group_index = 2, max_item_count = 5 },
+        }, {
+          { name = "buffer", group_index = 3, keyword_lenght = 5, max_item_count = 5 },
+        }),
+        enabled = function()
+          -- disable completion in comments
+          local context = require 'cmp.config.context'
+          -- keep command mode completion enabled when cursor is in a comment
+          if vim.api.nvim_get_mode().mode == 'c' then
+            return true
+          else
+            return not context.in_treesitter_capture("comment")
+                and not context.in_syntax_group("Comment")
+          end
+        end
+      })
 
-			require("luasnip.loaders.from_vscode").lazy_load()
+      cmp.setup.filetype("gitcommit", {
+        sources = cmp.config.sources({
+          { name = "git", max_item_count = 5 },
+        }, {
+          { name = "buffer", max_item_count = 5 },
+        }),
+      })
 
-			cmp.setup({
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				mapping = {
-					["<CR>"] = cmp.mapping.confirm({ select = false }),
-					["<C-x>"] = cmp.mapping.complete(),
-					["<C-f>"] = cmp_action.luasnip_jump_forward(),
-					["<C-b>"] = cmp_action.luasnip_jump_backward(),
-				},
-				sources = {
-					{ name = "nvim_lsp", max_item_count = 8, group_index = 1 },
-					{ name = "nvim_lua", max_item_count = 4, group_index = 1 },
-					{ name = "luasnip", max_item_count = 4, group_index = 2 },
-					{ name = "buffer", max_item_count = 4, keyword_length = 4, group_index = 3 },
-				},
-			})
-			lsp.on_attach(function(client, bufnr)
-				lsp.default_keymaps({ buffer = bufnr }) -- add lsp-zero defaults
+      cmp.setup.cmdline({ "/", "?" }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = "buffer", max_item_count = 5 },
+        },
+      })
 
-				local opts = { buffer = bufnr }
-				local bind = vim.keymap.set
+      cmp.setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path", max_item_count = 5 },
+        }, {
+          { name = "cmdline", max_item_count = 5 },
+        }),
+      })
 
-				bind("n", "gR", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-				bind("n", "<leader>cf", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-				bind("n", "<leader>cd", "<cmd>lua vim.lsp.buf.code_action<cr>", opts)
-			end)
+      local lsp_installed = {
+        "cssls",
+        "clangd",
+        "gopls",
+        "html",
+        "jsonls",
+        "marksman",
+        -- "lua_ls",
+        "ols",
+        -- "pyright",
+        "sqlls",
+        "tailwindcss",
+        "taplo",
+        -- "tsserver",
+        "zls"
+      }
 
-			-- K: Displays hover information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.hover().
-			-- gd: Jumps to the definition of the symbol under the cursor. See :help vim.lsp.buf.definition().
-			-- gD: Jumps to the declaration of the symbol under the cursor. Some servers don't implement this feature. See :help vim.lsp.buf.declaration().
-			-- gi: Lists all the implementations for the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.implementation().
-			-- go: Jumps to the definition of the type of the symbol under the cursor. See :help vim.lsp.buf.type_definition().
-			-- gr: Lists all the references to the symbol under the cursor in the quickfix window. See :help vim.lsp.buf.references().
-			-- gs: Displays signature information about the symbol under the cursor in a floating window. See :help vim.lsp.buf.signature_help(). If a mapping already exists for this key this function is not bound.
-			-- gl: Show diagnostics in a floating window. See :help vim.diagnostic.open_float().
-			-- [d: Move to the previous diagnostic in the current buffer. See :help vim.diagnostic.goto_prev().
-			-- ]d: Move to the next diagnostic. See :help vim.diagnostic.goto_next().
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			require("mason").setup({})
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"lua_ls",
-					"pyright",
-					"tsserver",
-					"rust_analyzer",
-					"tailwindcss",
-					"cssls",
-					"clangd",
-					"gopls",
-					"eslint",
-					"html",
-					"jsonls",
-					"marksman",
-					"ols",
-					"sqlls",
-					"taplo",
-				},
-				handlers = {
-					lsp.default_setup,
-					lua_ls = function()
-						-- (Optional) configure lua language server
-						require("lspconfig").lua_ls.setup(lsp.nvim_lua_ls())
-					end,
-				},
-			})
-		end,
-	},
+      require 'lspconfig'.lua_ls.setup {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      }
+
+      require 'lspconfig'.pyright.setup {
+        capabilities = capabilities
+      }
+
+      for _, lsp in pairs(lsp_installed) do
+        require("lspconfig")[lsp].setup({
+          capabilities = capabilities,
+        })
+      end
+    end,
+  },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    ft = { "typescrpt", "javascript", "tsx", "jsx" },
+    opts = {},
+  },
+  {
+    'simrat39/rust-tools.nvim',
+    dependencies = {
+      "nvim-lua/plenary.nvim"
+    },
+    ft = { "rust" },
+    config = function()
+      local rt = require("rust-tools")
+
+      rt.setup({
+        server = {
+          on_attach = function(_, bufnr)
+            -- Hover actions
+            vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+            -- Code action groups
+            vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+          end,
+        },
+      })
+    end
+  }
 }
