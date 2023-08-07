@@ -86,10 +86,11 @@ return {
         "gopls",
         "html",
         "jsonls",
-        "marksman",
         -- "lua_ls",
+        "marksman",
         "ols",
         -- "pyright",
+        -- "rust_analyzer",
         "sqlls",
         "tailwindcss",
         "taplo",
@@ -141,7 +142,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim"
     },
-    ft = { "rust" },
+    event = { "BufReadPost *.rs" },
     config = function()
       local rt = require("rust-tools")
 
