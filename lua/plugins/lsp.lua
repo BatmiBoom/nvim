@@ -157,5 +157,26 @@ return {
         },
       })
     end
-  }
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "BufRead",
+    config = function() require"lsp_signature".on_attach() end,
+  },
+  -- PYTHON
+  {
+    "AckslD/swenv.nvim",
+    ft = { "python" },
+    config = function ()
+      require('swenv').setup({
+        get_venvs = function(venvs_path)
+          return require('swenv.api').get_venvs(venvs_path)
+        end,
+        venvs_path = vim.fn.expand('~/venvs'),
+        post_set_venv = function ()
+          vim.cmd("LspRestart")
+        end,
+      })
+    end
+  },
 }

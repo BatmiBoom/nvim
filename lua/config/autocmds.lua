@@ -1,5 +1,3 @@
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
 local function augroup(name)
   return vim.api.nvim_create_augroup("autocmd_" .. name, { clear = true })
 end

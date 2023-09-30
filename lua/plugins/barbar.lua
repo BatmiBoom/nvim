@@ -17,7 +17,7 @@ return {
 				"<S-h>", "<cmd>BufferPrevious<CR>",desc = "Next Tab",
 			},
 			{
-				"<leader>bc", "<cmd>BufferClose<CR>",desc = "Next Tab",
+				"<S-x>", "<cmd>BufferClose<CR>",desc = "Next Tab",
 			},
 		},
 		version = "^1.0.0", -- optional: only update when a new 1.x version is released
