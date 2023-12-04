@@ -25,7 +25,6 @@ sudo apt install clangd
 brew install llvm
 ~~~
 
-
 ## TypeScript
 ~~~
 npm install -g typescript typescript-language-server
@@ -50,10 +49,8 @@ go install golang.org/x/tools/gopls@latest
 npm i -g sql-language-server
 ~~~
 
-
 ## Haskell
 [link](https://github.com/haskell/haskell-language-server)
-
 
 ## Markdown
 
@@ -65,17 +62,14 @@ brew install marksman
 ### Windows
 [link](https://github.com/artempyanykh/marksman/releases)
 
-
 ## Python
-
-### Pylsp
-~~~
-pipx install 'python-lsp-server[all]'
-~~~
 
 ### Pyright
 ~~~
 pip install pyright
+pip install ruff-lsp
+pip install black
+pip install flake8
 ~~~
 
 ## Rust
@@ -103,6 +97,39 @@ scoop install lua-language-server
 ### MacOs
 ~~~
 brew install lua-language-server
+~~~
+
+## Ocamllsp
+~~~
+opam install ocaml-lsp-server
+~~~
+
+## Camke
+~~~
+pip install cmake-language-server
+~~~
+
+## Dockerls
+~~~
+npm install -g dockerfile-language-server-nodejs
+~~~
+
+## Elixirls
+
+~~~
+curl -fLO https://github.com/elixir-lsp/elixir-ls/releases/latest/download/elixir-ls.zip
+unzip elixir-ls.zip -d /path/to/elixir-ls
+chmod +x /path/to/elixir-ls/language_server.
+~~~
+
+## Neocmake
+~~~
+cargo install neocmakelsp
+~~~
+
+## NimLsp
+~~~
+nimble install nimlangserver
 ~~~
 
 
@@ -186,6 +213,18 @@ cargo install bottom --locked
 ~~~
 go install github.com/dundee/gdu/v5/cmd/gdu@latest
 ~~~
+
+## Ueberzugpp
+
+### Linux - Mac
+~~~
+brew install jstkdng/programs/ueberzugpp
+~~~
+
+## Rranger
+
+### Linux - Mac - Windows
+pip install ranger-fm
 
 # NEOVIM
 

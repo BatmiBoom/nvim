@@ -1,0 +1,90 @@
+return {
+	--"nvim/nvim-lspconfig"
+	--dependencies = {
+	-- { "hrsh7th/nvim-cmp" },
+	-- { "hrsh7th/cmp-nvim-lsp" },
+	-- { "hrsh7th/cmp-nvim-lua" },
+	-- { "hrsh7th/cmp-buffer" },
+	-- { "hrsh7th/cmp-path" },
+	-- { "hrsh7th/cmp-cmdline" },
+	-- { "saadparwaiz1/cmp_luasnip" },
+	--    {
+	--      "Saecki/crates.nvim",
+	--      event = { "BufRead Cargo.toml" },
+	--      opts = {
+	--        src = {
+	--          cmp = { enabled = true },
+	--        },
+	--      },
+	--    },
+	--},
+	--config = function()
+	-- vim.api.nvim_set_hl(0, "CmpGhoshText", { link = "Comment", default = true})
+	-- local cmp = require("cmp")
+	-- local defaults = require("cmp.config.default")()
+	-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+	-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+	--
+	-- cmp.setup({
+	--      completion = {
+	--        completeopt = "menu,menuone,noinsert"
+	--      },
+	-- 	snippet = {
+	-- 		expand = function(args)
+	-- 			require("luasnip").lsp_expand(args.body)
+	-- 		end,
+	-- 	},
+	-- 	window = {
+	-- 		completion = cmp.config.window.bordered(winhighlight),
+	-- 		documentation = cmp.config.window.bordered(winhighlight),
+	-- 	},
+	-- 	mapping = cmp.mapping.preset.insert({
+	-- 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+	-- 		["<C-f>"] = cmp.mapping.scroll_docs(4),
+	-- 		["<C-x>"] = cmp.mapping.complete(),
+	-- 		["<C-e>"] = cmp.mapping.abort(),
+	-- 		["<CR>"] = cmp.mapping.confirm({ select = false }),
+	-- 	}),
+	-- 	sources = cmp.config.sources({
+	-- 		{ name = "nvim_lsp", group_index = 1 },
+	-- 		{ name = "nvim_lua", group_index = 1 },
+	-- 		{ name = "luasnip", group_index = 2 },
+	--        { name = "crates"}
+	-- 	}, {
+	-- 		{ name = "path", max_item_count = 5 },
+	-- 	}),
+	-- 	enabled = function()
+	-- 		local context = require("cmp.config.context")
+	-- 		if vim.api.nvim_get_mode().mode == "c" then
+	-- 			return true
+	-- 		else
+	-- 			return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+	-- 		end
+	-- 	end,
+	--      experimental = {
+	--        ghost_text = {
+	--          hl_group = "CmpGhoshText",
+	--        }
+	--      },
+	--      sorting = defaults.sorting
+	-- })
+	--
+	-- cmp.setup.cmdline(":", {
+	-- 	mapping = cmp.mapping.preset.cmdline(),
+	-- 	sources = cmp.config.sources({
+	-- 		{ name = "path", max_item_count = 5 },
+	-- 	}, {
+	-- 		{ name = "cmdline", max_item_count = 5 },
+	-- 	}),
+	-- })
+
+	-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+	-- local capabilities = vim.tbl_deep_extend(
+	-- 	"force",
+	-- 	{},
+	-- 	vim.lsp.protocol.make_client_capabilities(),
+	--  cmp_nvim_lsp.default_capabilities
+	-- )
+	--end
+}

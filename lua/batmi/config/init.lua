@@ -1,4 +1,6 @@
-require "batmi.config.options"
-require "batmi.config.remap"
-require "batmi.config.autocmd"
-require "batmi.config.lazy"
+-- require("batmi.config.disable_builtin")
+require("batmi.config.options")
+require("batmi.config.remap")
+require("batmi.config.autocmd")
+require("batmi.config.lsp.handlers")
+require("batmi.config.lazy")

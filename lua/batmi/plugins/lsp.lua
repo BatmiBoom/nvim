@@ -3,90 +3,150 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			{ "hrsh7th/nvim-cmp" },
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-nvim-lua" },
-			{ "hrsh7th/cmp-buffer" },
-			{ "hrsh7th/cmp-path" },
-			{ "hrsh7th/cmp-cmdline" },
-			{ "lukas-reineke/cmp-rg" },
+			{ "nvimdev/epo.nvim" },
 			{ "L3MON4D3/LuaSnip" },
-			{ "saadparwaiz1/cmp_luasnip" },
 			{ "rafamadriz/friendly-snippets" },
+			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
+			{ "folke/neodev.nvim", opts = {} },
 		},
 		config = function()
-			local cmp = require("cmp")
+			local winhighlight = {
+				winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
+			}
 
 			require("luasnip.loaders.from_vscode").lazy_load()
 
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+			-- suggested completeopt
+			vim.opt.completeopt = "menu,menuone,noselect"
 
-			cmp.setup({
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-x>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = false }),
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp", group_index = 1 },
-					{ name = "rg", group_index = 1 },
-					{ name = "nvim_lua", group_index = 1 },
-					{ name = "luasnip", group_index = 2 },
-				}, {
-					{ name = "path", max_item_count = 5 },
-				}),
-				enabled = function()
-					local context = require("cmp.config.context")
-					if vim.api.nvim_get_mode().mode == "c" then
-						return true
-					else
-						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
-					end
+			-- Color for completetion menu
+			vim.api.nvim_set_hl(0, "Pmenu", { fg = "#E512E5", bg = nil })
+			vim.api.nvim_set_hl(0, "PmenuExtra", { fg = "#000000", bg = "#ffffff" })
+			vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#696fb5", fg = "#E512E5" })
+			vim.api.nvim_set_hl(0, "PmenuKind", { fg = "#E5E512" })
+			vim.api.nvim_set_hl(0, "PmenuKindSel", { fg = "#33CE25", bg = "#b5696f" })
+			vim.api.nvim_set_hl(0, "PmenuExtraSel", { fg = "#ffffff", bg = "#000000" })
+			vim.api.nvim_set_hl(0, "PmenuSbar", { fg = "#ffffff", bg = "#000000" })
+
+			local kind_icons = {
+				Text = "󰉿",
+				Method = "󰆧",
+				Function = "󰘧",
+				Constructor = "",
+				Field = "󰜢",
+				Variable = "󰀫",
+				Class = "󰠱",
+				Interface = "",
+				Module = "",
+				Property = "󰜢",
+				Unit = "󰑭",
+				Value = "󰎠",
+				Enum = "",
+				Keyword = "󰌋",
+				Snippet = "",
+				Color = "󰏘",
+				File = "󰈙",
+				Reference = "",
+				Folder = "󰉋",
+				EnumMember = "",
+				Constant = "󰏿",
+				Struct = "",
+				Event = "",
+				Operator = "󰆕",
+				TypeParameter = " ",
+				Unknown = " ",
+			}
+
+			require("epo").setup({
+				fuzzy = true,
+				debounce = 50,
+				signature = true,
+				snippet_path = nil,
+				signature_border = "rounded",
+				kind_format = function(k)
+					return kind_icons[k] .. " " .. k
 				end,
 			})
 
-			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = cmp.config.sources({
-					{ name = "path", max_item_count = 5 },
-				}, {
-					{ name = "cmdline", max_item_count = 5 },
-				}),
-			})
+			-- keys for completion
+			vim.keymap.set("i", "<TAB>", function()
+				if vim.fn.pumvisible() == 1 then
+					return "<C-n>"
+				elseif vim.snippet.jumpable(1) then
+					return "<cmd>lua vim.snippet.jump(1)<cr>"
+				else
+					return "<TAB>"
+				end
+			end, { expr = true })
+
+			vim.keymap.set("i", "<S-TAB>", function()
+				if vim.fn.pumvisible() == 1 then
+					return "<C-p>"
+				elseif vim.snippet.jumpable(-1) then
+					return "<cmd>lua vim.snippet.jump(-1)<CR>"
+				else
+					return "<S-TAB>"
+				end
+			end, { expr = true })
+
+			vim.keymap.set("i", "<C-e>", function()
+				if vim.fn.pumvisible() == 1 then
+					require("epo").disable_trigger()
+				end
+				return "<C-e>"
+			end, { expr = true })
+
+			-- Enter as completition
+			vim.keymap.set("i", "<cr>", function()
+				if vim.fn.pumvisible() == 1 then
+					return "<C-y>"
+				end
+				return "<cr>"
+			end, { expr = true, noremap = true })
+
+			-- autopairs
+			vim.keymap.set("i", "<cr>", function()
+				if vim.fn.pumvisible() == 1 then
+					return vim.api.nvim_replace_termcodes("<C-y>", true, true, true)
+				end
+				return require("nvim-autopairs").autopairs_cr()
+			end, { expr = true, noremap = true, replace_keycodes = false })
+			require("nvim-autopairs").setup({ map_cr = false })
 
 			local lsp_installed = {
+				"astro",
 				"cssls",
 				"clangd",
+				"cmake",
+				"dockerls",
+				"elixirls",
 				"gopls",
 				"html",
+				"htmx",
 				"jsonls",
 				-- "lua_ls",
 				"marksman",
+				"neocmake",
+				"nim_langserver",
+				"ocamllsp",
 				"ols",
 				-- "pyright",
 				"ruff_lsp",
 				-- "rust_analyzer",
 				"sqlls",
+				"svelte",
 				"tailwindcss",
 				"taplo",
 				-- "tsserver",
 				"zls",
 			}
 
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+			local capabilities = vim.tbl_deep_extend(
+				"force",
+				{},
+				vim.lsp.protocol.make_client_capabilities(),
+				require("epo").register_cap()
+			)
 
 			require("lspconfig").lua_ls.setup({
 				capabilities = capabilities,
@@ -148,30 +208,6 @@ return {
 					end,
 				},
 			})
-		end,
-	},
-
-	-- BETTER SIGNATURE HELP
-	{
-		"ray-x/lsp_signature.nvim",
-		event = "BufRead",
-		opts = {
-			bind = true,
-			handler_opts = {
-				border = "single",
-			},
-			doc_lines = 5,
-			toggle_key = "<C-k>",
-			hint_enable = false,
-		},
-		config = function()
-			vim.keymap.set({ "n" }, "<C-k>", function()
-				require("lsp_signature").toggle_float_win()
-			end, { silent = true, noremap = true, desc = "toggle signature" })
-
-			vim.keymap.set({ "n" }, "<Leader>k", function()
-				vim.lsp.buf.signature_help()
-			end, { silent = true, noremap = true, desc = "toggle signature" })
 		end,
 	},
 
