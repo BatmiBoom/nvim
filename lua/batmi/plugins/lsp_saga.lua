@@ -73,8 +73,8 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "gh", "<CMD>Lspsaga finder ref<CR>")
-		vim.keymap.set("n", "gD", "<CMD>Lspsaga finder def<CR>")
+		vim.keymap.set("n", "mfr", "<CMD>Lspsaga finder ref<CR>")
+		vim.keymap.set("n", "mfd", "<CMD>Lspsaga finder def<CR>")
 		vim.keymap.set("n", "gi", "<CMD>Lspsaga finder imp<CR>")
 		vim.keymap.set("n", "mca", "<CMD>Lspsaga code_action<CR>")
 		vim.keymap.set("n", "gd", "<CMD>Lspsaga peek_definition<CR>")

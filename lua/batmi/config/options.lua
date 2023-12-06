@@ -36,7 +36,6 @@ vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true
 
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "95"
 
 vim.opt.showmode = false
 vim.opt.laststatus = 3

@@ -60,10 +60,10 @@ return {
 			gamma = 1.00, -- adjust the brightness of the theme
 			styles = {
 				comments = { italic = true }, -- style for comments
-				keywords = { italic = true }, -- style for keywords
-				identifiers = { italic = true }, -- style for identifiers
-				functions = {}, -- style for functions
-				variables = {}, -- style for variables
+				keywords = {}, -- style for keywords
+				identifiers = {}, -- style for identifiers
+				functions = { italic = true }, -- style for functions
+				variables = { bold = true }, -- style for variables
 			},
 			terminal_colors = true, -- enable terminal colors cfkj
 		},
@@ -91,7 +91,7 @@ return {
 	},
 	{
 		"rose-pine/neovim",
-		lazy = true,
+		lazy = false,
 		priority = 1000,
 		name = "rose-pine",
 		config = function()
@@ -100,7 +100,7 @@ return {
 				dark_variant = "moon",
 				bold_vert_split = false,
 				dim_nc_background = false,
-				disable_background = false,
+				disable_background = true,
 				disable_float_background = false,
 				disable_italics = false,
 
@@ -141,7 +141,7 @@ return {
 	},
 	{
 		"rebelot/kanagawa.nvim",
-		lazy = false,
+		lazy = true,
 		priority = 1000,
 		config = function()
 			require("kanagawa").setup({

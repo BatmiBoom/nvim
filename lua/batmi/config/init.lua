@@ -1,4 +1,4 @@
--- require("batmi.config.disable_builtin")
+require("batmi.config.disable_builtin")
 require("batmi.config.options")
 require("batmi.config.remap")
 require("batmi.config.autocmd")

@@ -94,8 +94,8 @@ map("n", "<s-tab>", ":tabprev<Return>", {})
 map("n", "<leader>te", ":term<CR>", {})
 
 -- Split window
-map("n", "ss", ":split<Return>", {})
-map("n", "sv", ":vsplit<Return>", {})
+map("n", "zs", ":split<Return>", {})
+map("n", "zv", ":vsplit<Return>", {})
 
 -- Diagnostics
 map("n", "gl", vim.diagnostic.open_float, {})

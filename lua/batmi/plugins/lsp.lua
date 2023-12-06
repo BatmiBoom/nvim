@@ -3,115 +3,139 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
-			{ "nvimdev/epo.nvim" },
+			{ "hrsh7th/nvim-cmp" },
+			{ "hrsh7th/cmp-nvim-lsp" },
+			{ "hrsh7th/cmp-nvim-lua" },
+			{ "hrsh7th/cmp-buffer" },
+			{ "hrsh7th/cmp-path" },
+			{ "hrsh7th/cmp-cmdline" },
+			{ "saadparwaiz1/cmp_luasnip" },
+			{
+				"Saecki/crates.nvim",
+				event = { "BufRead Cargo.toml" },
+				opts = {
+					src = {
+						cmp = { enabled = true },
+					},
+				},
+			},
 			{ "L3MON4D3/LuaSnip" },
 			{ "rafamadriz/friendly-snippets" },
 			{ "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
 			{ "folke/neodev.nvim", opts = {} },
 		},
 		config = function()
+			vim.api.nvim_set_hl(0, "CmpGhoshText", { link = "Comment", default = true })
 			local winhighlight = {
 				winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
 			}
 
 			require("luasnip.loaders.from_vscode").lazy_load()
 
-			-- suggested completeopt
-			vim.opt.completeopt = "menu,menuone,noselect"
+			local cmp = require("cmp")
+			local defaults = require("cmp.config.default")()
+			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
-			-- Color for completetion menu
-			vim.api.nvim_set_hl(0, "Pmenu", { fg = "#E512E5", bg = nil })
-			vim.api.nvim_set_hl(0, "PmenuExtra", { fg = "#000000", bg = "#ffffff" })
-			vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#696fb5", fg = "#E512E5" })
-			vim.api.nvim_set_hl(0, "PmenuKind", { fg = "#E5E512" })
-			vim.api.nvim_set_hl(0, "PmenuKindSel", { fg = "#33CE25", bg = "#b5696f" })
-			vim.api.nvim_set_hl(0, "PmenuExtraSel", { fg = "#ffffff", bg = "#000000" })
-			vim.api.nvim_set_hl(0, "PmenuSbar", { fg = "#ffffff", bg = "#000000" })
-
-			local kind_icons = {
-				Text = "󰉿",
-				Method = "󰆧",
-				Function = "󰘧",
-				Constructor = "",
-				Field = "󰜢",
-				Variable = "󰀫",
-				Class = "󰠱",
-				Interface = "",
-				Module = "",
-				Property = "󰜢",
-				Unit = "󰑭",
-				Value = "󰎠",
-				Enum = "",
-				Keyword = "󰌋",
-				Snippet = "",
-				Color = "󰏘",
-				File = "󰈙",
-				Reference = "",
-				Folder = "󰉋",
-				EnumMember = "",
-				Constant = "󰏿",
-				Struct = "",
-				Event = "",
-				Operator = "󰆕",
-				TypeParameter = " ",
-				Unknown = " ",
-			}
-
-			require("epo").setup({
-				fuzzy = true,
-				debounce = 50,
-				signature = true,
-				snippet_path = nil,
-				signature_border = "rounded",
-				kind_format = function(k)
-					return kind_icons[k] .. " " .. k
+			cmp.setup({
+				completion = {
+					completeopt = "menu,menuone,noinsert",
+				},
+				snippet = {
+					expand = function(args)
+						require("luasnip").lsp_expand(args.body)
+					end,
+				},
+				window = {
+					completion = cmp.config.window.bordered(winhighlight),
+					documentation = cmp.config.window.bordered(winhighlight),
+				},
+				mapping = cmp.mapping.preset.insert({
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
+					["<C-f>"] = cmp.mapping.scroll_docs(4),
+					["<C-x>"] = cmp.mapping.complete(),
+					["<C-e>"] = cmp.mapping.abort(),
+					["<CR>"] = cmp.mapping.confirm({ select = false }),
+				}),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp", group_index = 1 },
+					{ name = "nvim_lua", group_index = 1 },
+					{ name = "luasnip", group_index = 2 },
+					{ name = "crates" },
+				}, {
+					{ name = "path", max_item_count = 5 },
+				}),
+				enabled = function()
+					local context = require("cmp.config.context")
+					if vim.api.nvim_get_mode().mode == "c" then
+						return true
+					else
+						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+					end
 				end,
+				experimental = {
+					native_menu = false,
+					ghost_text = {
+						hl_group = "CmpGhoshText",
+					},
+				},
+				formatting = {
+					fields = { "kind", "abbr", "menu" },
+					format = function(entry, vim_item)
+						vim_item.kind = string.format("%s", vim.g.personal_options.lsp_icons[vim_item.kind])
+						vim_item.menu = ({
+							nvim_lsp = "[LSP ]",
+							luasnip = "[Snip]",
+							buffer = "[Buff]",
+							path = "[Path]",
+							dictionary = "[Text]",
+							spell = "[Spll]",
+							calc = "[Calc]",
+						})[entry.source.name]
+						return vim_item
+					end,
+				},
+				sorting = {
+					comparators = {
+						cmp.config.compare.offset,
+						cmp.config.compare.exact,
+						cmp.config.compare.score,
+
+						-- copied from cmp-under, but I don't think I need the plugin for this.
+						-- I might add some more of my own.
+						function(entry1, entry2)
+							local _, entry1_under = entry1.completion_item.label:find("^_+")
+							local _, entry2_under = entry2.completion_item.label:find("^_+")
+							entry1_under = entry1_under or 0
+							entry2_under = entry2_under or 0
+							if entry1_under > entry2_under then
+								return false
+							elseif entry1_under < entry2_under then
+								return true
+							end
+						end,
+
+						cmp.config.compare.kind,
+						cmp.config.compare.sort_text,
+						cmp.config.compare.length,
+						cmp.config.compare.order,
+					},
+				},
 			})
 
-			-- keys for completion
-			vim.keymap.set("i", "<TAB>", function()
-				if vim.fn.pumvisible() == 1 then
-					return "<C-n>"
-				elseif vim.snippet.jumpable(1) then
-					return "<cmd>lua vim.snippet.jump(1)<cr>"
-				else
-					return "<TAB>"
-				end
-			end, { expr = true })
-
-			vim.keymap.set("i", "<S-TAB>", function()
-				if vim.fn.pumvisible() == 1 then
-					return "<C-p>"
-				elseif vim.snippet.jumpable(-1) then
-					return "<cmd>lua vim.snippet.jump(-1)<CR>"
-				else
-					return "<S-TAB>"
-				end
-			end, { expr = true })
-
-			vim.keymap.set("i", "<C-e>", function()
-				if vim.fn.pumvisible() == 1 then
-					require("epo").disable_trigger()
-				end
-				return "<C-e>"
-			end, { expr = true })
-
-			-- Enter as completition
-			vim.keymap.set("i", "<cr>", function()
-				if vim.fn.pumvisible() == 1 then
-					return "<C-y>"
-				end
-				return "<cr>"
-			end, { expr = true, noremap = true })
-
-			-- autopairs
-			vim.keymap.set("i", "<cr>", function()
-				if vim.fn.pumvisible() == 1 then
-					return vim.api.nvim_replace_termcodes("<C-y>", true, true, true)
-				end
-				return require("nvim-autopairs").autopairs_cr()
-			end, { expr = true, noremap = true, replace_keycodes = false })
-			require("nvim-autopairs").setup({ map_cr = false })
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path", max_item_count = 5 },
+				}, {
+					{ name = "cmdline", max_item_count = 5 },
+				}),
+			})
+			--
+			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			--
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 			local lsp_installed = {
 				"astro",
@@ -127,9 +151,7 @@ return {
 				-- "lua_ls",
 				"marksman",
 				"neocmake",
-				"nim_langserver",
 				"ocamllsp",
-				"ols",
 				-- "pyright",
 				"ruff_lsp",
 				-- "rust_analyzer",
@@ -140,13 +162,6 @@ return {
 				-- "tsserver",
 				"zls",
 			}
-
-			local capabilities = vim.tbl_deep_extend(
-				"force",
-				{},
-				vim.lsp.protocol.make_client_capabilities(),
-				require("epo").register_cap()
-			)
 
 			require("lspconfig").lua_ls.setup({
 				capabilities = capabilities,
@@ -171,6 +186,8 @@ return {
 			require("lspconfig").pyright.setup({
 				capabilities = capabilities,
 			})
+
+			require("lspconfig").ols.setup({})
 
 			for _, lsp in pairs(lsp_installed) do
 				require("lspconfig")[lsp].setup({
@@ -212,6 +229,10 @@ return {
 	},
 
 	-- PYTHON
+	{
+		"stevanmilic/nvim-lspimport",
+		ft = { "python" },
+	},
 	{
 		"AckslD/swenv.nvim",
 		config = function()
