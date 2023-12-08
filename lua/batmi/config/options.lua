@@ -32,7 +32,7 @@ vim.opt.undofile = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
 
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes:1"
 vim.opt.termguicolors = true
 
 vim.opt.updatetime = 50
@@ -42,6 +42,8 @@ vim.opt.laststatus = 3
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+vim.opt.cmdheight = 0
 
 vim.g.markdown_recommended_style = 0
 
