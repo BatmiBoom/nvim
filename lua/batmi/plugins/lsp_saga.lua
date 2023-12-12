@@ -55,7 +55,7 @@ return {
 				open_cmd = "!chrome",
 			},
 			lightbulb = {
-				enable = true,
+				enable = false,
 				sign = true,
 				virtual_text = false,
 				priority = 100,

@@ -1,108 +1,63 @@
 return {
 	{
-		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
+		"linrongbin16/fzfx.nvim",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope-ui-select.nvim",
-			"debugloop/telescope-undo.nvim",
 			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
+				"junegunn/fzf",
+				build = function()
+					vim.fn["fzf#install"]()
+				end,
+			},
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {
+			fzf_color_opts = {
+				fg = { "fg", "Normal" },
+				bg = { "bg", "Normal" },
+				hl = { "fg", "Comment" },
+				["fg+"] = { "fg", "CursorLine", "CursorColumn", "Normal" },
+				["bg+"] = { "bg", "CursorLine", "CursorColumn" },
+				["hl+"] = { "fg", "Statement" },
+				info = { "fg", "PreProc" },
+				border = { "fg", "Ignore" },
+				prompt = { "fg", "Conditional" },
+				pointer = { "fg", "Exception" },
+				marker = { "fg", "Keyword" },
+				spinner = { "fg", "Label" },
+				header = { "fg", "Comment" },
+				preview_label = { "fg", "Label" },
 			},
 		},
-		config = function()
-			local telescope = require("telescope")
-
-			telescope.setup({
-				defaults = {
-					wrap_results = true,
-					layout_strategy = "flex",
-					layout_config = { height = 0.95, prompt_position = "top" },
-					sorting_strategy = "ascending",
-					winblend = 0,
-				},
-				pickers = {
-					diagnostics = {
-						theme = "ivy",
-						initial_mode = "normal",
-						layout_config = {
-							preview_cutoff = 9999,
-						},
-					},
-				},
-				extensions = {
-					["ui-select"] = {},
-				},
-			})
-
-			require("telescope").load_extension("fzf")
-			require("telescope").load_extension("ui-select")
-			require("telescope").load_extension("undo")
-
-			vim.keymap.set("n", "<leader>u", "<CMD>Telescope undo<CR>")
-		end,
 		keys = {
 			{
-				"<leader>fP",
-				function()
-					require("telescope.builtin").find_files({
-						cwd = require("lazy.core.config").options.root,
-					})
-				end,
-				desc = "Find plugin file",
+				";;",
+				"<cmd>FzfxFiles<cr>",
+				{ silent = true, noremap = true, desc = "File explorer" },
 			},
 			{
 				";f",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.find_files({
-						no_ignore = false,
-						hidden = true,
-					})
-				end,
+				"<cmd>FzfxGFiles<cr>",
+				{ silent = true, noremap = true, desc = "File explorer" },
 			},
 			{
 				";r",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.live_grep()
-				end,
+				"<cmd>FzfxLiveGrep<cr>",
+				{ silent = true, noremap = true, desc = "File explorer" },
 			},
 			{
 				"\\\\",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.buffers()
-				end,
+				"<cmd>FzfxBuffers<cr>",
+				{ silent = true, noremap = true, desc = "File explorer" },
 			},
 			{
-				";t",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.help_tags()
-				end,
-			},
-			{
-				";;",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.resume()
-				end,
+				"-",
+				"<cmd>FzfxFileExplorer<cr>",
+				{ silent = true, noremap = true, desc = "File explorer" },
 			},
 			{
 				";d",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.diagnostics()
-				end,
-			},
-			{
-				";s",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.treesitter()
-				end,
+				"<cmd>FzfxLspDiagnostics<cr>",
+				{ silent = true, noremap = true, desc = "File explorer" },
 			},
 		},
 	},

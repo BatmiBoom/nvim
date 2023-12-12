@@ -1,1 +1,1 @@
-require "batmi"
+require("batmi")

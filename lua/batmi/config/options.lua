@@ -45,6 +45,8 @@ vim.opt.splitright = true
 
 vim.opt.cmdheight = 0
 
+vim.opt.winbar = "%=%m %f"
+
 vim.g.markdown_recommended_style = 0
 
 -- vim.cmd("highlight WinSeparator guibg=None")
