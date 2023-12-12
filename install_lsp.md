@@ -221,10 +221,17 @@ go install github.com/dundee/gdu/v5/cmd/gdu@latest
 brew install jstkdng/programs/ueberzugpp
 ~~~
 
-## Rranger
+## lsd
 
-### Linux - Mac - Windows
-pip install ranger-fm
+### Linux - Mac
+~~~
+brew install lsd
+~~~
+
+### Windows
+~~~
+cargo install lsd
+~~~
 
 # NEOVIM
 
