@@ -24,5 +24,38 @@ require("lazy").setup({
 		cache = {
 			enabled = true,
 		},
+		reset_packpath = true, -- reset the package path to improve startup time
+		rtp = {
+			reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+			---@type string[]
+			paths = {}, -- add any custom paths here that you want to includes in the rtp
+			---@type string[] list any plugins you want to disable here
+			disabled_plugins = {
+				"gzip",
+				"zip",
+				"zipPlugin",
+				"tar",
+				"tarPlugin",
+
+				"getscript",
+				"getscriptPlugin",
+				"vimball",
+				"vimballPlugin",
+				"2html_plugin",
+
+				"matchit",
+				"matchparen",
+				"logiPat",
+				"rrhelper",
+
+				"netrw",
+				"netrwPlugin",
+				"netrwSettings",
+			},
+		},
+	},
+	change_detection = {
+		enabled = true,
+		notify = false, -- get a notification when changes are found
 	},
 })

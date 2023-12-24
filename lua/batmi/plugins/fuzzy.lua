@@ -27,6 +27,16 @@ return {
 				header = { "fg", "Comment" },
 				preview_label = { "fg", "Label" },
 			},
+			file_explorer = {
+				interactions = {
+					cd = {
+						key = "ctrl-l",
+					},
+					upper = {
+						key = "ctrl-h",
+					},
+				},
+			},
 		},
 		keys = {
 			{

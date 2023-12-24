@@ -1,4 +1,3 @@
-require("batmi.config.disable_builtin")
 require("batmi.config.options")
 require("batmi.config.neovide")
 require("batmi.config.remap")
