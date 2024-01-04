@@ -1,73 +1,49 @@
 return {
 	{
-		"linrongbin16/fzfx.nvim",
+		"ibhagwan/fzf-lua",
 		dependencies = {
 			{
 				"junegunn/fzf",
-				build = function()
-					vim.fn["fzf#install"]()
-				end,
+				build = "./install --bin",
 			},
 			"nvim-tree/nvim-web-devicons",
 		},
-		opts = {
-			fzf_color_opts = {
-				fg = { "fg", "Normal" },
-				bg = { "bg", "Normal" },
-				hl = { "fg", "Comment" },
-				["fg+"] = { "fg", "CursorLine", "CursorColumn", "Normal" },
-				["bg+"] = { "bg", "CursorLine", "CursorColumn" },
-				["hl+"] = { "fg", "Statement" },
-				info = { "fg", "PreProc" },
-				border = { "fg", "Ignore" },
-				prompt = { "fg", "Conditional" },
-				pointer = { "fg", "Exception" },
-				marker = { "fg", "Keyword" },
-				spinner = { "fg", "Label" },
-				header = { "fg", "Comment" },
-				preview_label = { "fg", "Label" },
-			},
-			file_explorer = {
-				interactions = {
-					cd = {
-						key = "ctrl-l",
-					},
-					upper = {
-						key = "ctrl-h",
-					},
-				},
-			},
-		},
+		config = function()
+			require("fzf-lua").setup({
+				"fzf-native",
+				winopts = { preview = { default = "bat" } },
+			})
+		end,
 		keys = {
 			{
 				";;",
-				"<cmd>FzfxFiles<cr>",
-				{ silent = true, noremap = true, desc = "File explorer" },
+				"<CMD>FzfLua files<cr>",
+				{ silent = true, noremap = true, desc = "Find File" },
+			},
+			{
+				";s",
+				"<CMD>FzfLua resume<CR>",
+				{ silent = true, noremap = true, desc = "Resume wor" },
 			},
 			{
 				";f",
-				"<cmd>FzfxGFiles<cr>",
-				{ silent = true, noremap = true, desc = "File explorer" },
+				"<CMD>FzfLua git_files<cr>",
+				{ silent = true, noremap = true, desc = "Find Git Files" },
 			},
 			{
 				";r",
-				"<cmd>FzfxLiveGrep<cr>",
-				{ silent = true, noremap = true, desc = "File explorer" },
+				"<CMD>FzfLua live_grep_native<cr>",
+				{ silent = true, noremap = true, desc = "Live Grep" },
 			},
 			{
 				"\\\\",
-				"<cmd>FzfxBuffers<cr>",
-				{ silent = true, noremap = true, desc = "File explorer" },
-			},
-			{
-				"-",
-				"<cmd>FzfxFileExplorer<cr>",
-				{ silent = true, noremap = true, desc = "File explorer" },
+				"<CMD>FzfLua buffers<cr>",
+				{ silent = true, noremap = true, desc = "Search Open Buffers" },
 			},
 			{
 				";d",
-				"<cmd>FzfxLspDiagnostics<cr>",
-				{ silent = true, noremap = true, desc = "File explorer" },
+				"<CMD>FzfLua diagnostics_documents<cr>",
+				{ silent = true, noremap = true, desc = "Diagnostics" },
 			},
 		},
 	},

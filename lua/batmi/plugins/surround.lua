@@ -1,11 +1,27 @@
 return {
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = { "BufReadPost" },
-    config = function()
-        require("nvim-surround").setup()
-    end
-  }
-}
+	{
+		"echasnovski/mini.surround",
+		version = false,
+		event = { "BufReadPost" },
+		opts = {
+			custom_surroundings = nil,
+			highlight_duration = 500,
+			mappings = {
+				add = "qa",
+				delete = "qd",
+				find = "qf",
+				find_left = "qF",
+				highlight = "qh",
+				replace = "qr",
+				update_n_lines = "qn",
 
+				suffix_last = "l",
+				suffix_next = "n",
+			},
+			n_lines = 20,
+			respect_selection_type = false,
+			search_method = "cover",
+			silent = false,
+		},
+	},
+}

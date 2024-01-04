@@ -72,17 +72,6 @@ return {
 				},
 			},
 		})
-
-		vim.keymap.set("n", "mfr", "<CMD>Lspsaga finder ref<CR>")
-		vim.keymap.set("n", "mfd", "<CMD>Lspsaga finder def<CR>")
-		vim.keymap.set("n", "gi", "<CMD>Lspsaga finder imp<CR>")
-		vim.keymap.set("n", "mca", "<CMD>Lspsaga code_action<CR>")
-		vim.keymap.set("n", "gd", "<CMD>Lspsaga peek_definition<CR>")
-		vim.keymap.set("n", "gtd", "<CMD>Lspsaga peek_type_definition<CR>")
-		vim.keymap.set("n", "gD", "<CMD>Lspsaga goto_definition<CR>")
-		vim.keymap.set("n", "gtD", "<CMD>Lspsaga goto_type_definition<CR>")
-		vim.keymap.set("n", "K", "<CMD>Lspsaga hover_doc ++keep<CR>")
-		vim.keymap.set("n", "mrn", "<CMD>Lspsaga rename ++project<CR>")
 	end,
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter",

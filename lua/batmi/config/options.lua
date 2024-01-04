@@ -47,6 +47,9 @@ vim.opt.cmdheight = 0
 
 vim.opt.winbar = "%=%m %f"
 
+vim.opt.completeopt = "menuone,noinsert,noselect"
+vim.opt.shortmess:append({ F = true })
+
 vim.g.markdown_recommended_style = 0
 
--- vim.cmd("highlight WinSeparator guibg=None")
+vim.cmd("highlight WinSeparator guibg=None")
