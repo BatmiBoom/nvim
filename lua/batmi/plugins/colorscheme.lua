@@ -96,28 +96,37 @@ return {
 		name = "rose-pine",
 		config = function()
 			require("rose-pine").setup({
-				variant = "moon", -- 'auto' | 'main' | 'moon' | 'dawn'
-				dark_variant = "moon",
-				bold_vert_split = false,
-				dim_nc_background = false,
-				disable_background = true,
-				disable_float_background = false,
-				disable_italics = false,
+				variant = "auto", -- auto, main, moon, or dawn
+				dark_variant = "main", -- main, moon, or dawn
+				dim_inactive_windows = false,
+				extend_background_behind_borders = true,
+
+				styles = {
+					bold = true,
+					italic = true,
+					transparency = true,
+				},
 
 				groups = {
-					background = "base",
-					background_nc = "_experimental_nc",
-					panel = "surface",
-					panel_nc = "base",
-					border = "highlight_med",
-					comment = "muted",
+					border = "muted",
 					link = "iris",
-					punctuation = "subtle",
+					panel = "surface",
 
 					error = "love",
 					hint = "iris",
 					info = "foam",
 					warn = "gold",
+
+					git_add = "foam",
+					git_change = "rose",
+					git_delete = "love",
+					git_dirty = "rose",
+					git_ignore = "muted",
+					git_merge = "iris",
+					git_rename = "pine",
+					git_stage = "iris",
+					git_text = "rose",
+					git_untracked = "subtle",
 
 					headings = {
 						h1 = "iris",
@@ -129,13 +138,10 @@ return {
 					},
 				},
 				highlight_groups = {
-					ColorColumn = { bg = "rose" },
-					CursorLine = { bg = "foam", blend = 10 },
-					StatusLine = { fg = "love", bg = "love", blend = 10 },
-					Search = { bg = "gold", inherit = false },
+					Comment = { fg = "foam" },
+					VertSplit = { fg = "muted", bg = "muted" },
 				},
 			})
-
 			vim.cmd("colorscheme rose-pine")
 		end,
 	},

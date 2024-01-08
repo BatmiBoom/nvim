@@ -3,6 +3,7 @@ return {
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
+			{ "folke/trouble.nvim" },
 			{ "hrsh7th/nvim-cmp" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-nvim-lua" },
@@ -24,12 +25,14 @@ return {
 			{ "folke/neodev.nvim" },
 		},
 		config = function()
+			------------------------------ START CMP ------------------------------------------
 			vim.api.nvim_set_hl(0, "CmpGhoshText", { link = "Comment", default = true })
 			local winhighlight = {
 				winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
 			}
 
 			require("luasnip.loaders.from_vscode").lazy_load()
+			require("luasnip").filetype_extend("typescriptreact", { "html" })
 
 			local cmp = require("cmp")
 
@@ -61,6 +64,10 @@ return {
 				}, {
 					{ name = "path", max_item_count = 3 },
 				}),
+				confirm_opts = {
+					behavior = cmp.ConfirmBehavior.Replace,
+					select = false,
+				},
 				enabled = function()
 					local context = require("cmp.config.context")
 					if vim.api.nvim_get_mode().mode == "c" then
@@ -107,9 +114,9 @@ return {
 					{ name = "cmdline", max_item_count = 5 },
 				}),
 			})
-			--
+			------------------------------ END CMP ------------------------------------------
+			------------------------------ START LSP ----------------------------------------
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
-			--
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
@@ -172,6 +179,28 @@ return {
 					capabilities = capabilities,
 				})
 			end
+
+			------------------------------ END LSP ------------------------------------------
+			------------------------------ START DIAG -----------------------------------------------
+
+			local default_diagnostic_config = {
+				virtual_text = false,
+				update_in_insert = false,
+				underline = true,
+				severity_sort = true,
+				float = {
+					focusable = true,
+					style = "minimal",
+					border = "rounded",
+					source = "always",
+					header = "",
+					prefix = "",
+				},
+			}
+
+			vim.diagnostic.config(default_diagnostic_config)
+
+			------------------------------ END DIAG -----------------------------------------------
 		end,
 	},
 

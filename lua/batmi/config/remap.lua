@@ -10,18 +10,14 @@ end
 map("n", "<leader>rl", ":source ~/.config/nvim/init.lua", {})
 
 -- MAKE FILE EXECUTABLE
-map("n", "<leader>x", ":!chmod +x %", {})
+map("n", "<leader>0", ":!chmod +x % <CR>", {})
 
 -- EXECUTE TMUX-SESSIONIZER
 map("n", "<C-f>", ":silent !tmux neww tmux-sessionizer<CR>", {})
 
 -- MOVE LINES
-map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
-map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
-map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
-map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
-map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
+map("v", "J", ":m '>+1<cr>gv=gv", { desc = "Move down" })
+map("v", "K", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 -- UP A LINE
 map("n", "J", "mzJ`z", {})
 
@@ -54,7 +50,7 @@ map("n", "<C-right>", ":vertical resize -3<CR>", {})
 -- greatest remap ever
 map("x", "<leader>p", [["_dP]], {})
 
--- next greatest remap ever : asbjornHaland
+-- Copy to system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], {})
 map("n", "<leader>Y", [["+Y]], {})
 
