@@ -36,6 +36,11 @@ return {
 				{ silent = true, noremap = true, desc = "Live Grep" },
 			},
 			{
+				";rg",
+				"<CMD>FzfLua live_grep_resume<cr>",
+				{ silent = true, noremap = true, desc = "Live Grep Resume" },
+			},
+			{
 				"\\\\",
 				"<CMD>FzfLua buffers<cr>",
 				{ silent = true, noremap = true, desc = "Search Open Buffers" },

@@ -4,6 +4,7 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {
 			{ "folke/trouble.nvim" },
+
 			{ "hrsh7th/nvim-cmp" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-nvim-lua" },
@@ -20,9 +21,13 @@ return {
 					},
 				},
 			},
+
 			{ "L3MON4D3/LuaSnip" },
 			{ "rafamadriz/friendly-snippets" },
+
 			{ "folke/neodev.nvim" },
+
+			{ "b0o/schemastore.nvim" },
 		},
 		config = function()
 			------------------------------ START CMP ------------------------------------------
@@ -130,7 +135,7 @@ return {
 				"gopls",
 				"html",
 				"htmx",
-				"jsonls",
+				-- "jsonls",
 				-- "lua_ls",
 				"marksman",
 				"neocmake",
@@ -143,6 +148,7 @@ return {
 				"tailwindcss",
 				"taplo",
 				-- "tsserver",
+				-- "yamlls",
 				"zls",
 			}
 
@@ -173,6 +179,27 @@ return {
 			})
 
 			require("lspconfig").ols.setup({})
+
+			require("lspconfig").jsonls.setup({
+				settings = {
+					json = {
+						schemas = require("schemastore").json.schemas(),
+						validate = { enable = true },
+					},
+				},
+			})
+
+			require("lspconfig").yamlls.setup({
+				settings = {
+					yaml = {
+						schemaStore = {
+							enable = false,
+							url = "",
+						},
+						schemas = require("schemastore").yaml.schemas(),
+					},
+				},
+			})
 
 			for _, lsp in pairs(lsp_installed) do
 				require("lspconfig")[lsp].setup({
@@ -225,10 +252,10 @@ return {
 			rt.setup({
 				server = {
 					on_attach = function(_, bufnr)
-						-- Hover actions
+						-- Hover action
 						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
 						-- Code action groups
-						vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+						vim.keymap.set("n", "<Leader>cag", rt.code_action_group.code_action_group, { buffer = bufnr })
 					end,
 				},
 			})

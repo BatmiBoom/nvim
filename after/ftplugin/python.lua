@@ -1,1 +1,1 @@
-vim.keymap.set("n", "<leader>a", require("lspimport").import, { noremap = true })
+vim.keymap.set("n", "<leader>mi", require("lspimport").import, { noremap = true })
