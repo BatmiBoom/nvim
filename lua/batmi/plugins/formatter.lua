@@ -5,6 +5,7 @@ return {
 	config = function()
 		local conform = require("conform")
 		local slow_format_filetypes = {}
+
 		conform.setup({
 			format = {
 				timeout_ms = 3000,

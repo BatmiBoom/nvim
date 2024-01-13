@@ -31,15 +31,22 @@ return {
 		},
 		config = function()
 			------------------------------ START CMP ------------------------------------------
-			vim.api.nvim_set_hl(0, "CmpGhoshText", { link = "Comment", default = true })
 			local winhighlight = {
 				winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
 			}
 
-			require("luasnip.loaders.from_vscode").lazy_load()
-			require("luasnip").filetype_extend("typescriptreact", { "html" })
+			local has_words_before = function()
+				unpack = unpack or table.unpack
+				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+				return col ~= 0
+					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+			end
 
 			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+
+			require("luasnip.loaders.from_vscode").lazy_load()
+			luasnip.filetype_extend("typescriptreact", { "html" })
 
 			cmp.setup({
 				completion = {
@@ -70,7 +77,7 @@ return {
 					{ name = "path", max_item_count = 3 },
 				}),
 				confirm_opts = {
-					behavior = cmp.ConfirmBehavior.Replace,
+					behavior = cmp.ConfirmBehavior.Select,
 					select = false,
 				},
 				enabled = function()
@@ -81,9 +88,11 @@ return {
 						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
 					end
 				end,
+				view = {
+					entries = "custom",
+				},
 				experimental = {
-					native_menu = false,
-					ghost_text = true,
+					ghost_text = false,
 				},
 				sorting = {
 					comparators = {
@@ -112,7 +121,6 @@ return {
 			})
 
 			cmp.setup.cmdline(":", {
-				mapping = cmp.mapping.preset.cmdline(),
 				sources = cmp.config.sources({
 					{ name = "path", max_item_count = 5 },
 				}, {
