@@ -63,16 +63,7 @@ map("i", "kj", "<Esc>", {})
 map("n", "Q", "<nop>", {})
 
 -- REPLACE A WORD IN THE DOCUMENT
-map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
-
--- Refactoring
-map("x", "<leader>re", ":Refactor extract ", {})
-map("x", "<leader>rf", ":Refactor extract_to_file ", {})
-map("x", "<leader>rv", ":Refactor extract_var ", {})
-map({ "n", "x" }, "<leader>ri", ":Refactor inline_var", {})
-map("n", "<leader>rI", ":Refactor inline_func", {})
-map("n", "<leader>rb", ":Refactor extract_block", {})
-map("n", "<leader>rbf", ":Refactor extract_block_to_file", {})
+map("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
 
 -- Select all
 map("n", "<C-a>", "gg<S-v>G")
@@ -87,7 +78,7 @@ map("n", "<tab>", ":tabnext<Return>", {})
 map("n", "<s-tab>", ":tabprev<Return>", {})
 
 -- term
-map("n", "<leader>te", ":term<CR>", {})
+map("n", "<leader>te", ":split<CR>:term<CR>", {})
 
 -- Split window
 map("n", "zs", ":split<Return>", {})
