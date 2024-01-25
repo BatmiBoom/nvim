@@ -197,18 +197,17 @@ return {
 				},
 			})
 
-			require("lspconfig").yamlls.setup({
-				settings = {
-					yaml = {
-						schemaStore = {
-							enable = false,
-							url = "",
-						},
-						schemas = require("schemastore").yaml.schemas(),
-					},
-				},
-			})
-
+      require('lspconfig').yamlls.setup {
+        settings = {
+          yaml = {
+            -- schemas = {
+            --   ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            --   ["../path/relative/to/file.yml"] = "/.github/workflows/*",
+            --   ["/path/from/root/of/project"] = "/.github/workflows/*",
+            -- },
+          },
+        }
+      }
 			for _, lsp in pairs(lsp_installed) do
 				require("lspconfig")[lsp].setup({
 					capabilities = capabilities,
