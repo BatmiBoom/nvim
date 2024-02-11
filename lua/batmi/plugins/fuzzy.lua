@@ -1,50 +1,57 @@
 return {
 	{
-		"ibhagwan/fzf-lua",
+		"nvim-telescope/telescope.nvim",
 		dependencies = {
+			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
+			{
+				"nvim-telescope/telescope-fzf-native.nvim",
+				build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+			},
 		},
 		config = function()
-			require("fzf-lua").setup({
-				"fzf-native",
-				winopts = { preview = { default = "bat" } },
+			require("telescope").setup({
+				defaults = {
+					layout_strategy = "horizontal",
+					layout_config = { height = 0.95 },
+				},
+				extensions = {
+					fzf = {
+						fuzzy = true,
+						override_generic_sorter = true,
+						override_file_sorter = true,
+						case_mode = "smart_case",
+					},
+				},
 			})
+
+			require("telescope").load_extension("fzf")
 		end,
 		keys = {
 			{
 				";;",
-				"<CMD>FzfLua files<cr>",
+				"<CMD>Telescope find_files<cr>",
 				{ silent = true, noremap = true, desc = "Find File" },
 			},
 			{
-				";s",
-				"<CMD>FzfLua resume<CR>",
-				{ silent = true, noremap = true, desc = "Resume wor" },
-			},
-			{
 				";f",
-				"<CMD>FzfLua git_files<cr>",
+				"<CMD>Telescope git_files<cr>",
 				{ silent = true, noremap = true, desc = "Find Git Files" },
 			},
 			{
 				";r",
-				"<CMD>FzfLua live_grep_native<cr>",
+				"<CMD>Telescope live_grep<cr>",
 				{ silent = true, noremap = true, desc = "Live Grep" },
 			},
 			{
-				";rg",
-				"<CMD>FzfLua live_grep_resume<cr>",
-				{ silent = true, noremap = true, desc = "Live Grep Resume" },
-			},
-			{
 				"\\\\",
-				"<CMD>FzfLua buffers<cr>",
+				"<CMD>Telescope buffers<cr>",
 				{ silent = true, noremap = true, desc = "Search Open Buffers" },
 			},
 			{
-				";d",
-				"<CMD>FzfLua diagnostics_documents<cr>",
-				{ silent = true, noremap = true, desc = "Diagnostics" },
+				";h",
+				"<CMD>Telescope help_tags<cr>",
+				{ silent = true, noremap = true, desc = "Help Tags" },
 			},
 		},
 	},

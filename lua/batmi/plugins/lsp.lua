@@ -81,12 +81,15 @@ return {
 					select = false,
 				},
 				enabled = function()
-					local context = require("cmp.config.context")
-					if vim.api.nvim_get_mode().mode == "c" then
-						return true
-					else
-						return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+					-- disable autocompletion in prompt (wasn't playing good with telescope)
+					local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+					if buftype == "prompt" then
+						return false
 					end
+
+					local context = require("cmp.config.context")
+					-- disable autocompletion in comments
+					return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
 				end,
 				view = {
 					entries = "custom",
@@ -197,17 +200,17 @@ return {
 				},
 			})
 
-      require('lspconfig').yamlls.setup {
-        settings = {
-          yaml = {
-            -- schemas = {
-            --   ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-            --   ["../path/relative/to/file.yml"] = "/.github/workflows/*",
-            --   ["/path/from/root/of/project"] = "/.github/workflows/*",
-            -- },
-          },
-        }
-      }
+			require("lspconfig").yamlls.setup({
+				settings = {
+					yaml = {
+						-- schemas = {
+						--   ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+						--   ["../path/relative/to/file.yml"] = "/.github/workflows/*",
+						--   ["/path/from/root/of/project"] = "/.github/workflows/*",
+						-- },
+					},
+				},
+			})
 			for _, lsp in pairs(lsp_installed) do
 				require("lspconfig")[lsp].setup({
 					capabilities = capabilities,

@@ -40,6 +40,8 @@ vim.opt.updatetime = 50
 vim.opt.showmode = false
 vim.opt.laststatus = 3
 
+-- vim.opt.iskeyword:append("_")
+
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 

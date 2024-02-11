@@ -98,16 +98,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		local opts = { buffer = ev.buf }
 
-		map("n", "mfr", "<CMD>Lspsaga finder ref<CR>")
-		map("n", "mfd", "<CMD>Lspsaga finder def<CR>")
+		map("n", "gfr", "<CMD>Lspsaga finder ref<CR>")
+		map("n", "gfd", "<CMD>Lspsaga finder def<CR>")
 		map("n", "gi", "<CMD>Lspsaga finder imp<CR>")
-		map("n", "mca", "<CMD>Lspsaga code_action<CR>")
+		map("n", "gca", "<CMD>Lspsaga code_action<CR>")
 		map("n", "gd", "<CMD>Lspsaga peek_definition<CR>")
 		map("n", "gtd", "<CMD>Lspsaga peek_type_definition<CR>")
 		map("n", "gD", "<CMD>Lspsaga goto_definition<CR>")
 		map("n", "gtD", "<CMD>Lspsaga goto_type_definition<CR>")
 		map("n", "K", "<CMD>Lspsaga hover_doc ++keep<CR>")
-		map("n", "mrn", "<CMD>Lspsaga rename ++project<CR>")
+		map("n", "grn", "<CMD>Lspsaga rename ++project<CR>")
 
 		map("n", "gs", vim.lsp.buf.signature_help, opts)
 		map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
