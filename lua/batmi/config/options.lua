@@ -4,6 +4,7 @@ vim.opt.compatible = false
 vim.opt.title = false
 
 vim.opt.nu = true
+vim.opt.numberwidth = 2
 vim.opt.relativenumber = true
 
 vim.opt.ignorecase = true
@@ -35,12 +36,15 @@ vim.opt.sidescrolloff = 10
 vim.opt.signcolumn = "yes:1"
 vim.opt.termguicolors = true
 
-vim.opt.updatetime = 50
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 400
 
 vim.opt.showmode = false
 vim.opt.laststatus = 3
 
--- vim.opt.iskeyword:append("_")
+vim.opt.whichwrap:append '<>[]hl'
+
+vim.opt.iskeyword:append("_")
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -53,5 +57,10 @@ vim.opt.completeopt = "menuone,noinsert,noselect"
 vim.opt.shortmess:append({ F = true })
 
 vim.g.markdown_recommended_style = 0
+
+-- disable some default providers
+for _, provider in ipairs { "perl", "ruby" } do
+  vim.g["loaded_" .. provider .. "_provider"] = 0
+end
 
 vim.cmd("highlight WinSeparator guibg=None")
