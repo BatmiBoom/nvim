@@ -85,9 +85,6 @@ map("n", "tc", ":tabclose<CR>", {})
 map("n", "<tab>", ":tabnext<Return>", {})
 map("n", "<s-tab>", ":tabprev<Return>", {})
 
--- term
-map("n", "<leader>te", ":split<CR>:term<CR>", {})
-
 -- Split window
 map("n", "zs", ":split<Return>", {})
 map("n", "zv", ":vsplit<Return>", {})
@@ -106,6 +103,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     local opts = { buffer = ev.buf }
 
+    -- Snipetts
     map("n", "gfr", "<CMD>Lspsaga finder ref<CR>")
     map("n", "gfd", "<CMD>Lspsaga finder def<CR>")
     map("n", "gi", "<CMD>Lspsaga finder imp<CR>")
@@ -123,6 +121,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "<space>wl", function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
+
+    -- Snippets
+    local ls = require 'luasnip'
+    map({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
+    map({ "i", "s" }, "<C-L>", function() ls.jump(1) end, { silent = true })
+    map({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
+    map({ "i", "s" }, "<C-E>", function()
+      if ls.choice_active() then
+        ls.change_choice(1)
+      end
+    end, { silent = true })
   end,
 })
 

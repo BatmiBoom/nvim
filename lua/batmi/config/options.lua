@@ -53,8 +53,8 @@ vim.opt.cmdheight = 0
 
 vim.opt.winbar = "%=%m %f"
 
-vim.opt.completeopt = "menuone,noinsert,noselect"
-vim.opt.shortmess:append({ F = true })
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append({ c = true })
 
 vim.g.markdown_recommended_style = 0
 
