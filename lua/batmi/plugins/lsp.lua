@@ -50,6 +50,7 @@ return {
       require("luasnip.loaders.from_vscode").lazy_load()
       luasnip.filetype_extend("typescriptreact", { "html" })
 
+      vim.opt.completeopt = { "menu", "menuone", "noselect" }
       cmp.setup({
         mapping = cmp.mapping.preset.insert({
           ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },

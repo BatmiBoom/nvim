@@ -19,6 +19,10 @@ map("i", "<C-k", "<Up>", {})
 
 -- NORMAL
 
+-- BETTER UP/DOWN
+map("n", "j", "jzz", {})
+map("n", "k", "kzz", {})
+
 -- RELOAD CONFIG
 map("n", "<leader>rl", ":source ~/.config/nvim/init.lua", {})
 
