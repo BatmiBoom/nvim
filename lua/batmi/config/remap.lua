@@ -1,9 +1,9 @@
 local function map(mode, lhs, rhs, opts)
-  local options = { noremap = true, silent = true }
-  if opts then
-    options = vim.tbl_extend("force", options, opts)
-  end
-  vim.keymap.set(mode, lhs, rhs, options)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
 end
 
 -- INSERT
@@ -31,9 +31,6 @@ map("n", "<leader>0", ":!chmod +x % <CR>", {})
 
 -- EXECUTE TMUX-SESSIONIZER
 map("n", "<C-f>", ":silent !tmux neww tmux-sessionizer<CR>", {})
-
--- CLEAR HIGHLIGHTS
-map("n", "<Esc>", "<cmd> noh <CR>", {})
 
 -- MOVING THROUGH WRAPPED LINES
 map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
@@ -64,15 +61,13 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result
 map("n", "<C-left>", ":vertical resize +3<CR>", {})
 map("n", "<C-right>", ":vertical resize -3<CR>", {})
 
-
 -- Copy to system clipboard
 map({ "n", "v" }, "<leader>y", [["+y]], {})
 map("n", "<leader>Y", [["+Y]], {})
 
 map({ "n", "v" }, "<leader>d", [["_d]], {})
 
-
-map("n", "Q", "<nop>", {})
+map("n", "Q", "<CMD> noh <CR>", {})
 
 -- REPLACE A WORD IN THE DOCUMENT
 map("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
@@ -96,47 +91,50 @@ map("n", "zv", ":vsplit<Return>", {})
 -- Diagnostics
 map("n", "gl", vim.diagnostic.open_float, {})
 map("n", "<C-j>", function()
-  vim.diagnostic.goto_next()
+	vim.diagnostic.goto_next()
 end)
 
 -- LSP Keys
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+	callback = function(ev)
+		vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    local opts = { buffer = ev.buf }
+		local opts = { buffer = ev.buf }
 
-    -- Snipetts
-    map("n", "gfr", "<CMD>Lspsaga finder ref<CR>")
-    map("n", "gfd", "<CMD>Lspsaga finder def<CR>")
-    map("n", "gi", "<CMD>Lspsaga finder imp<CR>")
-    map("n", "gca", "<CMD>Lspsaga code_action<CR>")
-    map("n", "gd", "<CMD>Lspsaga peek_definition<CR>")
-    map("n", "gtd", "<CMD>Lspsaga peek_type_definition<CR>")
-    map("n", "gD", "<CMD>Lspsaga goto_definition<CR>")
-    map("n", "gtD", "<CMD>Lspsaga goto_type_definition<CR>")
-    map("n", "K", "<CMD>Lspsaga hover_doc ++keep<CR>")
-    map("n", "grn", "<CMD>Lspsaga rename ++project<CR>")
+		-- Snipetts
+		map("n", "gfr", "<CMD>Lspsaga finder ref<CR>")
+		map("n", "gfd", "<CMD>Lspsaga finder def<CR>")
+		map("n", "gi", "<CMD>Lspsaga finder imp<CR>")
+		map("n", "gca", "<CMD>Lspsaga code_action<CR>")
+		map("n", "gd", "<CMD>Lspsaga peek_definition<CR>")
+		map("n", "gtd", "<CMD>Lspsaga peek_type_definition<CR>")
+		map("n", "gD", "<CMD>Lspsaga goto_definition<CR>")
+		map("n", "gtD", "<CMD>Lspsaga goto_type_definition<CR>")
+		map("n", "K", "<CMD>Lspsaga hover_doc ++keep<CR>")
+		map("n", "grn", "<CMD>Lspsaga rename ++project<CR>")
 
-    map("n", "gs", vim.lsp.buf.signature_help, opts)
-    map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-    map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
-    map("n", "<space>wl", function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
+		map("n", "gs", vim.lsp.buf.signature_help, opts)
+		map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
+		map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+		map("n", "<space>wl", function()
+			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+		end, opts)
 
-    -- Snippets
-    local ls = require 'luasnip'
-    map({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
-    map({ "i", "s" }, "<C-L>", function() ls.jump(1) end, { silent = true })
-    map({ "i", "s" }, "<C-J>", function() ls.jump(-1) end, { silent = true })
-    map({ "i", "s" }, "<C-E>", function()
-      if ls.choice_active() then
-        ls.change_choice(1)
-      end
-    end, { silent = true })
-  end,
+		-- Snippets
+		local ls = require("luasnip")
+		map({ "i", "s" }, "<C-L>", function()
+			ls.jump(1)
+		end, { silent = true })
+		map({ "i", "s" }, "<C-J>", function()
+			ls.jump(-1)
+		end, { silent = true })
+		map({ "i", "s" }, "<C-E>", function()
+			if ls.choice_active() then
+				ls.change_choice(1)
+			end
+		end, { silent = true })
+	end,
 })
 
 -- VISUAL
