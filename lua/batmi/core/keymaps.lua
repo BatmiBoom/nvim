@@ -19,8 +19,10 @@ map('i', '<C-k', '<Up>', {})
 
 -- NORMAL
 
--- OPEN NETRW
-map('n', '<leader>pv', '<cmd>Lexplore<CR>', {})
+-- OPEN MINIFILES
+map('n', '-', function()
+  MiniFiles.open()
+end, {})
 
 -- DISABLED ARROWS
 map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>', {})

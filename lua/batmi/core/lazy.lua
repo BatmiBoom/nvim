@@ -50,6 +50,10 @@ require('lazy').setup({
         'matchparen',
         'logiPat',
         'rrhelper',
+
+        'netrw',
+        'netrwPlugin',
+        'netrwSettings',
       },
     },
   },
