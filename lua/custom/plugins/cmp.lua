@@ -15,7 +15,6 @@ return { -- Autocompletion
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    'lukas-reineke/cmp-rg',
     'SergioRibera/cmp-dotenv',
     'onsails/lspkind-nvim',
     'rafamadriz/friendly-snippets',
@@ -64,19 +63,8 @@ return { -- Autocompletion
           },
         },
       },
-
-      -- enabled = function()
-      --   local buftype = vim.api.nvim_get_option_value('buftype', { buf = 0 })
-      --   if buftype == 'prompt' then
-      --     return false
-      --   end
-      --
-      --   local context = require 'cmp.config.context'
-      --   return not context.in_treesitter_capture 'comment' and not context.in_syntax_group 'Comment'
-      -- end,
       sources = {
         { name = 'nvim_lsp' },
-        { name = 'rg', keyword_lenght = 3 },
         { name = 'nvim_lsp_signature_help', keyword_lenght = 3 },
         { name = 'luasnip' },
         { name = 'path' },
