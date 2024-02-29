@@ -83,7 +83,7 @@ return {
         },
         marksman = {},
         ocamllsp = {},
-        odin = {},
+        ols = {},
         ruff_lsp = {},
         sqlls = {},
         taplo = {},
