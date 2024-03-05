@@ -83,7 +83,7 @@ return {
           },
         },
         marksman = {},
-        ocamllsp = {},
+        -- ocamllsp = {},
         ols = {},
         sqlls = {},
         taplo = {},
@@ -97,10 +97,10 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua',
         'black',
-        'flake8',
         'isort',
         'prettierd',
         'eslint_d',
+        'ruff',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
