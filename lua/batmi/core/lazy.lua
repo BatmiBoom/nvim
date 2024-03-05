@@ -54,6 +54,10 @@ require('lazy').setup({
         'netrw',
         'netrwPlugin',
         'netrwSettings',
+
+        'spellfile',
+        'tohtml',
+        'tutor',
       },
     },
   },

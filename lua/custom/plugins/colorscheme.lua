@@ -47,7 +47,7 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = true,
+    lazy = false,
     name = 'catppuccin',
     priority = 1000,
     config = function()
@@ -71,11 +71,11 @@ return {
         styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
           comments = { 'italic' }, -- Change the style of comments
           conditionals = { 'italic' },
-          loops = {},
-          functions = {},
-          keywords = {},
+          loops = { 'italic' },
+          functions = { 'italic' },
+          keywords = { 'bold' },
           strings = {},
-          variables = {},
+          variables = { 'bold' },
           numbers = {},
           booleans = {},
           properties = {},
@@ -199,7 +199,7 @@ return {
   },
   {
     'nyoom-engineering/oxocarbon.nvim',
-    lazy = false,
+    lazy = true,
     priority = 1000,
     config = function()
       vim.opt.background = 'dark'
@@ -208,15 +208,6 @@ return {
       -- Transparency
       -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
       -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    end,
-  },
-  {
-    'baliestri/aura-theme',
-    lazy = true,
-    priority = 1000,
-    config = function(plugin)
-      vim.opt.rtp:append(plugin.dir .. '/packages/neovim')
-      vim.cmd [[colorscheme aura-dark]]
     end,
   },
 }

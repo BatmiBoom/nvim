@@ -6,8 +6,9 @@ return {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'folke/neodev.nvim',
+      'hinell/lsp-timeout.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim' },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -123,7 +124,6 @@ return {
   },
   {
     'hinell/lsp-timeout.nvim',
-    event = { 'VeryLazy' },
     init = function()
       vim.g.lspTimeoutConfig = {
         stopTimeout = 1000 * 60 * 5, -- ms, timeout before stopping all LSPs
