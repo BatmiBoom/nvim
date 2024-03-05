@@ -85,7 +85,6 @@ return {
         marksman = {},
         ocamllsp = {},
         ols = {},
-        ruff_lsp = {},
         sqlls = {},
         taplo = {},
         yamlls = {},
