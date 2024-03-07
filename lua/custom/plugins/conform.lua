@@ -9,7 +9,7 @@ return {
     },
     formatters_by_ft = {
       lua = { 'stylua' },
-      python = { 'isort', 'black' },
+      python = { 'reorder-python-imports', 'black' },
       javascript = { 'prettierd' },
       typescript = { 'prettierd' },
       javascriptreact = { 'prettierd' },
