@@ -1,5 +1,6 @@
 return {
   'NeogitOrg/neogit',
+  brach = 'master',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'sindrets/diffview.nvim',
@@ -9,7 +10,9 @@ return {
   keys = {
     {
       '<leader>g',
-      '<cmd>Neogit kind=auto<CR>',
+      function()
+        require('neogit').open { kind = 'auto', cmd = '%:p:h' }
+      end,
       {},
     },
   },
