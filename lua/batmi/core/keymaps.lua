@@ -106,49 +106,6 @@ map('n', '<C-j>', function()
   vim.diagnostic.goto_next()
 end)
 
--- LSP Keys
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    local opts = { buffer = ev.buf }
-
-    -- Snipetts
-    map('n', 'gfr', '<CMD>Lspsaga finder ref<CR>')
-    map('n', 'gfd', '<CMD>Lspsaga finder def<CR>')
-    map('n', 'gi', '<CMD>Lspsaga finder imp<CR>')
-    map('n', 'gca', '<CMD>Lspsaga code_action<CR>')
-    map('n', 'gd', '<CMD>Lspsaga peek_definition<CR>')
-    map('n', 'gtd', '<CMD>Lspsaga peek_type_definition<CR>')
-    map('n', 'gD', '<CMD>Lspsaga goto_definition<CR>')
-    map('n', 'gtD', '<CMD>Lspsaga goto_type_definition<CR>')
-    map('n', 'K', '<CMD>Lspsaga hover_doc ++keep<CR>')
-    map('n', 'grn', '<CMD>Lspsaga rename ++project<CR>')
-
-    map('n', 'gs', vim.lsp.buf.signature_help, opts)
-    map('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    map('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    map('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-
-    -- Snippets
-    local ls = require 'luasnip'
-    map({ 'i', 's' }, '<C-L>', function()
-      ls.jump(1)
-    end, { silent = true })
-    map({ 'i', 's' }, '<C-J>', function()
-      ls.jump(-1)
-    end, { silent = true })
-    map({ 'i', 's' }, '<C-E>', function()
-      if ls.choice_active() then
-        ls.change_choice(1)
-      end
-    end, { silent = true })
-  end,
-})
-
 -- VISUAL
 
 -- greatest remap ever

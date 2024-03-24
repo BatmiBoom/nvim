@@ -7,8 +7,8 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'folke/neodev.nvim',
-      'hinell/lsp-timeout.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
+      { 'zeioth/garbage-day.nvim', opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -21,6 +21,7 @@ return {
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
           map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
           map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
           map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
@@ -117,19 +118,6 @@ return {
               capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
             }
           end,
-        },
-      }
-    end,
-  },
-  {
-    'hinell/lsp-timeout.nvim',
-    init = function()
-      vim.g.lspTimeoutConfig = {
-        stopTimeout = 1000 * 60 * 5, -- ms, timeout before stopping all LSPs
-        startTimeout = 1000 * 10, -- ms, timeout before restart
-        silent = true, -- true to suppress notifications,
-        filetypes = {
-          ignore = {},
         },
       }
     end,
