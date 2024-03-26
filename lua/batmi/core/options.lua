@@ -1,7 +1,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.wildignore = '__pycache__'
+vim.g.have_nerd_font = true
+
 vim.opt.wildignore:append { '*.o', '*~', '*.pyc', '*pycache*' }
 vim.opt.wildignore:append { 'Cargo.lock' }
 

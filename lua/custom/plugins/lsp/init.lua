@@ -6,9 +6,9 @@ return {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      'folke/neodev.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
       { 'zeioth/garbage-day.nvim', opts = {} },
+      { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -68,18 +68,9 @@ return {
           -- capabilities = {},
           settings = {
             Lua = {
-              globals = { 'vim' },
-              runtime = { version = 'LuaJIT' },
-              workspace = {
-                checkThirdParty = false,
-                -- Tells lua_ls where to find all the Lua files that you have loaded
-                -- for your neovim configuration.
-                library = {
-                  '${3rd}/luv/library',
-                  unpack(vim.api.nvim_get_runtime_file('', true)),
-                },
+              completion = {
+                callSnippet = 'Replace',
               },
-              diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
@@ -102,10 +93,9 @@ return {
         'prettierd',
         'eslint_d',
         'ruff',
+        'vale',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      require('neodev').setup()
 
       require('mason-lspconfig').setup {
         handlers = {
