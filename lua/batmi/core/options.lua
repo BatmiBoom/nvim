@@ -91,9 +91,9 @@ vim.opt.winbar = '%=%m %f'
 
 vim.opt.shortmess:append { c = true }
 
-if vim.fn.has 'win32' == 1 then
-  vim.opt.shell = 'nu.exe'
-end
+-- if vim.fn.has 'win32' == 1 then
+--   vim.opt.shell = 'nu.exe'
+-- end
 
 local group = vim.api.nvim_create_augroup('CursorLineControl', { clear = true })
 local set_cursorline = function(event, value, pattern)

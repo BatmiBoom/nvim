@@ -93,7 +93,8 @@ return {
         'prettierd',
         'eslint_d',
         'ruff',
-        'vale',
+        'mdformat',
+        'markdownlint',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
