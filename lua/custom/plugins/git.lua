@@ -11,7 +11,7 @@ return {
     {
       '<leader>g',
       function()
-        require('neogit').open { kind = 'auto', cmd = '%:p:h' }
+        require('neogit').open { kind = 'auto', cwd = '%:p:h' }
       end,
       {},
     },
