@@ -18,6 +18,8 @@ vim.opt.numberwidth = 2
 
 vim.opt.mouse = 'a'
 
+vim.opt.diffopt = 'iwhite,filler'
+
 vim.opt.showmode = false
 vim.opt.showcmd = true
 vim.opt.cmdheight = 1
