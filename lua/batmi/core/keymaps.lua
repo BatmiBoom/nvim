@@ -81,7 +81,7 @@ map({ 'n', 'v' }, '<leader>d', [["_d]], {})
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
 
 -- REPLACE A WORD IN THE DOCUMENT
-map('n', '<leader>sr', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
+map('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
 
 -- Select all
 map('n', '<C-a>', 'gg<S-v>G')
