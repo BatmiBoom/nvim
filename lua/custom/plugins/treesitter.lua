@@ -4,6 +4,8 @@ return {
   build = ':TSUpdate',
   config = function()
     require('nvim-treesitter.configs').setup {
+      sync_install = false,
+      ignore_install = {},
       ensure_installed = {
         'bash',
         'cmake',
@@ -25,6 +27,7 @@ return {
         'rust',
         'sql',
         'tsx',
+        'toml',
         'typescript',
         'vimdoc',
         'vim',

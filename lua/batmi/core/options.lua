@@ -31,6 +31,8 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hidden = true
 
+vim.opt.backspace = 'indent,eol,start'
+
 vim.opt.breakindent = true
 vim.opt.smartindent = true
 vim.opt.cindent = true
@@ -80,7 +82,7 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 vim.opt.shada = { '!', "'1000", '<50', 's10', 'h' }
 
-vim.opt.formatoptions = vim.opt.formatoptions - 'a' - 't' + 'c' + 'q' - 'o' + 'r' + 'n' + 'j' - '2'
+vim.opt.formatoptions:remove 'o'
 
 vim.opt.joinspaces = false
 

@@ -7,7 +7,6 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'zeioth/garbage-day.nvim', opts = {} },
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()

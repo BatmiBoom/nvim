@@ -32,6 +32,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
   config = function()
     require('telescope').setup {
       defaults = {
+        path_display = { 'smart' },
         layout_strategy = 'center',
         layout_config = {
           width = 150,

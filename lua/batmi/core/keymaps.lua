@@ -98,6 +98,7 @@ map('n', '<s-tab>', ':tabprev<Return>', {})
 -- Split window
 map('n', 'zs', ':split<Return>', {})
 map('n', 'zv', ':vsplit<Return>', {})
+map('n', 'zx', ':close<Return>', {})
 
 -- Diagnostics
 map('n', '<space>e', vim.diagnostic.open_float, {})
