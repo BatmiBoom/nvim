@@ -88,13 +88,15 @@ return {
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
+        -- FORMATTERS
         'stylua',
         'black',
         'reorder-python-imports',
         'prettierd',
+        'mdformat',
+        -- LINTERS
         'eslint_d',
         'ruff',
-        'mdformat',
         'markdownlint',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
