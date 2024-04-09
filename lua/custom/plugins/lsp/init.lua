@@ -97,7 +97,7 @@ return {
         -- LINTERS
         'eslint_d',
         'ruff',
-        'markdownlint',
+        'vale',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
