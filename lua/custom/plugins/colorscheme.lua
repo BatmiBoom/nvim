@@ -2,7 +2,7 @@ return {
   {
     'sontungexpt/witch',
     priority = 1000,
-    lazy = true,
+    lazy = false,
     config = function()
       require('witch').setup {
         theme = {
@@ -47,7 +47,7 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = false,
+    lazy = true,
     name = 'catppuccin',
     priority = 1000,
     config = function()

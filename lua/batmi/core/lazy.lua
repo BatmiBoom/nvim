@@ -20,7 +20,7 @@ require('lazy').setup({
     missing = true,
   },
   dev = {
-    path = '~/workspace/nvim/plugins',
+    path = '~/workspace/github.com/nvim_plugins',
     fallback = false,
   },
   performance = {

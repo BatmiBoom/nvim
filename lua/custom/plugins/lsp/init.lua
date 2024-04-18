@@ -7,7 +7,7 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim', opts = {} },
+      { 'folke/neodev.nvim' },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -46,13 +46,17 @@ return {
               callback = vim.lsp.buf.clear_references,
             })
           end
+
+          if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+            map('<leader>gth', function()
+              vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled())
+            end, '[T]oggle Inlay [H]ints')
+          end
         end,
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-      capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = false
 
       local servers = {
         clangd = {},
@@ -75,7 +79,7 @@ return {
             },
           },
         },
-        marksman = {},
+        markdown_oxide = {},
         -- ocamllsp = {},
         ols = {},
         sqlls = {},
@@ -100,6 +104,8 @@ return {
         'vale',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      require('neodev').setup {}
 
       require('mason-lspconfig').setup {
         handlers = {

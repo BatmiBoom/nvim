@@ -96,7 +96,7 @@ map('n', '<tab>', ':tabnext<Return>', {})
 map('n', '<s-tab>', ':tabprev<Return>', {})
 
 -- Split window
-map('n', 'zs', ':split<Return>', {})
+map('n', 'zh', ':split<Return>', {})
 map('n', 'zv', ':vsplit<Return>', {})
 map('n', 'zx', ':close<Return>', {})
 

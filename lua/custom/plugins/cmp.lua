@@ -22,7 +22,6 @@ return { -- Autocompletion
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
     'SergioRibera/cmp-dotenv',
     'onsails/lspkind-nvim',
   },
@@ -32,18 +31,27 @@ return { -- Autocompletion
     luasnip.config.setup {}
 
     cmp.setup {
+      enabled = function()
+        return vim.g.cmptoggle
+      end,
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
         end,
       },
-      completion = { completeopt = 'menu,menuone,noinsert' },
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
+      completion = {
+        completeopt = 'menu,menuone,noinsert',
+      },
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-e>'] = cmp.mapping.confirm { select = true },
         ['<C-y>'] = cmp.mapping.abort(),
-        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-x>'] = cmp.mapping.complete {},
         ['<C-l>'] = cmp.mapping(function()
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
@@ -71,12 +79,20 @@ return { -- Autocompletion
         },
       },
       sources = {
-        { name = 'nvim_lsp' },
-        { name = 'nvim_lsp_signature_help', keyword_lenght = 3 },
+        {
+          name = 'nvim_lsp',
+          option = {
+            markdown_oxide = {
+              keyword_pattern = [[\(\k| \|\/|#\)\+]],
+            },
+          },
+        },
         { name = 'luasnip' },
         { name = 'path' },
         { name = 'dotenv' },
       },
     }
+
+    vim.keymap.set('n', '<leader>ua', '<CMD>lua vim.g.cmptoggle = not vim.g.cmptoggle<CR>')
   end,
 }

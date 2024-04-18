@@ -99,6 +99,7 @@ vim.opt.shortmess:append { c = true }
 --   vim.opt.shell = 'nu.exe'
 -- end
 
+-- CURSOR LINE --
 local group = vim.api.nvim_create_augroup('CursorLineControl', { clear = true })
 local set_cursorline = function(event, value, pattern)
   vim.api.nvim_create_autocmd(event, {
@@ -113,9 +114,13 @@ set_cursorline('WinLeave', false)
 set_cursorline('WinEnter', true)
 set_cursorline('FileType', false, 'TelescopePrompt')
 
--- disable some default providers
+-- Disable some default PROVIDERS
 for _, provider in ipairs { 'perl', 'ruby' } do
   vim.g['loaded_' .. provider .. '_provider'] = 0
 end
 
 vim.cmd 'highlight WinSeparator guibg=None'
+
+-- CMP --
+local cmptoggle = false
+vim.g.cmptoggle = cmptoggle

@@ -25,8 +25,8 @@ return {
       json = { 'prettierd' },
       svelte = { 'prettierd' },
       yaml = { 'prettierd' },
-      markdown = { 'mdformat' },
       graphql = { 'prettierd' },
+      markdown = { 'prettierd' },
     },
   },
 }
