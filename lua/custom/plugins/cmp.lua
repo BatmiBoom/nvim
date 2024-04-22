@@ -1,5 +1,6 @@
 return { -- Autocompletion
   'hrsh7th/nvim-cmp',
+  version = false,
   event = 'InsertEnter',
   dependencies = {
     {
@@ -21,12 +22,14 @@ return { -- Autocompletion
     },
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'SergioRibera/cmp-dotenv',
     'onsails/lspkind-nvim',
   },
   config = function()
     local cmp = require 'cmp'
+    local defaults = require 'cmp.config.default'()
     local luasnip = require 'luasnip'
     luasnip.config.setup {}
 
@@ -79,18 +82,25 @@ return { -- Autocompletion
         },
       },
       sources = {
+        { name = 'path' },
         {
           name = 'nvim_lsp',
+          keyword_lenght = 1,
           option = {
             markdown_oxide = {
               keyword_pattern = [[\(\k| \|\/|#\)\+]],
             },
           },
         },
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'dotenv' },
+        { name = 'buffer', keyword_length = 3 },
+        { name = 'luasnip', keyword_length = 4 },
+        { name = 'dotenv', keyword_length = 4 },
       },
+      experimental = {
+        ghost_text = false,
+        native_menu = false,
+      },
+      sorting = defaults.sorting,
     }
 
     vim.keymap.set('n', '<leader>ua', '<CMD>lua vim.g.cmptoggle = not vim.g.cmptoggle<CR>')

@@ -56,7 +56,31 @@ return {
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+        or require('lspconfig').util.default_config.capabilities
+        or require('cmp_nvim_lsp').default_capabilities
+
+      capabilities.textDocument.completion.completionItem = {
+        snippetSupport = true,
+        preselectSupport = true,
+        insertReplaceSupport = true,
+        labelDetailsSupport = true,
+        deprecatedSupport = true,
+        commitCharactersSupport = true,
+        documentationFormat = {
+          'markdown',
+          'plaintext',
+        },
+        tagSupport = {
+          valueSet = { 1 },
+        },
+        resolveSupport = {
+          properties = {
+            'documentation',
+            'detail',
+            'additionalTextEdits',
+          },
+        },
+      }
 
       local servers = {
         clangd = {},
@@ -99,9 +123,8 @@ return {
         'prettierd',
         'mdformat',
         -- LINTERS
-        'eslint_d',
+        'standardjs',
         'ruff',
-        'vale',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

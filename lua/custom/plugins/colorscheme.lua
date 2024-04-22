@@ -10,10 +10,7 @@ return {
           style = 'dark',
           extras = {
             bracket = true,
-            dashboard = true,
             diffview = true,
-            explorer = true,
-            indentline = true,
           },
           customs = {
             -- require("witch.theme.example"),

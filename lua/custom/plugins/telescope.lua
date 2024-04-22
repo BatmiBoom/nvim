@@ -10,6 +10,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
         return vim.fn.executable 'make' == 1
       end,
     },
+    { 'debugloop/telescope-undo.nvim' },
     { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
   },
@@ -45,6 +46,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       },
     }
 
+    pcall(require('telescope').load_extension, 'undo')
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
 
@@ -72,5 +74,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sn', function()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end, { desc = '[S]earch [N]eovim files' })
+    vim.keymap.set('n', '<leader>su', '<cmd>Telescope undo<cr>')
   end,
 }

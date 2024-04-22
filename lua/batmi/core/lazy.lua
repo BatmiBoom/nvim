@@ -16,12 +16,12 @@ require('lazy').setup({
     lazy = true,
     version = false,
   },
+  dev = {
+    path = 'C:\\Users\\nstir\\workspace\\github.com\\batmikun\\plugins',
+    fallback = false,
+  },
   install = {
     missing = true,
-  },
-  dev = {
-    path = '~/workspace/github.com/nvim_plugins',
-    fallback = false,
   },
   performance = {
     cache = {
