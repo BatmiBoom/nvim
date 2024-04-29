@@ -15,7 +15,7 @@ return {
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      python = { 'reorder-python-imports', 'black' },
+      python = { 'ruff-fix', 'ruff-format' },
       javascript = { 'biome' },
       typescript = { 'biome' },
       javascriptreact = { 'biome' },

@@ -13,6 +13,7 @@ map('i', 'jk', '<Esc>', {})
 map('i', 'kj', '<Esc>', {})
 
 -- NORMAL
+map('t', '<C-x><C-c>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- OPEN MINIFILES
 map('n', '-', function()
@@ -57,7 +58,7 @@ map('n', 'n', "'Nn'[v:searchforward].'zv'", { expr = true, desc = 'Next search r
 map('x', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
 map('o', 'n', "'Nn'[v:searchforward]", { expr = true, desc = 'Next search result' })
 map('n', 'N', "'nN'[v:searchforward].'zv'", { expr = true, desc = 'Prev search result' })
-map('x', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result' })
+map('x', 'N', "'nN'[v:searchorward]", { expr = true, desc = 'Prev search result' })
 map('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result' })
 
 -- RESIZE VERTICAL SPLIT
