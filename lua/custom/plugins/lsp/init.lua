@@ -8,6 +8,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
       { 'folke/neodev.nvim' },
+      { 'ibhagwan/fzf-lua' },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -17,17 +18,18 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          local fzf_lua = require 'fzf-lua'
+          map('gd', fzf_lua.lsp_definitions, '[G]oto [D]efinition')
+          map('gr', fzf_lua.lsp_references, '[G]oto [R]eferences')
+          map('gI', fzf_lua.lsp_implementations, '[G]oto [I]mplementation')
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
-          map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gtd', fzf_lua.lsp_typedefs, 'Type [D]efinition')
+          map('gds', fzf_lua.lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('gws', fzf_lua.lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+          map('gk', vim.lsp.buf.hover, 'Hover Documentation')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
