@@ -20,4 +20,9 @@ return {
       desc = 'Select Python Env',
     },
   },
+  {
+    'stevanmilic/nvim-lspimport',
+    opts = {},
+    ft = { 'python' },
+  },
 }

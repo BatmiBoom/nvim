@@ -1,11 +1,7 @@
 return {
-  'mrcjkb/rustaceanvim',
-  dependencies = {
-    {
-      'saecki/crates.nvim',
-      tag = 'stable',
-      opts = {},
-    },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
+    ft = { 'rust' },
   },
-  ft = { 'rust' },
 }

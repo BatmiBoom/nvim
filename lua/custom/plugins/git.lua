@@ -1,6 +1,5 @@
 return {
   'NeogitOrg/neogit',
-  brach = 'master',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'sindrets/diffview.nvim',

@@ -27,8 +27,8 @@ map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>', {})
 map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', {})
 
 -- BETTER UP/DOWN
-map('n', 'j', 'jzz', {})
-map('n', 'k', 'kzz', {})
+map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- MAKE FILE EXECUTABLE
 map('n', '<leader>0', ':!chmod +x % <CR>', {})
@@ -67,7 +67,11 @@ map('n', '<C-right>', ':vertical resize -3<CR>', {})
 
 -- Copy to system clipboard
 map({ 'n', 'v' }, '<leader>y', [["+y]], {})
-map({ 'n', 'v' }, '<leader>d', [["_d]], {})
+map({ 'n', 'v' }, '<leader>d', [["_d]], { remap = false })
+
+-- keep pasting over the same thing, ie. delete content and paste something in it place
+map("n", "<leader>p", [[m`0"_DP``]], {})
+map("v", "<leader>p", [[m`"_dP``]], {})
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
 

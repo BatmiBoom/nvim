@@ -60,7 +60,7 @@ return {
 
           vim.api.nvim_create_autocmd('LspDetach', {
             group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-            callback = function(event)
+            callback = function()
               vim.lsp.buf.clear_references()
               vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event.buf }
             end,
@@ -102,7 +102,7 @@ return {
         html = {},
         jsonls = {},
         pyright = {},
-        rust_analyzer = {},
+        -- rust_analyzer = {},
         -- tsserver = {},
         lua_ls = {
           -- cmd = {...},
@@ -117,7 +117,6 @@ return {
           },
         },
         markdown_oxide = {},
-        -- ocamllsp = {},
         ols = {},
         sqlls = {},
         taplo = {},
