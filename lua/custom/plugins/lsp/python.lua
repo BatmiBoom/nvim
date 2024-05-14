@@ -23,6 +23,14 @@ return {
   {
     'stevanmilic/nvim-lspimport',
     opts = {},
-    ft = { 'python' },
+    keys = {
+      {
+        '<leader>a',
+        mode = { 'n' },
+        function()
+          require('lspimport').import()
+        end,
+      },
+    },
   },
 }
