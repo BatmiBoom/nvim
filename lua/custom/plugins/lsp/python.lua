@@ -20,20 +20,4 @@ return {
       desc = 'Select Python Env',
     },
   },
-<<<<<<< HEAD
-  {
-    'stevanmilic/nvim-lspimport',
-    opts = {},
-    keys = {
-      {
-        '<leader>a',
-        mode = { 'n' },
-        function()
-          require('lspimport').import()
-        end,
-      },
-    },
-  },
-=======
->>>>>>> 665c2cf (Bunch of changes)
 }

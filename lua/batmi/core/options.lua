@@ -2,9 +2,14 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true
+vim.g.terminal_emulator = 'pwsh'
 
 vim.opt.wildignore:append { '*.o', '*~', '*.pyc', '*pycache*' }
 vim.opt.wildignore:append { 'Cargo.lock' }
+
+if vim.fn.has 'win32' == 1 then
+  vim.opt.shell = 'pwsh'
+end
 
 vim.opt.pumblend = 17
 vim.opt.wildmode = 'longest:full'

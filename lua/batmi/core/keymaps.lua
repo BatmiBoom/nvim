@@ -15,11 +15,6 @@ map('i', 'kj', '<Esc>', {})
 -- NORMAL
 map('t', '<C-x><C-c>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- OPEN MINIFILES
-map('n', '-', function()
-  MiniFiles.open()
-end, {})
-
 -- DISABLED ARROWS
 map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>', {})
 map('n', '<right>', '<cmd>echo "Use l to move!!"<CR>', {})
@@ -27,8 +22,8 @@ map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>', {})
 map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', {})
 
 -- BETTER UP/DOWN
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- MAKE FILE EXECUTABLE
 map('n', '<leader>0', ':!chmod +x % <CR>', {})
@@ -70,8 +65,8 @@ map({ 'n', 'v' }, '<leader>y', [["+y]], {})
 map({ 'n', 'v' }, '<leader>d', [["_d]], { remap = false })
 
 -- keep pasting over the same thing, ie. delete content and paste something in it place
-map("n", "<leader>p", [[m`0"_DP``]], {})
-map("v", "<leader>p", [[m`"_dP``]], {})
+map('n', '<leader>p', [[m`0"_DP``]], {})
+map('v', '<leader>p', [[m`"_dP``]], {})
 
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
 
