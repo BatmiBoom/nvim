@@ -60,6 +60,10 @@ map('o', 'N', "'nN'[v:searchforward]", { expr = true, desc = 'Prev search result
 map('n', '<C-left>', ':vertical resize +3<CR>', {})
 map('n', '<C-right>', ':vertical resize -3<CR>', {})
 
+-- RESIZE HORIZONTAL SPLIT
+map('n', '<C-up>', ':horizontal resize +3<CR>', {})
+map('n', '<C-down>', ':horizontal resize -3<CR>', {})
+
 -- Copy to system clipboard
 map({ 'n', 'v' }, '<leader>y', [["+y]], {})
 map({ 'n', 'v' }, '<leader>d', [["_d]], { remap = false })
