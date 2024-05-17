@@ -12,6 +12,7 @@ return {
       'c',
       'cpp',
       'css',
+      'diff',
       'gitignore',
       'go',
       'html',

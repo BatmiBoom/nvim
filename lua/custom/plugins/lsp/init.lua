@@ -3,12 +3,14 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      { 'williamboman/mason.nvim', config = true },
       { 'j-hui/fidget.nvim', opts = {} },
       { 'folke/neodev.nvim' },
       { 'ibhagwan/fzf-lua' },
+
+      'b0o/SchemaStore.nvim',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -95,12 +97,28 @@ return {
         },
       }
 
+      capabilities.workspace = {
+        didChangeWatchedFiles = {
+          dynamicRegistration = true,
+        },
+      }
+
       local servers = {
-        clangd = {},
+        clangd = {
+          init_options = { clangdFileStatus = true },
+          filetypes = { 'c' },
+        },
         cssls = {},
         -- gopls = {},
         html = {},
-        jsonls = {},
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
         pyright = {},
         -- rust_analyzer = {},
         -- tsserver = {},
@@ -118,9 +136,20 @@ return {
         },
         markdown_oxide = {},
         ols = {},
+        -- ruff_lsp = {},
         sqlls = {},
         taplo = {},
-        yamlls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                enable = false,
+                url = '',
+              },
+              schemas = require('schemastore').yaml.schemas(),
+            },
+          },
+        },
         zls = {},
       }
 
@@ -130,8 +159,6 @@ return {
       vim.list_extend(ensure_installed, {
         -- FORMATTERS
         'stylua',
-        'black',
-        'reorder-python-imports',
         'prettierd',
         -- LINTERS
         'biome',

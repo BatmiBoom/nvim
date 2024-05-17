@@ -20,18 +20,26 @@ return { -- Autocompletion
         },
       },
     },
-    'saadparwaiz1/cmp_luasnip',
+
+    'onsails/lspkind-nvim',
+
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
+    'saadparwaiz1/cmp_luasnip',
     'SergioRibera/cmp-dotenv',
-    'onsails/lspkind-nvim',
   },
   config = function()
     local cmp = require 'cmp'
     local defaults = require 'cmp.config.default'()
     local luasnip = require 'luasnip'
     luasnip.config.setup {}
+
+    vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+    vim.opt.shortmess:append 'c'
+
+    local lspkind = require 'lspkind'
+    lspkind.init {}
 
     cmp.setup {
       enabled = function()
@@ -45,9 +53,6 @@ return { -- Autocompletion
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
-      },
-      completion = {
-        completeopt = 'menu,menuone,noinsert',
       },
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -66,23 +71,7 @@ return { -- Autocompletion
           end
         end, { 'i', 's' }),
       },
-      formatting = {
-        expandable_indicator = false,
-        fields = { 'kind', 'abbr', 'menu' },
-        format = require('lspkind').cmp_format {
-          with_text = false,
-          menu = {
-            nvim_lsp = '[LSP]',
-            nvim_lua = '[NVIM_API]',
-            path = '[PATH]',
-            buffer = '[BUF]',
-            luasnip = '[SNIP]',
-            dotenv = '[ENV]',
-          },
-        },
-      },
       sources = {
-        { name = 'path' },
         {
           name = 'nvim_lsp',
           keyword_lenght = 1,
@@ -92,6 +81,7 @@ return { -- Autocompletion
             },
           },
         },
+        { name = 'path' },
         { name = 'buffer', keyword_length = 3 },
         { name = 'luasnip', keyword_length = 4 },
         { name = 'dotenv', keyword_length = 4 },
@@ -102,6 +92,15 @@ return { -- Autocompletion
       },
       sorting = defaults.sorting,
     }
+
+    luasnip.config.set_config {
+      history = false,
+      updateevents = 'TextChanged,TextChangedI',
+    }
+
+    for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('lua/custom/snippets/*.lua', true)) do
+      loadfile(ft_path)()
+    end
 
     vim.keymap.set('n', '<leader>ua', '<CMD>lua vim.g.cmptoggle = not vim.g.cmptoggle<CR>')
   end,

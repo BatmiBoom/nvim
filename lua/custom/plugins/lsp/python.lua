@@ -20,6 +20,7 @@ return {
       desc = 'Select Python Env',
     },
   },
+<<<<<<< HEAD
   {
     'stevanmilic/nvim-lspimport',
     opts = {},
@@ -33,4 +34,6 @@ return {
       },
     },
   },
+=======
+>>>>>>> 665c2cf (Bunch of changes)
 }

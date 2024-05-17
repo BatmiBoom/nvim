@@ -81,16 +81,6 @@ autocmd({ 'BufWritePre' }, {
   end,
 })
 
--- Delete [No Name] buffer when it's hiddne
-autocmd('BufHidden', {
-  group = augroup 'delete_no_name_buffer',
-  callback = function(event)
-    if event.file == '' and vim.bo[event.buf].buftype == '' and not vim.bo[event.buf].modified then
-      vim.api.nvim_buf_delete(event.buf, { force = true })
-    end
-  end,
-})
-
 -- Highlight Current Line and Column
 autocmd({ 'WinLeave', 'WinEnter' }, {
   group = augroup 'highligt_current_line_and_column',

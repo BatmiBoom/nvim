@@ -2,21 +2,19 @@ return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
   opts = {
-    notify_on_error = false,
+    notify_on_error = true,
     format_on_save = function(bufnr)
-      -- local disable_filetypes = { c = true, cpp = true }
       return {
         timeout_ms = 500,
-        -- lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
       }
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      python = { 'ruff-fix', 'ruff-format' },
-      javascript = { 'prettierd' },
-      typescript = { 'prettierd' },
-      javascriptreact = { 'prettierd' },
-      typescriptreact = { 'prettierd' },
+      python = { 'ruff_fix', 'ruff_format' },
+      javascript = { 'biome' },
+      typescript = { 'biome' },
+      javascriptreact = { 'biome' },
+      typescriptreact = { 'biome' },
       css = { 'prettierd' },
       html = { 'prettierd' },
       json = { 'prettierd' },
