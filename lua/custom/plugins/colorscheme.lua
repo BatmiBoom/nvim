@@ -1,8 +1,21 @@
 return {
   {
-    'sontungexpt/witch',
+    'maxmx03/fluoromachine.nvim',
     priority = 1000,
     lazy = false,
+    config = function()
+      local fm = require 'fluoromachine'
+      fm.setup {
+        glow = true,
+        theme = 'retrowave',
+      }
+      vim.cmd.colorscheme 'fluoromachine'
+    end,
+  },
+  {
+    'sontungexpt/witch',
+    priority = 1000,
+    lazy = true,
     config = function()
       require('witch').setup {
         theme = {

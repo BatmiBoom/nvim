@@ -1,6 +1,10 @@
 return {
   {
     'tjdevries/express_line.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
     config = function()
       local builtin = require 'el.builtin'
       local extensions = require 'el.extensions'
@@ -31,14 +35,6 @@ return {
               end
             end)
           )
-          table.insert(segments, function()
-            local task_count = #require('misery.scheduler').tasks
-            if task_count == 0 then
-              return ''
-            else
-              return string.format(' (Queued Events: %d)', task_count)
-            end
-          end)
           table.insert(segments, sections.split)
           table.insert(segments, '%f')
           table.insert(segments, sections.split)
