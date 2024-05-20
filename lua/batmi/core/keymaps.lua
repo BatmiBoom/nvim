@@ -6,27 +6,16 @@ local function map(mode, lhs, rhs, opts)
   vim.keymap.set(mode, lhs, rhs, options)
 end
 
--- INSERT
-
 -- BETTER ESCAPE
 map('i', 'jk', '<Esc>', {})
 map('i', 'kj', '<Esc>', {})
 
--- NORMAL
-map('t', '<C-x><C-c>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
--- DISABLED ARROWS
-map('n', '<left>', '<cmd>echo "Use h to move!!"<CR>', {})
-map('n', '<right>', '<cmd>echo "Use l to move!!"<CR>', {})
-map('n', '<up>', '<cmd>echo "Use k to move!!"<CR>', {})
-map('n', '<down>', '<cmd>echo "Use j to move!!"<CR>', {})
-
--- BETTER UP/DOWN
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-
 -- MAKE FILE EXECUTABLE
 map('n', '<leader>0', ':!chmod +x % <CR>', {})
+
+-- BETTER UP/DOWN
+map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- EXECUTE TMUX-SESSIONIZER
 map('n', '<C-f>', ':silent !tmux neww tmux-sessionizer<CR>', {})
@@ -41,12 +30,6 @@ map('n', 'J', 'mzJ`z', {})
 -- BETTER SCROLLING
 map('n', '<C-d>', '<C-d>zz', {})
 map('n', '<C-u>', '<C-u>zz', {})
-
--- BETTER UP/DOWN
-map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- BETTER SEARCH
 map('n', 'n', "'Nn'[v:searchforward].'zv'", { expr = true, desc = 'Next search result' })
@@ -85,14 +68,15 @@ map('n', 'zh', ':split<Return>', {})
 map('n', 'zv', ':vsplit<Return>', {})
 map('n', 'zx', ':close<Return>', {})
 
+-- for fast repalce
+map('n', '<leader>r', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
+
 -- Diagnostics
 map('n', '<space>xx', vim.diagnostic.open_float, {})
 map('n', '<leader>xn', vim.diagnostic.setloclist, {})
 map('n', '<C-j>', function()
   vim.diagnostic.goto_next()
 end)
-
--- VISUAL
 
 -- MOVE LINES
 map('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'Move down' })

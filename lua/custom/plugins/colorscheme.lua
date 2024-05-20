@@ -1,8 +1,16 @@
 return {
   {
+    'Abstract-IDE/Abstract-cs',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'abscs'
+    end,
+  },
+  {
     'maxmx03/fluoromachine.nvim',
     priority = 1000,
-    lazy = false,
+    lazy = true,
     config = function()
       local fm = require 'fluoromachine'
       fm.setup {
@@ -10,6 +18,19 @@ return {
         theme = 'retrowave',
       }
       vim.cmd.colorscheme 'fluoromachine'
+    end,
+  },
+  {
+    'nyoom-engineering/oxocarbon.nvim',
+    lazy = true,
+    priority = 1000,
+    config = function()
+      vim.opt.background = 'dark'
+      vim.cmd.colorscheme 'oxocarbon'
+
+      -- Transparency
+      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end,
   },
   {
@@ -119,7 +140,7 @@ return {
     priority = 1000,
     config = function()
       require('kanagawa').setup {
-        compile = false, -- enable compiling the colorscheme
+        compile = true, -- enable compiling the colorscheme
         undercurl = true, -- enable undercurls
         commentStyle = { italic = true },
         functionStyle = {},
@@ -136,9 +157,8 @@ return {
         overrides = function(colors) -- add/modify highlights
           return {}
         end,
-        theme = 'wave', -- Load "wave" theme when 'background' option is not set
-        background = { -- map the value of 'background' option to a theme
-          dark = 'wave', -- try "dragon" !
+        background = {
+          dark = 'dragon',
           light = 'lotus',
         },
       }
@@ -205,19 +225,6 @@ return {
       -- vim.cmd("colorscheme rose-pine-main")
       -- vim.cmd("colorscheme rose-pine-moon")
       -- vim.cmd("colorscheme rose-pine-dawn")
-    end,
-  },
-  {
-    'nyoom-engineering/oxocarbon.nvim',
-    lazy = true,
-    priority = 1000,
-    config = function()
-      vim.opt.background = 'dark'
-      vim.cmd.colorscheme 'oxocarbon'
-
-      -- Transparency
-      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end,
   },
 }

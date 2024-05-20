@@ -43,7 +43,6 @@ vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.smartindent = true
 vim.opt.cindent = true
-vim.opt.wrap = true
 
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
@@ -61,7 +60,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', space = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '» ', nbsp = '␣' }
 
 vim.opt.inccommand = 'split'
 
@@ -84,8 +83,6 @@ vim.opt.diffopt = { 'internal', 'filler', 'closeoff', 'hiddenoff', 'algorithm:mi
 
 vim.opt.whichwrap:append '<>[]hl'
 vim.opt.winbar = '%=%m %f'
-
-vim.opt.shortmess:append { c = true }
 
 -- CMP --
 local cmptoggle = false

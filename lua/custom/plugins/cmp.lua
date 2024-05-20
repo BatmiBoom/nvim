@@ -24,6 +24,7 @@ return { -- Autocompletion
     'onsails/lspkind-nvim',
 
     'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'saadparwaiz1/cmp_luasnip',
@@ -58,8 +59,7 @@ return { -- Autocompletion
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
         ['<C-e>'] = cmp.mapping.confirm { select = true },
-        ['<C-y>'] = cmp.mapping.abort(),
-        ['<C-x>'] = cmp.mapping.complete {},
+        ['<C-x>'] = cmp.mapping.abort(),
         ['<C-l>'] = cmp.mapping(function()
           if luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
@@ -74,16 +74,16 @@ return { -- Autocompletion
       sources = {
         {
           name = 'nvim_lsp',
-          keyword_lenght = 1,
           option = {
             markdown_oxide = {
               keyword_pattern = [[\(\k| \|\/|#\)\+]],
             },
           },
         },
+        { name = 'nvim_lua' },
         { name = 'path' },
+        { name = 'luasnip' },
         { name = 'buffer', keyword_length = 3 },
-        { name = 'luasnip', keyword_length = 4 },
         { name = 'dotenv', keyword_length = 4 },
       },
       experimental = {

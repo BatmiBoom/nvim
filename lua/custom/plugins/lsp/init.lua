@@ -14,7 +14,7 @@ return {
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+        group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -33,46 +33,22 @@ return {
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
           map('gk', vim.lsp.buf.hover, 'Hover Documentation')
 
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.documentHighlightProvider then
-            local hl_group = vim.api.nvim_create_augroup('lsp-hl', { clear = false })
-            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-              buffer = event.buf,
-              group = hl_group,
-              callback = vim.lsp.buf.document_highlight,
-            })
-
-            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-              buffer = event.buf,
-              group = hl_group,
-              callback = vim.lsp.buf.clear_references,
-            })
-          end
-
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-            map('<leader>gth', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-            end, '[T]oggle Inlay [H]ints')
+            vim.lsp.inlay_hint.enable(true)
           end
 
           vim.api.nvim_create_autocmd('LspDetach', {
-            group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+            group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
             callback = function()
               vim.lsp.buf.clear_references()
-              vim.api.nvim_clear_autocmds { group = 'lsp-hl', buffer = event.buf }
+              vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event.buf }
             end,
           })
         end,
       })
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-        or require('lspconfig').util.default_config.capabilities
-        or require('cmp_nvim_lsp').default_capabilities
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       capabilities.textDocument.completion.completionItem = {
         snippetSupport = true,
@@ -153,8 +129,6 @@ return {
         zls = {},
       }
 
-      require('mason').setup()
-
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         -- FORMATTERS
@@ -163,24 +137,25 @@ return {
         -- LINTERS
         'biome',
         'ruff',
+        -- LSP
       })
+
+      require('mason').setup()
+      require('mason-lspconfig').setup()
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('neodev').setup {}
 
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            require('lspconfig')[server_name].setup {
-              cmd = server.cmd,
-              settings = server.settings,
-              filetypes = server.filetypes,
-              capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
-            }
-          end,
-        },
-      }
+      require('lspconfig')['lua_ls'].setup {}
+      for name, opts in pairs(servers) do
+        require('lspconfig')[name].setup {
+          cmd = opts.cmd,
+          init_options = opts.init_options,
+          settings = opts.settings,
+          filetypes = opts.filetypes,
+          capabilities = vim.tbl_deep_extend('force', {}, capabilities, opts.capabilities or {}),
+        }
+      end
     end,
   },
 }

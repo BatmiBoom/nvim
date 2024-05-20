@@ -13,7 +13,7 @@ return {
       lsp_diag_hdlr = true, -- hook lsp diag handler
 
       goimport = 'gofumports', -- goimport command
-      gofmt = 'gofumpt', --gofmt cmd,
+      gofmt = 'golines', --gofmt cmd,
 
       max_line_len = 120,
       tag_transform = false,
