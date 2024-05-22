@@ -42,7 +42,7 @@ return {
     end,
     keys = {
       {
-        '<space>od',
+        '<space>oo',
         function()
           require('dbee').open()
         end,

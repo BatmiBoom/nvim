@@ -1,7 +1,7 @@
 return {
   {
     'Abstract-IDE/Abstract-cs',
-    lazy = false,
+    lazy = true,
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'abscs'
@@ -78,7 +78,7 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = true,
+    lazy = false,
     name = 'catppuccin',
     priority = 1000,
     config = function()
