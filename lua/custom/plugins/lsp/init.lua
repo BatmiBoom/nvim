@@ -85,7 +85,7 @@ return {
           filetypes = { 'c' },
         },
         cssls = {},
-        -- gopls = {},
+        gopls = {},
         html = {},
         jsonls = {
           settings = {
