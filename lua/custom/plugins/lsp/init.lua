@@ -146,7 +146,6 @@ return {
 
       require('neodev').setup {}
 
-      require('lspconfig')['lua_ls'].setup {}
       for name, opts in pairs(servers) do
         require('lspconfig')[name].setup {
           cmd = opts.cmd,

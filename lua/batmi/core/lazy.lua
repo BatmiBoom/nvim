@@ -62,7 +62,7 @@ require('lazy').setup({
     },
   },
   change_detection = {
-    enabled = true,
+    enabled = false,
     notify = false, -- get a notification when changes are found
   },
   ui = {

@@ -24,7 +24,6 @@ return { -- Autocompletion
     'onsails/lspkind-nvim',
 
     'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lua',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'saadparwaiz1/cmp_luasnip',
@@ -80,7 +79,6 @@ return { -- Autocompletion
             },
           },
         },
-        { name = 'nvim_lua' },
         { name = 'path' },
         { name = 'luasnip' },
         { name = 'buffer', keyword_length = 3 },
