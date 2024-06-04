@@ -70,20 +70,26 @@ return { -- Autocompletion
           end
         end, { 'i', 's' }),
       },
-      sources = {
+      sources = cmp.config.sources({
         {
           name = 'nvim_lsp',
+          group_index = 0,
           option = {
             markdown_oxide = {
               keyword_pattern = [[\(\k| \|\/|#\)\+]],
             },
           },
         },
+        {
+          name = 'lazydev',
+          group_index = 0,
+        },
         { name = 'path' },
         { name = 'luasnip' },
+      }, {
         { name = 'buffer', keyword_length = 3 },
         { name = 'dotenv', keyword_length = 4 },
-      },
+      }),
       experimental = {
         ghost_text = false,
         native_menu = false,

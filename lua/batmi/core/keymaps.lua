@@ -60,13 +60,16 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
 -- New tab
 map('n', 'te', ':tabedit<CR>', {})
 map('n', 'tc', ':tabclose<CR>', {})
-map('n', 'tn', ':tabnext<Return>', {})
-map('n', 'tp', ':tabprev<Return>', {})
+map('n', 'tn', ':tabnext<CR>', {})
+map('n', 'tp', ':tabprev<CR>', {})
 
 -- Split window
-map('n', 'zh', ':split<Return>', {})
-map('n', 'zv', ':vsplit<Return>', {})
-map('n', 'zx', ':close<Return>', {})
+map('n', 'zh', ':split<CR>', {})
+map('n', 'zv', ':vsplit<CR>', {})
+map('n', 'zx', ':close<CR>', {})
+
+-- Buffer delete
+map('n', 'bx', ':bdelete<CR>')
 
 -- for fast repalce
 map('n', '<leader>r', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})

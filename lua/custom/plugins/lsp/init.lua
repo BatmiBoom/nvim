@@ -7,7 +7,6 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'williamboman/mason.nvim', config = true },
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim' },
       { 'ibhagwan/fzf-lua' },
 
       'b0o/SchemaStore.nvim',
@@ -143,8 +142,6 @@ return {
       require('mason').setup()
       require('mason-lspconfig').setup()
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-      require('neodev').setup {}
 
       for name, opts in pairs(servers) do
         require('lspconfig')[name].setup {

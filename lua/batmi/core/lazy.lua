@@ -11,6 +11,7 @@ require('lazy').setup({
   require 'custom.plugins.lsp.python',
   require 'custom.plugins.lsp.typescript',
   require 'custom.plugins.lsp.rust',
+  require 'custom.plugins.lsp.lua',
 }, {
   defaults = {
     lazy = true,
