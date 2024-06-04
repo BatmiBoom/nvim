@@ -69,7 +69,7 @@ map('n', 'zv', ':vsplit<CR>', {})
 map('n', 'zx', ':close<CR>', {})
 
 -- Buffer delete
-map('n', 'bx', ':bdelete<CR>')
+map('n', '<leader>bx', ':bdelete<CR>')
 
 -- for fast repalce
 map('n', '<leader>r', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})

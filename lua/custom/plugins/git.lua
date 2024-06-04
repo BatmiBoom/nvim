@@ -4,7 +4,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     'sindrets/diffview.nvim',
-    'ibhagwan/fzf-lua',
+    'nvim-telescope/telescope.nvim',
   },
   config = true,
   keys = {

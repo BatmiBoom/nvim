@@ -7,7 +7,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'williamboman/mason.nvim', config = true },
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'ibhagwan/fzf-lua' },
+      { 'nvim-telescope/telescope.nvim' },
 
       'b0o/SchemaStore.nvim',
     },
@@ -19,15 +19,14 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          local fzf_lua = require 'fzf-lua'
-          map('gd', fzf_lua.lsp_definitions, '[G]oto [D]efinition')
-          map('gr', fzf_lua.lsp_references, '[G]oto [R]eferences')
-          map('gI', fzf_lua.lsp_implementations, '[G]oto [I]mplementation')
+          local telescope = require 'telescope.builtin'
+          map('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
+          map('gr', telescope.lsp_references, '[G]oto [R]eferences')
+          map('gI', telescope.lsp_implementations, '[G]oto [I]mplementation')
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          map('gtd', fzf_lua.lsp_typedefs, 'Type [D]efinition')
-          map('gds', fzf_lua.lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('gws', fzf_lua.lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('gtd', telescope.lsp_type_definitions, 'Type [D]efinition')
+          map('gds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
           map('gk', vim.lsp.buf.hover, 'Hover Documentation')
