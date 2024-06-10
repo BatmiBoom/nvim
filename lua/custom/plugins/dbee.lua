@@ -15,6 +15,12 @@ return {
           require('dbee').open()
         end,
       },
+      {
+        '<space>oc',
+        function()
+          require('dbee').close()
+        end,
+      },
     },
   },
 }
