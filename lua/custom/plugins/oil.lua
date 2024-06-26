@@ -5,6 +5,18 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('oil').setup {
+        default_file_explorer = true,
+        delete_to_trash = true,
+        skip_confirm_for_simple_edits = true,
+        float = {
+          padding = 2,
+          max_width = 90,
+          max_height = 0,
+        },
+        win_options = {
+          wrap = true,
+          winblend = 0,
+        },
         columns = { 'icon' },
         keymaps = {
           ['g?'] = 'actions.show_help',
@@ -13,7 +25,7 @@ return {
           ['<C-h>'] = 'actions.select_split',
           ['<C-t>'] = 'actions.select_tab',
           ['<C-p>'] = 'actions.preview',
-          ['<C-c>'] = 'actions.close',
+          ['q'] = 'actions.close',
           ['<C-l>'] = 'actions.refresh',
           ['-'] = 'actions.parent',
           ['_'] = 'actions.open_cwd',
@@ -26,6 +38,10 @@ return {
         },
         view_options = {
           show_hidden = true,
+          natural_order = true,
+          is_always_hidden = function(name, _)
+            return name == '..' or name == '.git'
+          end,
         },
       }
 

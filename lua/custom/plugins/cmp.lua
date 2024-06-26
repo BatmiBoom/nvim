@@ -42,9 +42,6 @@ return { -- Autocompletion
     lspkind.init {}
 
     cmp.setup {
-      enabled = function()
-        return vim.g.cmptoggle
-      end,
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -105,7 +102,5 @@ return { -- Autocompletion
     for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('lua/custom/snippets/*.lua', true)) do
       loadfile(ft_path)()
     end
-
-    vim.keymap.set('n', '<leader>ua', '<CMD>lua vim.g.cmptoggle = not vim.g.cmptoggle<CR>')
   end,
 }
