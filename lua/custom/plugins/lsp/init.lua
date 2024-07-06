@@ -114,7 +114,6 @@ return {
         },
         markdown_oxide = {},
         ols = {},
-        -- ruff_lsp = {},
         sqlls = {},
         taplo = {},
         yamlls = {
@@ -139,7 +138,6 @@ return {
         -- LINTERS
         'biome',
         'ruff',
-        -- LSP
       })
 
       require('mason').setup()
