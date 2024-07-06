@@ -20,7 +20,9 @@ return {
           end
 
           local telescope = require 'telescope.builtin'
-          map('gd', telescope.lsp_definitions, '[G]oto [D]efinition')
+          map('gd', function()
+            telescope.lsp_definitions { jump_type = 'never' }
+          end, '[G]oto [D]efinition')
           map('gr', telescope.lsp_references, '[G]oto [R]eferences')
           map('gI', telescope.lsp_implementations, '[G]oto [I]mplementation')
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
