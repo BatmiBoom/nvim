@@ -61,11 +61,8 @@ return { -- Autocompletion
         completion = cmp.config.window.bordered {
           col_offset = -3,
           side_padding = 0,
-          winhighlight = 'Normal:Normal, FloatBorder:FloatBorder, CursorLine:Visual, Search:None',
         },
-        documentation = cmp.config.window.bordered {
-          winhighlight = 'Normal:Normal, FloatBorder:FloatBorder, CursorLine:Visual, Search:None',
-        },
+        documentation = cmp.config.window.bordered(),
       },
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
