@@ -142,7 +142,17 @@ return {
         no_italic = false,
         no_bold = false,
         no_underline = false,
-        color_overrides = {},
+        color_overrides = {
+          all = {
+            text = '#ffffff',
+          },
+          mocha = {
+            base = '#1e1e21',
+          },
+          frappe = {},
+          macchiato = {},
+          latte = {},
+        },
         custom_highlights = {},
         integrations = {
           cmp = true,
