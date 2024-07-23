@@ -71,17 +71,6 @@ autocmd({ 'BufWritePre' }, {
   end,
 })
 
--- Highlight Current Line and Column
-autocmd({ 'WinLeave', 'WinEnter' }, {
-  group = augroup 'highligt_current_line_and_column',
-  callback = function(args)
-    vim.api.nvim_command(({
-      WinLeave = 'setlocal nocursorline nocursorcolumn',
-      WinEnter = 'if &buflisted | setlocal cursorline cursorcolumn | else | setlocal cursorline | endif',
-    })[args.event])
-  end,
-})
-
 -- close some filetypes with <q>
 autocmd('FileType', {
   group = augroup 'close_with_q',

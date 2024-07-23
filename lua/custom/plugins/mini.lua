@@ -2,7 +2,6 @@ return {
   'echasnovski/mini.ai',
   dependencies = {
     'echasnovski/mini.surround',
-    'echasnovski/mini.pairs',
   },
   event = { 'InsertEnter' },
   config = function()
@@ -26,12 +25,7 @@ return {
         highlight = 'yh', -- Highlight surrounding
         replace = 'yr', -- Replace surrounding
         update_n_lines = 'yn', -- Update `n_lines`
-
-        suffix_last = 'l', -- Suffix to search with "prev" method
-        suffix_next = 'n', -- Suffix to search with "next" method
       },
     }
-
-    require('mini.pairs').setup()
   end,
 }

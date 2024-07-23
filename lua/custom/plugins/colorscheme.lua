@@ -1,5 +1,21 @@
 return {
   {
+    'rafamadriz/neon',
+    lazy = true,
+    priority = 1000,
+    config = function()
+      vim.g.neon_style = 'doom'
+      vim.g.neon_italic_comment = true
+      vim.g.neon_italic_keyword = true
+      vim.g.neon_italic_function = true
+      vim.g.neon_italic_variable = false
+      vim.g.neon_bold = true
+      vim.g.neon_transparent = false
+
+      vim.cmd [[colorscheme neon]]
+    end,
+  },
+  {
     'echasnovski/mini.base16',
     lazy = true,
     priority = 1000,
@@ -126,21 +142,6 @@ return {
         no_italic = false, -- Force no italic
         no_bold = false, -- Force no bold
         no_underline = false, -- Force no underline
-        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-          comments = { 'italic' }, -- Change the style of comments
-          conditionals = { 'italic' },
-          loops = { 'italic' },
-          functions = { 'italic' },
-          keywords = { 'bold' },
-          strings = {},
-          variables = { 'bold' },
-          numbers = {},
-          booleans = {},
-          properties = {},
-          types = {},
-          operators = {},
-          -- miscs = {}, -- Uncomment to turn off hard-coded styles
-        },
         color_overrides = {},
         custom_highlights = {},
         integrations = {
@@ -153,11 +154,9 @@ return {
             enabled = true,
             indentscope_color = '',
           },
-          -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
         },
       }
 
-      -- setup must be called before loading
       vim.cmd.colorscheme 'catppuccin'
     end,
   },

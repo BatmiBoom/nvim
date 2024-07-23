@@ -28,6 +28,16 @@ return { -- Autocompletion
     'hrsh7th/cmp-path',
     'saadparwaiz1/cmp_luasnip',
     'SergioRibera/cmp-dotenv',
+
+    {
+      'Exafunction/codeium.nvim',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+      },
+      config = function()
+        require('codeium').setup {}
+      end,
+    },
   },
   config = function()
     local cmp = require 'cmp'
@@ -81,6 +91,7 @@ return { -- Autocompletion
           name = 'lazydev',
           group_index = 0,
         },
+        { name = 'codeium' },
         { name = 'path' },
         { name = 'luasnip' },
       }, {
