@@ -20,6 +20,7 @@ return {
         yaml = { 'prettierd' },
         graphql = { 'prettierd' },
         markdown = { 'prettierd' },
+        gleam = { 'gleam' },
       },
       format_on_save = function(bufnr)
         if slow_format_filetypes[vim.bo[bufnr].filetype] then

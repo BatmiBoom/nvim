@@ -89,6 +89,7 @@ return {
           filetypes = { 'c' },
         },
         cssls = {},
+        elp = {},
         gopls = {},
         html = {},
         jsonls = {
@@ -114,6 +115,7 @@ return {
             },
           },
         },
+        lexical = {},
         markdown_oxide = {},
         ols = {},
         sqlls = {},
@@ -146,8 +148,10 @@ return {
       require('mason-lspconfig').setup()
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      local lsp_config = require 'lspconfig'
+      -- Mason Installed Servers
       for name, opts in pairs(servers) do
-        require('lspconfig')[name].setup {
+        lsp_config[name].setup {
           cmd = opts.cmd,
           init_options = opts.init_options,
           settings = opts.settings,
@@ -155,6 +159,9 @@ return {
           capabilities = vim.tbl_deep_extend('force', {}, capabilities, opts.capabilities or {}),
         }
       end
+
+      -- Servers that are not in mason
+      lsp_config.gleam.setup {}
     end,
   },
 }

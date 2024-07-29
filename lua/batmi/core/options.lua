@@ -75,7 +75,6 @@ vim.opt.modelines = 1
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv 'HOME' .. '/.vim/undodir'
 vim.opt.shada = { "'10", '<0', 's10', 'h' }
 vim.opt.formatoptions:remove 'o'
 

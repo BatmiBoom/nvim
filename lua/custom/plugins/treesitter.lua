@@ -19,6 +19,7 @@ return {
         'css',
         'diff',
         'gitignore',
+        'gleam',
         'go',
         'html',
         'javascript',
