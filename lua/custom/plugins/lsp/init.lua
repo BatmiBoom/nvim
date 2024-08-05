@@ -89,7 +89,6 @@ return {
           filetypes = { 'c' },
         },
         cssls = {},
-        elp = {},
         gopls = {},
         html = {},
         jsonls = {
@@ -115,7 +114,6 @@ return {
             },
           },
         },
-        lexical = {},
         markdown_oxide = {},
         ols = {},
         sqlls = {},
@@ -162,6 +160,11 @@ return {
 
       -- Servers that are not in mason
       lsp_config.gleam.setup {}
+      lsp_config.lexical.setup {
+        filetypes = { 'elixir', 'eelixir', 'heex' },
+        cmd = { '~/programs/lexical/bin/start_lexical.sh' },
+        settings = {},
+      }
     end,
   },
 }
