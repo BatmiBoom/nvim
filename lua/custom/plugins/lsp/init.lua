@@ -160,6 +160,7 @@ return {
 
       -- Servers that are not in mason
       lsp_config.gleam.setup {}
+      lsp_config.ocamllsp.setup {}
       lsp_config.lexical.setup {
         filetypes = { 'elixir', 'eelixir', 'heex' },
         cmd = { '~/programs/lexical/bin/start_lexical.sh' },

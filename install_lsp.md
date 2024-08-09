@@ -150,7 +150,7 @@ brew install fzf
 ### Windows
 
 ```
-choco install fzf
+scoop install fzf
 ```
 
 ## zoxide
@@ -168,7 +168,7 @@ brew install bat
 ### Windows
 
 ```
-choco install bat
+scoop install bat
 ```
 
 ### Linux
@@ -195,7 +195,7 @@ brew install fd
 ### Windows
 
 ```
-choco install fd
+scoop install fd
 ```
 
 ## lsd

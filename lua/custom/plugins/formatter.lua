@@ -8,6 +8,7 @@ return {
       notify_on_error = true,
       formatters_by_ft = {
         lua = { 'stylua' },
+        ocaml = { 'ocamlformat' },
         python = { 'ruff_fix', 'ruff_format', 'ruff_organize_imports' },
         javascript = { 'prettierd' },
         typescript = { 'prettierd' },
