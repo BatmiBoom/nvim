@@ -1,7 +1,7 @@
 return {
   {
     'batmikun/mactions.nvim',
-    event = 'VeryLazy',
+    ft = { 'markdown' },
     config = function()
       local mk = require 'mactions'
 
