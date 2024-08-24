@@ -7,7 +7,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   { import = 'custom.plugins' },
-  require 'custom.plugins.lsp.python',
   require 'custom.plugins.lsp.rust',
   require 'custom.plugins.lsp.lua',
   require 'custom.plugins.lsp.go',

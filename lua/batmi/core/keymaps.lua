@@ -8,7 +8,6 @@ end
 
 -- BETTER ESCAPE
 map('i', 'jk', '<Esc>', {})
-map('i', 'kj', '<Esc>', {})
 
 -- MAKE FILE EXECUTABLE
 map('n', '<leader>0', ':!chmod +x % <CR>', {})
