@@ -10,6 +10,11 @@ return {
       { 'nvim-telescope/telescope.nvim' },
 
       'b0o/SchemaStore.nvim',
+
+      {
+        'rmagatti/goto-preview',
+        config = true,
+      },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -19,23 +24,23 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          local telescope = require 'telescope.builtin'
-          map('gd', function()
-            telescope.lsp_definitions { jump_type = 'never' }
-          end, '[G]oto [D]efinition')
-          map('gr', telescope.lsp_references, '[G]oto [R]eferences')
-          map('gI', telescope.lsp_implementations, '[G]oto [I]mplementation')
+          local g = require 'goto-preview'
+          map('gd', g.goto_preview_definition, '[G]oto [D]efinition')
+          map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+          map('gI', g.goto_preview_implementation, '[G]oto [I]mplementation')
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          map('gtd', telescope.lsp_type_definitions, 'Type [D]efinition')
-          map('gds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('gD', g.goto_preview_declaration, '[G]oto [D]eclaration')
+          map('gtd', g.goto_preview_type_definition, 'Type [D]efinition')
+          map('gds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
           map('gk', vim.lsp.buf.hover, 'Hover Documentation')
 
+          map('<leader>cw', g.close_all_win, '[C]lose all windows')
+
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
           end
 
           if client and client.server_capabilities.documentHighlightProvider then
