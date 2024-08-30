@@ -1,5 +1,143 @@
 return {
   {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      require('tokyonight').setup {
+        style = 'storm', -- storm night day
+        light_style = 'day',
+        transparent = true,
+        terminal_colors = true,
+        styles = {
+          comments = { italic = true },
+          keywords = { italic = true },
+          functions = {},
+          variables = {},
+          sidebars = 'transparent', -- dark transparent normal
+          floats = 'transparent',
+        },
+        day_brightness = 0.3,
+        dim_inactive = false,
+        cache = true,
+        plugins = {
+          auto = true,
+        },
+      }
+
+      vim.cmd [[colorscheme tokyonight]] -- tokyonight-night tokyonight-storm tokyonight-day tokyonight-moon
+    end,
+  },
+  {
+    'EdenEast/nightfox.nvim',
+    priority = 1000,
+    lazy = true,
+    config = function()
+      require('nightfox').setup {
+        options = {
+          compile_path = vim.fn.stdpath 'cache' .. '/nightfox',
+          compile_file_suffix = '_compiled',
+          transparent = true,
+          terminal_colors = true,
+          dim_inactive = false,
+          module_default = true,
+          colorblind = {
+            enable = false,
+            simulate_only = false,
+            severity = {
+              protan = 0,
+              deutan = 0,
+              tritan = 0,
+            },
+          },
+          styles = { -- Value is any valid attr-list value `:help attr-list`
+            comments = 'italic',
+            conditionals = 'NONE',
+            constants = 'NONE',
+            functions = 'NONE',
+            keywords = 'bold',
+            numbers = 'NONE',
+            operators = 'NONE',
+            strings = 'NONE',
+            types = 'italic,bold',
+            variables = 'NONE',
+          },
+          inverse = {
+            match_paren = false,
+            visual = false,
+            search = false,
+          },
+        },
+      }
+
+      vim.cmd 'colorscheme nightfox' -- nightfox, duskfox, nordfox, terafox, carbonfox
+    end,
+  },
+  {
+    'Mofiqul/dracula.nvim',
+    priority = 1000,
+    lazy = true,
+    config = function()
+      require('dracula').setup {
+        colors = {
+          bg = '#282A36',
+          fg = '#F8F8F2',
+          selection = '#44475A',
+          comment = '#6272A4',
+          red = '#FF5555',
+          orange = '#FFB86C',
+          yellow = '#F1FA8C',
+          green = '#50fa7b',
+          purple = '#BD93F9',
+          cyan = '#8BE9FD',
+          pink = '#FF79C6',
+          bright_red = '#FF6E6E',
+          bright_green = '#69FF94',
+          bright_yellow = '#FFFFA5',
+          bright_blue = '#D6ACFF',
+          bright_magenta = '#FF92DF',
+          bright_cyan = '#A4FFFF',
+          bright_white = '#FFFFFF',
+          menu = '#21222C',
+          visual = '#3E4452',
+          gutter_fg = '#4B5263',
+          nontext = '#3B4048',
+          white = '#ABB2BF',
+          black = '#191A21',
+        },
+        show_end_of_buffer = true,
+        transparent_bg = true,
+        italic_comment = true,
+      }
+
+      vim.cmd [[colorscheme dracula]]
+    end,
+  },
+  {
+    'comfysage/evergarden',
+    priority = 1000,
+    lazy = true,
+    config = function()
+      require('evergarden').setup {
+        transparent_background = true,
+        contrast_dark = 'medium', -- 'hard'|'medium'|'soft'
+        override_terminal = true,
+        style = {
+          tabline = { reverse = true, color = 'green' },
+          search = { reverse = false, inc_reverse = true },
+          types = { italic = true },
+          keyword = { italic = true },
+          comment = { italic = false },
+          sign = { highlight = false },
+        },
+        overrides = {}, -- add custom overrides
+      }
+
+      vim.cmd [[colorscheme evergarden]]
+    end,
+  },
+  {
     'rafamadriz/neon',
     lazy = true,
     priority = 1000,
@@ -16,41 +154,6 @@ return {
     end,
   },
   {
-    'echasnovski/mini.base16',
-    lazy = true,
-    priority = 1000,
-    config = function()
-      require('mimi.base16').setup {
-        palette = {
-          base00 = '',
-          base01 = '',
-          base02 = '',
-          base03 = '',
-          base04 = '',
-          base05 = '',
-          base06 = '',
-          base07 = '',
-          base08 = '',
-          base09 = '',
-          base0A = '',
-          base0B = '',
-          base0C = '',
-          base0D = '',
-          base0E = '',
-          base0F = '',
-        },
-      }
-    end,
-  },
-  {
-    'Abstract-IDE/Abstract-cs',
-    lazy = true,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'abscs'
-    end,
-  },
-  {
     'maxmx03/fluoromachine.nvim',
     priority = 1000,
     lazy = true,
@@ -61,62 +164,6 @@ return {
         theme = 'retrowave',
       }
       vim.cmd.colorscheme 'fluoromachine'
-    end,
-  },
-  {
-    'nyoom-engineering/oxocarbon.nvim',
-    lazy = true,
-    priority = 1000,
-    config = function()
-      vim.opt.background = 'dark'
-      vim.cmd.colorscheme 'oxocarbon'
-
-      -- Transparency
-      -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-      -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    end,
-  },
-  {
-    'sontungexpt/witch',
-    priority = 1000,
-    lazy = true,
-    config = function()
-      require('witch').setup {
-        theme = {
-          enabled = true,
-          style = 'dark',
-          extras = {
-            bracket = true,
-            diffview = true,
-          },
-          customs = {
-            -- require("witch.theme.example"),
-          },
-          --- @param style string : the current style of the theme
-          --- @param colors table : the current colors of the theme
-          --- @param highlight table : the current highlights of the theme
-          on_highlight = function(style, colors, highlight) end,
-        },
-        dim_inactive = {
-          enabled = true,
-          level = 0.48,
-          excluded = {
-            filetypes = {
-              NvimTree = true,
-            },
-            buftypes = {
-              nofile = true,
-              prompt = true,
-              terminal = true,
-            },
-          },
-        },
-        switcher = true,
-        more_themes = {
-          -- Custom1 = {},
-          -- Custom2 = {},
-        },
-      }
     end,
   },
   {
@@ -191,16 +238,13 @@ return {
         keywordStyle = { italic = true },
         statementStyle = { bold = true },
         typeStyle = {},
-        transparent = false, -- do not set background color
+        transparent = true,
         dimInactive = false, -- dim inactive window `:h hl-NormalNC`
         terminalColors = true, -- define vim.g.terminal_color_{0,17}
         colors = { -- add/modify theme and palette colors
           palette = {},
           theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
         },
-        overrides = function(colors) -- add/modify highlights
-          return {}
-        end,
         background = {
           dark = 'dragon',
           light = 'lotus',
@@ -223,14 +267,14 @@ return {
 
         enable = {
           terminal = true,
-          legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+          legacy_highlights = false, -- Improve compatibility for previous versions of Neovim
           migrations = true, -- Handle deprecated options automatically
         },
 
         styles = {
           bold = true,
           italic = true,
-          transparency = false,
+          transparency = true,
         },
 
         groups = {
