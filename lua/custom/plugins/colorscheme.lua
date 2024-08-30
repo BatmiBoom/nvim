@@ -121,7 +121,7 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = false,
+    lazy = true,
     name = 'catppuccin',
     priority = 1000,
     config = function()

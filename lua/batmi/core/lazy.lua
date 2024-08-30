@@ -13,7 +13,6 @@ require('lazy').setup({
   require 'custom.plugins.lsp.rust',
   require 'custom.plugins.lsp.lua',
   require 'custom.plugins.lsp.go',
-  require 'custom.plugins.lsp.previewer',
   require 'custom.plugins.lsp',
 }, {
   defaults = {

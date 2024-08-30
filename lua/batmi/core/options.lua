@@ -84,3 +84,10 @@ vim.opt.winbar = '%=%m %f'
 -- CMP --
 local cmptoggle = false
 vim.g.cmptoggle = cmptoggle
+
+vim.cmd [[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]]

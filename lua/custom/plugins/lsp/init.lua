@@ -19,17 +19,22 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- GLANCE
-          map('gd', '<CMD>Glance definitions<CR>', '[G]oto Definition')
-          map('gtd', '<CMD>Glance type_definitions<CR>', '[G]oto Type Definition')
-          map('gI', '<CMD>Glance implementations<CR>', '[G]oto implementation')
           -- TELESCOPE
-          map('gds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          local telescope = require 'telescope.builtin'
+          map('gd', function()
+            telescope.lsp_definitions { jump_type = 'tab', reuse_win = true }
+          end, '[G]oto Definition')
+          map('gtd', function()
+            telescope.lsp_type_definitions { jump_type = 'tab', reuse_win = true }
+          end, '[G]oto Type Definition')
+          map('gr', function()
+            telescope.lsp_references { jump_type = 'tab' }
+          end, '[G]oto References & Implementation')
+          map('gds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('gws', telescope.lsp_dynamic_workspace_symbols, '[W]orkspace Symbols')
           -- BUILTINT
-          map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-          map('gtd', vim.lsp.buf.type_definition, 'Type [D]efinition')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
