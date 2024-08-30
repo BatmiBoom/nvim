@@ -10,11 +10,6 @@ return {
       { 'nvim-telescope/telescope.nvim' },
 
       'b0o/SchemaStore.nvim',
-
-      {
-        'rmagatti/goto-preview',
-        config = true,
-      },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -24,19 +19,20 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          local g = require 'goto-preview'
-          map('gd', g.goto_preview_definition, '[G]oto [D]efinition')
-          map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
-          map('gI', g.goto_preview_implementation, '[G]oto [I]mplementation')
-          map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
-          map('gD', g.goto_preview_declaration, '[G]oto [D]eclaration')
-          map('gtd', g.goto_preview_type_definition, 'Type [D]efinition')
+          -- GLANCE
+          map('gd', '<CMD>Glance definitions<CR>', '[G]oto Definition')
+          map('gtd', '<CMD>Glance type_definitions<CR>', '[G]oto Type Definition')
+          map('gI', '<CMD>Glance implementations<CR>', '[G]oto implementation')
+          -- TELESCOPE
           map('gds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          -- BUILTINT
+          map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+          map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gtd', vim.lsp.buf.type_definition, 'Type [D]efinition')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
           map('gk', vim.lsp.buf.hover, 'Hover Documentation')
-
-          map('<leader>cw', g.close_all_win, '[C]lose all windows')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
