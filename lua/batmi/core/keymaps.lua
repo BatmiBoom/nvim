@@ -74,11 +74,7 @@ map('n', '<leader>bx', ':bdelete<CR>')
 map('n', '<leader>r', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
 
 -- Diagnostics
-map('n', '<space>xx', vim.diagnostic.open_float, {})
-map('n', '<leader>xn', vim.diagnostic.setloclist, {})
-map('n', '<C-j>', function()
-  vim.diagnostic.goto_next()
-end)
+-- Pop up error <C-W>d
 
 -- MOVE LINES
 map('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'Move down' })

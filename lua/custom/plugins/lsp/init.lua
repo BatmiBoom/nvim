@@ -32,28 +32,40 @@ return {
           map('gtd', vim.lsp.buf.type_definition, 'Type [D]efinition')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-          map('gk', vim.lsp.buf.hover, 'Hover Documentation')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
+          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+            map('<leader>th', function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+            end, '[T]oggle Inlay [H]ints')
           end
 
-          if client and client.server_capabilities.documentHighlightProvider then
-            vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+            local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+            vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.document_highlight,
+            })
+
+            vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+              buffer = event.buf,
+              group = highlight_augroup,
+              callback = vim.lsp.buf.clear_references,
+            })
 
             vim.api.nvim_create_autocmd('LspDetach', {
-              group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+              group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
               callback = function(event2)
                 vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
               end,
             })
           end
         end,
       })
-
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       capabilities.textDocument.completion.completionItem = {
         snippetSupport = true,

@@ -30,6 +30,7 @@ return {
         'markdown_inline',
         'odin',
         'python',
+        'query',
         'regex',
         'rust',
         'sql',
