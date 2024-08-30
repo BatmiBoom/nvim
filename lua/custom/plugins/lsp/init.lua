@@ -155,9 +155,12 @@ return {
         -- FORMATTERS
         'stylua',
         'prettierd',
+        'gofumpt',
+        'goimports',
         -- LINTERS
         'biome',
         'ruff',
+        'golangci-lint',
       })
 
       require('mason').setup()
