@@ -58,9 +58,9 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
 
 -- New tab
 map('n', 'te', ':tabedit<CR>', {})
-map('n', 'tc', ':tabclose<CR>', {})
-map('n', 'tn', ':tabnext<CR>', {})
-map('n', 'tp', ':tabprev<CR>', {})
+map('n', 'tx', ':tabclose<CR>', {})
+map('n', '<TAB>', ':tabnext<CR>', {})
+map('n', '<S-TAB>', ':tabprev<CR>', {})
 
 -- Split window
 map('n', 'zh', ':split<CR>', {})
