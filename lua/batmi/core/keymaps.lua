@@ -54,6 +54,10 @@ map({ 'n', 'v' }, '<leader>d', [["_d]], { remap = false })
 map('n', '<leader>p', [[m`0"_DP``]], {})
 map('v', '<leader>p', [[m`"_dP``]], {})
 
+-- Copy from sytem clipboard
+map('n', '<leader>P', [[+p]], {})
+
+-- Clear search
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
 
 -- New tab

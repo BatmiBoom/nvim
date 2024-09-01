@@ -4,6 +4,8 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 vim.g.terminal_emulator = 'pwsh'
 
+vim.opt.clipboard = 'unnamedplus'
+
 vim.opt.wildignore:append { '*.o', '*~', '*.pyc', '*pycache*' }
 vim.opt.wildignore:append { 'Cargo.lock' }
 
