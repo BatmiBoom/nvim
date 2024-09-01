@@ -36,6 +36,8 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hidden = true
 
+vim.opt.inccommand = 'split'
+
 vim.opt.backspace = 'indent,eol,start'
 
 vim.opt.showbreak = string.rep(' ', 3)
@@ -76,7 +78,7 @@ vim.opt.modelines = 1
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.shada = { "'10", '<0', 's10', 'h' }
-vim.opt.formatoptions:remove 'o'
+vim.opt.formatoptions:remove { 'o' }
 
 vim.opt.diffopt = { 'internal', 'filler', 'closeoff', 'hiddenoff', 'algorithm:minimal' }
 
