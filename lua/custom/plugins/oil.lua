@@ -2,7 +2,7 @@ return {
   {
     'stevearc/oil.nvim',
     event = 'VeryLazy',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'echasnovski/mini.icons' },
     config = function()
       require('oil').setup {
         default_file_explorer = true,
