@@ -24,14 +24,6 @@ return {
         quit_key = '<ESC>',
         resize_keys = { 'h', 'j', 'k', 'l' },
         silent = true,
-        hooks = {
-          on_enter = function()
-            vim.notify 'Entering resize mode'
-          end,
-          on_leave = function()
-            vim.notify 'Exiting resize mode, bye'
-          end,
-        },
       },
       ignored_events = {
         'BufEnter',
@@ -41,18 +33,16 @@ return {
       -- this functionality is only supported on tmux and Wezterm due to kitty
       -- not having a way to check if a pane is zoomed
       disable_multiplexer_nav_when_zoomed = true,
-      -- Supply a Kitty remote control password if needed,
-      -- or you can also set vim.g.smart_splits_kitty_password
-      -- see https://sw.kovidgoyal.net/kitty/conf/#opt-kitty.remote_control_password
-      kitty_password = nil,
       -- default logging level, one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
       log_level = 'info',
     }
 
+    --resize
     vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
     vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
     vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
     vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+
     -- moving between splits
     vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
     vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
@@ -60,9 +50,9 @@ return {
     vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
     vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
     -- swapping buffers between windows
-    vim.keymap.set('n', '<leader><leader>h', require('smart-splits').swap_buf_left)
-    vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down)
-    vim.keymap.set('n', '<leader><leader>k', require('smart-splits').swap_buf_up)
-    vim.keymap.set('n', '<leader><leader>l', require('smart-splits').swap_buf_right)
+    vim.keymap.set('n', '<C-A-h>', require('smart-splits').swap_buf_left)
+    vim.keymap.set('n', '<C-A-j>', require('smart-splits').swap_buf_down)
+    vim.keymap.set('n', '<C-A-k>', require('smart-splits').swap_buf_up)
+    vim.keymap.set('n', '<C-A-l>', require('smart-splits').swap_buf_right)
   end,
 }
