@@ -157,6 +157,7 @@ return {
         'prettierd',
         'gofumpt',
         'goimports',
+        'golines',
         -- LINTERS
         'biome',
         'ruff',
