@@ -1,7 +1,7 @@
 return {
   {
     'folke/tokyonight.nvim',
-    lazy = false,
+    lazy = true,
     priority = 1000,
     opts = {},
     config = function()
@@ -32,13 +32,13 @@ return {
   {
     'EdenEast/nightfox.nvim',
     priority = 1000,
-    lazy = true,
+    lazy = false,
     config = function()
       require('nightfox').setup {
         options = {
           compile_path = vim.fn.stdpath 'cache' .. '/nightfox',
           compile_file_suffix = '_compiled',
-          transparent = true,
+          transparent = false,
           terminal_colors = true,
           dim_inactive = false,
           module_default = true,

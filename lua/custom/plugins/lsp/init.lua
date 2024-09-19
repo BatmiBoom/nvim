@@ -119,7 +119,7 @@ return {
         },
         pyright = {},
         -- rust_analyzer = {},
-        tsserver = {},
+        ts_ls = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes { ...},
