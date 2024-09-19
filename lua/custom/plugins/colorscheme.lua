@@ -52,10 +52,10 @@ return {
             },
           },
           styles = { -- Value is any valid attr-list value `:help attr-list`
-            comments = 'italic',
+            comments = 'NONE',
             conditionals = 'NONE',
             constants = 'NONE',
-            functions = 'NONE',
+            functions = 'italic',
             keywords = 'bold',
             numbers = 'NONE',
             operators = 'NONE',
@@ -71,7 +71,7 @@ return {
         },
       }
 
-      vim.cmd 'colorscheme nightfox' -- nightfox, duskfox, nordfox, terafox, carbonfox
+      vim.cmd 'colorscheme carbonfox' -- nightfox, duskfox, nordfox, terafox, carbonfox
     end,
   },
   {

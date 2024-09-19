@@ -26,8 +26,8 @@ vim.opt.mouse = 'a'
 vim.opt.diffopt = 'iwhite,filler'
 
 vim.opt.showmode = false
-vim.opt.showcmd = true
-vim.opt.cmdheight = 1
+vim.opt.showcmd = false
+vim.opt.cmdheight = 0
 vim.opt.laststatus = 3
 
 vim.opt.incsearch = true
@@ -84,6 +84,10 @@ vim.opt.diffopt = { 'internal', 'filler', 'closeoff', 'hiddenoff', 'algorithm:mi
 
 vim.opt.whichwrap:append '<>[]hl'
 vim.opt.winbar = '%=%m %f'
+
+-- GREP --
+vim.opt.grepprg = 'rg --vimgrep --color=never --no-heading --with-filename --line-number --column --smart-case --hidden'
+vim.opt.grepformat = '%f:%l:%c:%m'
 
 -- CMP --
 local cmptoggle = false

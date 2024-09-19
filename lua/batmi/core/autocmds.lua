@@ -4,6 +4,12 @@ end
 
 local autocmd = vim.api.nvim_create_autocmd
 
+autocmd('QuickFixCmdPost', {
+  group = vim.api.nvim_create_augroup('AutoOpenQuickfix', { clear = true }),
+  pattern = { '[^l]*' },
+  command = 'cwindow',
+})
+
 -- Check if we need to reload the file when it changed
 autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
   group = augroup 'checktime',
