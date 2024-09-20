@@ -127,6 +127,12 @@ Optional Dependencies:
 
 # TOOLS
 
+## Lazygit
+
+```bash
+go install github.com/jesseduffield/lazygit@latest
+```
+
 ## poppler
 
 ```

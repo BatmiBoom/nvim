@@ -1,19 +1,16 @@
 return {
-  'NeogitOrg/neogit',
-  branch = 'master',
+  'kdheepak/lazygit.nvim',
+  cmd = {
+    'LazyGit',
+    'LazyGitConfig',
+    'LazyGitCurrentFile',
+    'LazyGitFilter',
+    'LazyGitFilterCurrentFile',
+  },
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'sindrets/diffview.nvim',
-    'nvim-telescope/telescope.nvim',
   },
-  config = true,
   keys = {
-    {
-      '<leader>g',
-      function()
-        require('neogit').open { kind = 'auto', cwd = '%:p:h' }
-      end,
-      {},
-    },
+    { '<leader>gg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
   },
 }
