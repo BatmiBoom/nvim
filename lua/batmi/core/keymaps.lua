@@ -75,7 +75,7 @@ map('n', 'zx', ':close<CR>', {})
 map('n', '<leader>bx', ':bdelete<CR>')
 
 -- for fast repalce
-map('n', '<leader>r', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {})
+map('n', '<leader>rn', ':%s///gcI', {})
 
 -- Diagnostics
 -- Pop up error <C-W>d

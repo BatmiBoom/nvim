@@ -59,7 +59,9 @@
 
 ### Linux - Mac
 
-`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 
 ## Python
 
@@ -81,7 +83,7 @@
 
 ### Windows
 
-```console
+```bash
 scoop install erlang
 scoop install gleam
 scoop install elixir
@@ -89,7 +91,7 @@ scoop install elixir
 
 ### Mac and Linux
 
-```console
+```bash
 brew install erlang
 brew install gleam
 brew install elixir
@@ -103,7 +105,9 @@ brew install elixir
 
 ## Yazi
 
-`cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli`
+```bash
+cargo install --locked --git https://github.com/sxyazi/yazi.git yazi-fm yazi-cli
+```
 
 ### Windows
 
@@ -112,8 +116,10 @@ brew install elixir
 
 ### Mac and Linux
 
-- `brew install font-symbols-only-nerd-font`
-- `brew install ffmpegthumbnailer`
+```bash
+brew install font-symbols-only-nerd-font
+brew install ffmpegthumbnailer
+```
 
 Optional Dependencies:
 
@@ -124,6 +130,8 @@ Optional Dependencies:
 - [fd](#fd)
 - [jq](#jq)
 - [unar](#unar)
+- [delta](#delta)
+- [sad](#sad)
 
 # TOOLS
 
@@ -135,13 +143,13 @@ go install github.com/jesseduffield/lazygit@latest
 
 ## poppler
 
-```
+```bash
 scoop install poppler
 ```
 
 ## ripgrep
 
-```
+```bash
 cargo install ripgrep
 ```
 
@@ -149,37 +157,37 @@ cargo install ripgrep
 
 ### Mac - Linux
 
-```
+```bash
 brew install fzf
 ```
 
 ### Windows
 
-```
+```bash
 scoop install fzf
 ```
 
 ## zoxide
 
-[link](https://github.com/ajeetdsouza/zoxide)
+[ZOXIDE](https://github.com/ajeetdsouza/zoxide)
 
 ## bat - cat replacement
 
 ### Mac
 
-```
+```bash
 brew install bat
 ```
 
 ### Windows
 
-```
+```bash
 scoop install bat
 ```
 
 ### Linux
 
-```
+```bash
 sudo apt install bat
 ```
 
@@ -187,20 +195,20 @@ sudo apt install bat
 
 ### Linux
 
-```
+```bash
 sudo apt install fd-find
 ln -s $(which fdfind) ~/.local/bin/fd
 ```
 
 ### Mac
 
-```
+```bash
 brew install fd
 ```
 
 ### Windows
 
-```
+```bash
 scoop install fd
 ```
 
@@ -208,13 +216,13 @@ scoop install fd
 
 ### Linux - Mac
 
-```
+```bash
 brew install lsd
 ```
 
 ### Windows
 
-```
+```bash
 cargo install lsd
 ```
 
@@ -224,21 +232,21 @@ cargo install lsd
 
 ## bottom
 
-```
+```bash
 cargo install bottom --locked
 ```
 
 ## unar
 
-[link](https://theunarchiver.com/command-line)
+[UNAR](https://theunarchiver.com/command-line)
 
 ## cmake
 
-[link](https://cmake.org/download/)
+[CMAKE](https://cmake.org/download/)
 
 ## make
 
-```
+```bash
 choco install make
 ```
 
@@ -248,26 +256,37 @@ choco install make
 
 [LLVM + CLANG](https://github.com/llvm/llvm-project/releases)
 
+## Delta
+
+```bash
+cargo install git-delta
+```
+
+## Sad
+
+```bash
+cargo install --locked --all-features --root="/usr/bin/" \
+  --git https://github.com/ms-jpq/sad --branch senpai
+```
+
 # NEOVIM
 
 ### Mac - Linux
 
-```
--- Install
+```bash
 brew install --HEAD neovim
--- Update
 brew upgrade neovim --fetch-HEAD
 ```
 
 ### Windows
 
-```
+```bash
 choco install neovim --pre
 ```
 
 ## NEOVIM DEPENDENCIES
 
-```
+```bash
 pip install neovim
 npm install -g neovim
 ```
