@@ -4,10 +4,11 @@ end
 
 local autocmd = vim.api.nvim_create_autocmd
 
+-- automatically open quick fix trouble
 autocmd('QuickFixCmdPost', {
-  group = vim.api.nvim_create_augroup('AutoOpenQuickfix', { clear = true }),
-  pattern = { '[^l]*' },
-  command = 'cwindow',
+  callback = function()
+    vim.cmd [[Trouble qflist open]]
+  end,
 })
 
 -- Check if we need to reload the file when it changed
