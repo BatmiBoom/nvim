@@ -136,6 +136,7 @@ return {
         ols = {},
         sqlls = {},
         taplo = {},
+        tailwindcss = {},
         yamlls = {
           settings = {
             yaml = {

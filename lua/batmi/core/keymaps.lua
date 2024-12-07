@@ -1,3 +1,5 @@
+local custom_functions = require 'batmi.core.functions'
+
 local function map(mode, lhs, rhs, opts)
   local options = { noremap = true, silent = true }
   if opts then
@@ -5,6 +7,10 @@ local function map(mode, lhs, rhs, opts)
   end
   vim.keymap.set(mode, lhs, rhs, options)
 end
+
+-- PERSONAL
+map('n', '<leader>op', custom_functions.open_floating_window)
+-----------------
 
 -- BETTER ESCAPE
 map('i', 'jk', '<Esc>', {})
