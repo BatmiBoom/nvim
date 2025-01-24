@@ -4,7 +4,6 @@ return {
     version = false,
     dependencies = {
       { 'echasnovski/mini.surround', version = false },
-      { 'echasnovski/mini.pairs', version = false },
     },
     event = { 'InsertEnter' },
     config = function()
@@ -28,26 +27,6 @@ return {
           highlight = 'yh', -- Highlight surrounding
           replace = 'yr', -- Replace surrounding
           update_n_lines = 'yn', -- Update `n_lines`
-        },
-      }
-
-      require('mini.pairs').setup {
-        modes = { insert = true, command = false, terminal = false },
-
-        -- - <action> - one of 'open', 'close', 'closeopen'.
-        -- - <pair> - two character string for pair to be used.
-        mappings = {
-          ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
-          ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
-          ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
-
-          [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
-          [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
-          ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
-
-          ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
-          ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
-          ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
         },
       }
     end,
