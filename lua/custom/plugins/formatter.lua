@@ -3,7 +3,6 @@ return {
   event = { 'BufWritePre' },
   cmd = { 'ConformInfo' },
   config = function()
-    local slow_format_filetypes = {}
     require('conform').setup {
       notify_on_error = true,
       formatters_by_ft = {
@@ -23,6 +22,7 @@ return {
         markdown = { 'prettierd' },
         gleam = { 'gleam' },
         go = { 'gofumpt', 'goimports', 'golines' },
+        rust = { 'rustfmt', lsp_format = 'fallback' },
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
       },

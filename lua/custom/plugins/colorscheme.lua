@@ -32,7 +32,7 @@ return {
   {
     'EdenEast/nightfox.nvim',
     priority = 1000,
-    lazy = false,
+    lazy = true,
     config = function()
       require('nightfox').setup {
         options = {
@@ -168,7 +168,7 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = true,
+    lazy = false,
     name = 'catppuccin',
     priority = 1000,
     config = function()
