@@ -117,7 +117,7 @@ return {
   {
     'comfysage/evergarden',
     priority = 1000,
-    lazy = true,
+    lazy = false,
     config = function()
       require('evergarden').setup {
         transparent_background = true,
@@ -125,6 +125,7 @@ return {
         override_terminal = true,
         style = {
           tabline = { reverse = true, color = 'green' },
+          incsearch = {},
           search = { reverse = false, inc_reverse = true },
           types = { italic = true },
           keyword = { italic = true },
