@@ -19,19 +19,10 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- TELESCOPE
-          local telescope = require 'telescope.builtin'
-          map('gd', function()
-            telescope.lsp_definitions { jump_type = 'tab', reuse_win = true }
-          end, '[G]oto Definition')
-          map('gtd', function()
-            telescope.lsp_type_definitions { jump_type = 'tab', reuse_win = true }
-          end, '[G]oto Type Definition')
-          map('gr', function()
-            telescope.lsp_references { jump_type = 'tab' }
-          end, '[G]oto References & Implementation')
-          map('gds', telescope.lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('gws', telescope.lsp_dynamic_workspace_symbols, '[W]orkspace Symbols')
+          -- FZF
+          map('gd', ':FzfxLspDefinitions<CR>', '[G]oto Definition')
+          map('gtd', ':FzfxLspTypeDefinitions<CR>', '[G]oto Type Definition')
+          map('gr', ':FzfxLspReferences<CR>', '[G]oto References & Implementation')
           -- BUILTINT
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
