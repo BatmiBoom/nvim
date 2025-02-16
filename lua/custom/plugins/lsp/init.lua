@@ -7,7 +7,6 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'williamboman/mason.nvim', config = true },
-      { 'nvim-telescope/telescope.nvim' },
 
       'b0o/SchemaStore.nvim',
     },
