@@ -117,7 +117,7 @@ return {
   {
     'comfysage/evergarden',
     priority = 1000,
-    lazy = false,
+    lazy = true,
     config = function()
       require('evergarden').setup {
         transparent_background = true,
