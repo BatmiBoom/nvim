@@ -18,22 +18,11 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- FZF
-          map('gd', ':FzfxLspDefinitions<CR>', '[G]oto Definition')
-          map('gtd', ':FzfxLspTypeDefinitions<CR>', '[G]oto Type Definition')
-          map('gr', ':FzfxLspReferences<CR>', '[G]oto References & Implementation')
           -- BUILTINT
           map('gs', vim.lsp.buf.signature_help, '[S]ignature [H]elp')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, 0) then
-            map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-            end, '[T]oggle Inlay [H]ints')
-          end
         end,
       })
 

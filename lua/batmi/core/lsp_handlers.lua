@@ -7,36 +7,9 @@ vim.diagnostic.config {
   float = {
     show_header = true,
     border = 'rounded',
-    source = 'always',
-    format = function(d)
-      if not d.code and not d.user_data then
-        return d.message
-      end
-
-      local t = vim.deepcopy(d)
-      local code = d.code
-      if not code then
-        if not d.user_data.lsp then
-          return d.message
-        end
-
-        code = d.user_data.lsp.code
-      end
-      if code then
-        t.message = string.format('%s [%s]', t.message, code):gsub('1. ', '')
-      end
-      return t.message
-    end,
+    source = true,
   },
 
   severity_sort = true,
   update_in_insert = false,
 }
-
--- setup borders for handlers
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "shadow",
-})
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "shadow",
-})

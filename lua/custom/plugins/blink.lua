@@ -1,6 +1,9 @@
 return {
   'saghen/blink.cmp',
-  dependencies = 'rafamadriz/friendly-snippets',
+  dependencies = {
+    'rafamadriz/friendly-snippets',
+    'echasnovski/mini.icons',
+  },
   version = '*',
   opts = {
     keymap = { preset = 'default' },

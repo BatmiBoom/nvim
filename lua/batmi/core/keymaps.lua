@@ -60,8 +60,11 @@ map({ 'n', 'v' }, '<leader>d', [["_d]], { remap = false })
 map('n', '<leader>p', [[m`0"_DP``]], {})
 map('v', '<leader>p', [[m`"_dP``]], {})
 
--- Copy from sytem clipboard
+-- Paste from sytem clipboard
 map('n', '<leader>P', [[+p]], {})
+
+-- Yank to sytem clipboard
+map('n', '<leader>Y', [[+y]], {})
 
 -- Clear search
 map('n', '<Esc>', '<cmd>nohlsearch<CR>', {})
@@ -76,15 +79,6 @@ map('n', '<S-TAB>', ':tabprev<CR>', {})
 map('n', 'zh', ':split<CR>', {})
 map('n', 'zv', ':vsplit<CR>', {})
 map('n', 'zx', ':close<CR>', {})
-
--- Buffer delete
-map('n', '<leader>bx', ':bdelete<CR>')
-
--- for fast repalce
-map('n', '<leader>rn', ':%s///gcI', {})
-
--- Diagnostics
--- Pop up error <C-W>d
 
 -- MOVE LINES
 map('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'Move down' })

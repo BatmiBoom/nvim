@@ -88,15 +88,3 @@ vim.opt.winbar = '%=%m %f'
 -- GREP --
 vim.opt.grepprg = 'rg --vimgrep --color=never --no-heading --with-filename --line-number --column --smart-case --hidden'
 vim.opt.grepformat = '%f:%l:%c:%m'
-
--- CMP --
-local cmptoggle = false
-vim.g.cmptoggle = cmptoggle
-
--- Make daefault theme background transparent
--- vim.cmd [[
---   highlight Normal guibg=none
---   highlight NonText guibg=none
---   highlight Normal ctermbg=none
---   highlight NonText ctermbg=none
--- ]]
