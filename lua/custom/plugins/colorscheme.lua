@@ -1,4 +1,13 @@
 return {
+{
+  "olimorris/onedarkpro.nvim",
+  priority = 1000, -- Ensure it loads first
+    lazy = false,
+    config = function ()
+     vim.cmd("colorscheme onedark") 
+    end
+},
+
   {
     'folke/tokyonight.nvim',
     lazy = true,
@@ -169,7 +178,7 @@ return {
   },
   {
     'catppuccin/nvim',
-    lazy = false,
+    lazy = true,
     name = 'catppuccin',
     priority = 1000,
     config = function()
