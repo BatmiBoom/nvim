@@ -72,7 +72,7 @@ return {
         jsonls = {},
         pyright = {},
         rust_analyzer = {},
-        ts_ls = {},
+        -- ts_ls = {},
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -107,6 +107,8 @@ return {
         'biome',
         'ruff',
         'golangci-lint',
+        -- LSP THAT DOESNT GO IN LSP SETTING
+        'ts_ls', -- typescript-tools setups ts/js server
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
