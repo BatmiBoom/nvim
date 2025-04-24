@@ -7,18 +7,9 @@ local autocmd = vim.api.nvim_create_autocmd
 -- highlight when yank
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = augroup 'kickstart-highlight-yank',
+  group = augroup 'highlight-yank',
   callback = function()
     vim.highlight.on_yank()
-  end,
-})
-
--- Fix conceallevel for json files
-autocmd({ 'FileType' }, {
-  group = augroup 'json_conceal',
-  pattern = { 'json', 'jsonc', 'json5' },
-  callback = function()
-    vim.opt_local.conceallevel = 0
   end,
 })
 
