@@ -18,7 +18,7 @@ return {
   },
   {
     'github-main-user/lytmode.nvim',
-    lazy = false,
+    lazy = true,
     priority = 1000,
     config = function()
       require('lytmode').setup {
@@ -34,6 +34,33 @@ return {
       }
 
       vim.cmd 'colorscheme lytmode'
+    end,
+  },
+  {
+    'everviolet/nvim',
+    name = 'evergarden',
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require('evergarden').setup {
+        theme = {
+          variant = 'winter',
+          accent = 'green',
+        },
+        editor = {
+          transparent_background = false,
+          sign = { color = 'none' },
+          float = {
+            color = 'mantle',
+            invert_border = false,
+          },
+          completion = {
+            color = 'surface0',
+          },
+        },
+      }
+
+      vim.cmd 'colorscheme evergarden'
     end,
   },
 }
