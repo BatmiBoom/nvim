@@ -14,7 +14,6 @@ return {
             end,
           },
         },
-        opts = {},
       },
       'folke/lazydev.nvim',
     },
@@ -26,16 +25,26 @@ return {
         nerd_font_variant = 'mono',
       },
       completion = {
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        menu = { border = 'single' },
+        documentation = { auto_show = true, auto_show_delay_ms = 500, window = { border = 'single' } },
       },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          lsp = {
+            name = 'LSP',
+            module = 'blink.cmp.sources.lsp',
+            transform_items = function(_, items)
+              return vim.tbl_filter(function(item)
+                return item.kind ~= require('blink.cmp.types').CompletionItemKind.Keyword
+              end, items)
+            end,
+          },
         },
       },
       snippets = { preset = 'luasnip' },
-      fuzzy = { implementation = 'lua' },
+      fuzzy = { implementation = 'lua', sorts = { 'exact', 'score', 'sort_text' } },
       signature = { enabled = true },
     },
   },
