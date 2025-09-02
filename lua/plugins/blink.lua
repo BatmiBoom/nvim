@@ -1,51 +1,50 @@
-return {
-  {
-    'saghen/blink.cmp',
-    version = '1.*',
-    dependencies = {
-      {
-        'L3MON4D3/LuaSnip',
-        version = '2.*',
-        dependencies = {
-          {
-            'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-          },
-        },
-      },
-      'folke/lazydev.nvim',
-    },
-    opts = {
-      keymap = {
-        preset = 'default',
-      },
-      appearance = {
-        nerd_font_variant = 'mono',
-      },
-      completion = {
-        menu = { border = 'single' },
-        documentation = { auto_show = true, auto_show_delay_ms = 500, window = { border = 'single' } },
-      },
-      sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
-        providers = {
-          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-          lsp = {
-            name = 'LSP',
-            module = 'blink.cmp.sources.lsp',
-            transform_items = function(_, items)
-              return vim.tbl_filter(function(item)
-                return item.kind ~= require('blink.cmp.types').CompletionItemKind.Keyword
-              end, items)
-            end,
-          },
-        },
-      },
-      snippets = { preset = 'luasnip' },
-      fuzzy = { implementation = 'lua', sorts = { 'exact', 'score', 'sort_text' } },
-      signature = { enabled = true },
-    },
-  },
-}
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
+vim.pack.add({ "https://github.com/saghen/blink.cmp" })
+vim.pack.add({ "https://github.com/L3MON4D3/LuaSnip" })
+vim.pack.add({ "https://github.com/rafamadriz/friendly-snippets" })
+
+require("blink.cmp").setup({
+	keymap = {
+		preset = "default",
+	},
+	completion = {
+		menu = {
+			border = "single",
+			draw = {
+				components = {
+					kind_icon = {
+						text = function(ctx)
+							local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+							return kind_icon
+						end,
+						highlight = function(ctx)
+							local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+							return hl
+						end,
+					},
+					kind = {
+						highlight = function(ctx)
+							local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+							return hl
+						end,
+					},
+				},
+			},
+		},
+		documentation = { auto_show = true, auto_show_delay_ms = 500, window = { border = "single" } },
+	},
+	sources = {
+		providers = {
+			lsp = {
+				name = "LSP",
+				module = "blink.cmp.sources.lsp",
+			},
+		},
+		default = { "lsp", "path", "snippets" },
+	},
+	snippets = { preset = "luasnip" },
+	fuzzy = { implementation = "lua", sorts = { "exact", "score", "sort_text" } },
+	signature = { enabled = true },
+})
+
+require("luasnip.loaders.from_vscode").lazy_load()

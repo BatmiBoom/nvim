@@ -1,1 +1,3 @@
-require("config.lazy")
+require("core")
+require("internal")
+require("plugins")
