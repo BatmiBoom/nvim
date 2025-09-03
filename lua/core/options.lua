@@ -55,7 +55,7 @@ vim.opt.conceallevel = 0
 vim.opt.concealcursor = ""
 vim.opt.lazyredraw = true
 vim.opt.synmaxcol = 300
-vim.opt.winborder= 'rounded'
+vim.opt.winborder = 'rounded'
 
 -- Behavior Settings
 vim.opt.errorbells = false
@@ -68,5 +68,7 @@ vim.opt.encoding = 'UTF-8'
 vim.g.netrw_banner = 0
 vim.g.netrw_altv = 1
 vim.g.netrw_browse_split = 4
-vim.g.netrw_liststyle = 4
+vim.g.netrw_liststyle = 0
 vim.g.netrw_winsize = 14
+vim.g.netrw_hide = 1
+vim.g.netrw_liststyle = 3
