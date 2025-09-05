@@ -4,8 +4,7 @@
 -- Exit insert mode
 vim.keymap.set("i", "jk", "<Esc>")
 
--- Open Netrw
-vim.keymap.set("n", "-", ":Lexplore<CR>")
+-- Find
 vim.keymap.set("n", "<leader>ff", ":find ", { desc = "Find file" })
 
 -- Remove highlight
