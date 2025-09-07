@@ -8,7 +8,6 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 8
 
-
 -- Show whitespace charactrers
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
@@ -40,7 +39,6 @@ vim.opt.splitbelow = true
 
 -- Save Undo History
 vim.opt.undofile = true
-
 -- Visual settings
 vim.opt.termguicolors = true
 vim.opt.signcolumn = 'yes'
@@ -52,7 +50,7 @@ vim.opt.pumheight = 10
 vim.opt.pumblend = 10
 vim.opt.winblend = 0
 vim.opt.conceallevel = 0
-vim.opt.concealcursor = ""
+vim.opt.concealcursor = ''
 vim.opt.lazyredraw = true
 vim.opt.synmaxcol = 300
 vim.opt.winborder = 'rounded'
@@ -61,8 +59,8 @@ vim.opt.winborder = 'rounded'
 vim.opt.errorbells = false
 vim.opt.backspace = 'indent,eol,start'
 vim.opt.autochdir = false
-vim.opt.iskeyword:append("-")
-vim.opt.path:append("**")
+vim.opt.iskeyword:append '-'
+vim.opt.path:append '**'
 vim.opt.encoding = 'UTF-8'
 
 vim.g.netrw_banner = 0
