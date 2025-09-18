@@ -2,7 +2,8 @@ vim.pack.add({
     { src = "https://github.com/nvim-mini/mini.pick" },
     { src = 'https://github.com/nvim-mini/mini.surround' },
     { src = 'https://github.com/nvim-mini/mini.files' },
-    { src = 'https://github.com/nvim-mini/mini.tabline' }
+    { src = 'https://github.com/nvim-mini/mini.tabline' },
+    { src = 'https://github.com/nvim-mini/mini.statusline' }
 })
 require("mini.pick").setup({ -- Keys for performing actions. See `:h MiniPick-actions`.
     mappings = {
@@ -66,6 +67,7 @@ require('mini.surround').setup({
 
 require('mini.files').setup()
 require('mini.tabline').setup()
+require('mini.statusline').setup()
 
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>", { desc = "File Picker" })
 vim.keymap.set("n", "<leader>b", ":Pick buffers<CR>", { desc = "Buffer Picker" })

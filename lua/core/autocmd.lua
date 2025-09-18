@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
-    pattern = { "help", "minifiles", "nvim-pack" },
+    pattern = { "help", "minifiles", "nvim-pack", "qf" },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.keymap.set('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })

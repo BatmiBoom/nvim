@@ -40,3 +40,4 @@ vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and reselect' })
 -- Tabs
 vim.keymap.set('n', '<C-]>', ':bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<C-[>', ':bprev<CR>', { desc = 'Prev buffer' })
+vim.keymap.set('n', '<C-x>', ':bdelete<CR>', { desc = 'Close buffer' })

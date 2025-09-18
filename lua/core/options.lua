@@ -7,6 +7,7 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 8
+vim.opt.swapfile = false
 
 -- Show whitespace charactrers
 vim.opt.list = true
