@@ -1,6 +1,5 @@
 require("plugins.utils")
 require("plugins.colorscheme")
-require("plugins.treesitter")
 require("plugins.mason")
 require("plugins.conform")
 require("plugins.blink")

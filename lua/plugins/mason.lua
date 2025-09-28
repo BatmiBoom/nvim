@@ -31,3 +31,9 @@ local ensure_installed = {
 	"biome",
 	"golangci-lint",
 }
+
+vim.api.nvim_create_user_command('MasonEnsuredInstall', function() 
+    local cmd = table.concat(ensure_installed, " ")
+    vim.api.nvim_command('MasonInstall ' .. cmd)
+end, 
+{ desc = "Install Lsp Server"})
