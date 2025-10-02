@@ -1,9 +1,29 @@
 local M = {}
 
-local parser_path = '~/.config/nvim/parser/'
-local queries_path = '~/.config/nvim/queries/'
-local get_path_to_d_parser = function(parser_name)
-  return string.format('%s/%s-parser', parser_path, parser_name)
+local relative_parser_path = 'parser/'
+local relative_queries_path = 'queries/'
+local absolute_parser_path = '~/.config/nvim/parser/'
+local absolute_queries_path = '~/.config/nvim/queries/'
+local parser_extension = vim.fn.has 'mac' and 'dyalib' or 'so'
+
+---@param path string
+---@param parser_name string
+---@return string
+local get_path_to_d_parser = function(path, parser_name)
+  return string.format('%s%s-parser', path, parser_name)
+end
+
+local function run_command(cmd)
+  print(cmd)
+  local obj = vim.system({ 'fish', '-c', cmd }, { text = true }):wait()
+
+  if obj.code == 0 then
+    print(obj.stdout)
+    vim.notify(obj.stdout)
+  else
+    print 'ERROR'
+    vim.notify(obj.stderr)
+  end
 end
 
 M.parsers = {
@@ -116,176 +136,152 @@ M.parsers = {
 
 -- Download Parsers in folder ~/.config/nvim/parser
 ---@param parser_info table
----@return boolean?
 M.download_parsers = function(parser_info)
   local cmd = string.format(
-    'git clone %s %s/%s-parser',
+    'git clone %s %s',
     parser_info.url,
-    parser_path,
-    parser_info.name
+    get_path_to_d_parser(relative_parser_path, parser_info.name)
   )
-  local success, _, _ = os.execute(cmd)
-
-  return success
+  run_command(cmd)
 end
 
 -- Build the parsers
 ---@param parser_info table
----@return boolean?
 M.build_parsers = function(parser_info)
   if parser_info.name == 'typescript' then
-    local _, _, _ = os.execute(
-      'cd ' .. get_path_to_d_parser(parser_info.name) .. ' && npm install'
-    )
-
-    local success_ts, _, _ = os.execute(
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
-        .. '/typescript && tree-sitter generate && tree-sitter build'
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. '  npm install'
     )
-
-    local success_tsx, _, _ = os.execute(
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
-        .. '/tsx && tree-sitter generate && tree-sitter build'
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. '/typescript  tree-sitter generate && tree-sitter build'
     )
-
-    return success_ts and success_ts or success_tsx
+    run_command(
+      'cd '
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. '/tsx  tree-sitter generate && tree-sitter build'
+    )
   end
 
   if parser_info.name == 'markdown_inline' then
-    local _, _, _ = os.execute(
-      'cd ' .. get_path_to_d_parser(parser_info.name) .. ' && npm install'
-    )
-
-    local success_mk, _, _ = os.execute(
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
-        .. '/tree-sitter-markdown-inline && tree-sitter generate && tree-sitter build'
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. '  npm install'
     )
-
-    return success_mk
+    run_command(
+      'cd '
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. '/tree-sitter-markdown-inline  tree-sitter generate && tree-sitter build'
+    )
   end
 
   local cmd = string.format(
     'cd %s && npm install && tree-sitter generate && tree-sitter build',
-    get_path_to_d_parser(parser_info.name)
+    get_path_to_d_parser(absolute_parser_path, parser_info.name)
   )
-  local success, _, _ = os.execute(cmd)
-  return success
+  run_command(cmd)
 end
 
 -- Move Builded Parser
 ---@param parser_info table
----@return boolean?
 M.move_parsers = function(parser_info)
   if parser_info.name == 'typescript' then
-    local success_ts, _, _ = os.execute(
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
-        .. ' && mv typescript/parser.so '
-        .. parser_path
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. ' && mv typescript/parser'
+        .. parser_extension
+        .. ' ../'
         .. parser_info.name
-        .. '.so'
+        .. parser_extension
     )
+    run_command(
 
-    local success_tsx, _, _ = os.execute(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
-        .. ' && mv tsx/parser.so '
-        .. parser_path
-        .. 'tsx.so'
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. ' && mv tsx/parser'
+        .. parser_extension
+        .. ' ../'
+        .. 'tsx'
+        .. parser_extension
     )
-
-    return success_ts and success_ts or success_tsx
+    return
   end
 
   if parser_info.name == 'markdown_inline' then
-    local success_mk, _, _ = os.execute(
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
-        .. ' && mv tree-sitter-markdown-inline/markdown-inline.so '
-        .. parser_path
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+        .. ' && mv tree-sitter-markdown-inline/markdown-inline'
+        .. parser_extension
+        .. ' ../'
         .. parser_info.name
-        .. '.so'
+        .. parser_extension
     )
-
-    return success_mk
+    return
   end
 
-  local success, _, _ = os.execute(
+  run_command(
     'cd '
-      .. get_path_to_d_parser(parser_info.name)
-      .. ' && mv parser.so '
-      .. parser_path
+      .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+      .. ' && mv parser'
+      .. parser_extension
+      .. ' ../'
       .. parser_info.name
-      .. '.so'
+      .. parser_extension
   )
-  return success
 end
 
 -- Move Builded Parser
 ---@param parser_info table
----@return boolean?
 M.move_queries = function(parser_info)
   if parser_info.name == 'markdown_inline' then
-    os.execute(
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
         .. ' && mv tree-sitter-markdown-inline/queries ./queries'
     )
   end
 
   if parser_info.name == 'typescript' then
-    local queries_f = string.format('%s/%s', queries_path, 'tsx')
-    os.execute(
+    local queries_f = string.format('%s/%s', absolute_queries_path, 'tsx')
+    run_command(
       'cd '
-        .. get_path_to_d_parser(parser_info.name)
+        .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
         .. ' && mv queries '
         .. queries_f
     )
   end
 
-  local queries_f = string.format('%s/%s', queries_path, parser_info.name)
-  local success, _, _ = os.execute(
+  local queries_f =
+    string.format('%s/%s', absolute_queries_path, parser_info.name)
+  run_command(
     'cd '
-      .. get_path_to_d_parser(parser_info.name)
+      .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
       .. ' && mv queries '
       .. queries_f
   )
-  return success
 end
 
 M.clean_up = function(parser_info)
-  local success, _, _ =
-    os.execute('rm -rf ' .. get_path_to_d_parser(parser_info.name))
-  return success
+  run_command(
+    'rm -rf ' .. get_path_to_d_parser(absolute_parser_path, parser_info.name)
+  )
 end
 
 ---@return boolean
 M.install_tree_sitters_parsers = function()
   for i = 1, #M.parsers, 1 do
     local parser_info = M.parsers[i]
-
-    if not M.download_parsers(parser_info) then
-      return false
-    end
-
-    if not M.build_parsers(parser_info) then
-      return false
-    end
-
-    if not M.move_parsers(parser_info) then
-      return false
-    end
-
-    if not M.move_queries(parser_info) then
-      return false
-    end
-
-    if not M.clean_up(parser_info) then
-      return false
-    end
+    M.download_parsers(parser_info)
+    M.build_parsers(parser_info)
+    M.move_parsers(parser_info)
+    M.move_queries(parser_info)
+    -- if not M.clean_up(parser_info)  end
   end
 
   return true
