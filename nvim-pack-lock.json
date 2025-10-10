@@ -1,0 +1,45 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "version": "'v1.6.0'"
+    },
+    "conform.nvim": {
+      "rev": "fbcb4fa"
+    },
+    "diffview.nvim": [],
+    "mason.nvim": {
+      "rev": "ad7146a"
+    },
+    "mini.files": {
+      "rev": "51db5de"
+    },
+    "mini.icons": {
+      "rev": "2847986"
+    },
+    "mini.pick": {
+      "rev": "96ee37d"
+    },
+    "mini.statusline": {
+      "rev": "faa3977"
+    },
+    "mini.surround": {
+      "rev": "444e155"
+    },
+    "mini.tabline": {
+      "rev": "40f0ec8"
+    },
+    "neogit": {
+      "rev": "90dcfa7b"
+    },
+    "nvim-lint": {
+      "rev": "9da1fb9"
+    },
+    "nvim-lspconfig": {
+      "rev": "cc2f5f2"
+    },
+    "plenary.nvim": [],
+    "tokyonight.nvim": {
+      "rev": "00d92e6"
+    }
+  }
+}
