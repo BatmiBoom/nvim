@@ -4,20 +4,38 @@ local M = {}
 
 local absolute_parser_path = '~/.config/nvim/parser/'
 local absolute_queries_path = '~/.config/nvim/queries/'
-local parser_extension = vim.fn.has 'mac' and '.so' or '.dyalib'
+local parser_extension = vim.fn.has 'mac' and '.dylib' or '.so'
 
 --- @class Parser
 --- @field name string
 --- @field url string
 --- @field filetype string
---- @field location string
+--- @field location string?
+--- @field parser_name string?
+--- @field queries_location string?
 
 ---@param path string
 ---@param parser_info Parser
+---@param location string?
+---@param need_location boolean?
 ---@return string
-local get_path_to_d_parser = function(path, parser_info)
-  local folder_name = u.split(parser_info.url, '/')
-  return path .. folder_name[4] .. parser_info.location
+local get_path_to_d_parser = function(
+  path,
+  parser_info,
+  location,
+  need_location
+)
+  if need_location == nil then
+    need_location = true
+  end
+
+  if location == nil then
+    location = need_location and parser_info.location or ''
+  end
+
+  local folder_name = u.split(parser_info.url, '/')[4]
+
+  return path .. folder_name .. location
 end
 
 ---@param cmd string
@@ -32,133 +50,121 @@ M.parsers = {
     name = 'bash',
     url = 'https://github.com/tree-sitter/tree-sitter-bash',
     filetype = 'sh',
-    location = '',
   },
   {
     name = 'cmake',
     url = 'https://github.com/uyha/tree-sitter-cmake',
     filetype = 'cmake',
-    location = '',
   },
   {
     name = 'cpp',
     url = 'https://github.com/tree-sitter/tree-sitter-cpp',
     filetype = 'cpp',
-    location = '',
   },
   {
     name = 'gitignore',
     url = 'https://github.com/shunsambongi/tree-sitter-gitignore',
     filetype = 'gitignore',
-    location = '',
   },
   {
     name = 'css',
     url = 'https://github.com/tree-sitter/tree-sitter-css',
     filetype = 'css',
-    location = '',
   },
   {
     name = 'diff',
     url = 'https://github.com/the-mikedavis/tree-sitter-diff',
     filetype = 'diff',
-    location = '',
   },
   {
     name = 'gleam',
     url = 'https://github.com/gleam-lang/tree-sitter-gleam',
     filetype = 'gleam',
-    location = '',
   },
   {
     name = 'go',
     url = 'https://github.com/tree-sitter/tree-sitter-go',
     filetype = 'go',
-    location = '',
   },
   {
     name = 'html',
     url = 'https://github.com/tree-sitter/tree-sitter-html',
     filetype = 'html',
-    location = '',
   },
   {
     name = 'javascript',
     url = 'https://github.com/tree-sitter/tree-sitter-javascript',
     filetype = 'javascript',
-    location = '',
   },
   {
     name = 'javascriptreact',
     url = 'https://github.com/tree-sitter/tree-sitter-javascript',
     filetype = 'javascriptreact',
-    location = '',
+    parser_name = 'javascript',
   },
   {
     name = 'json',
     url = 'https://github.com/tree-sitter/tree-sitter-json',
     filetype = 'json',
-    location = '',
   },
   {
     name = 'markdown_inline',
     url = 'https://github.com/MDeiml/tree-sitter-markdown',
     filetype = 'markdown',
-    location = 'tree-sitter-markdown-inline',
+    location = '/tree-sitter-markdown-inline',
+    parser_name = 'markdown-inline',
+    queries_location = '/tree-sitter-markdown',
   },
   {
     name = 'odin',
     url = 'https://github.com/amaanq/tree-sitter-odin',
     filetype = 'odin',
-    location = '',
   },
   {
     name = 'python',
     url = 'https://github.com/tree-sitter/tree-sitter-python',
     filetype = 'python',
-    location = '',
   },
   {
     name = 'regex',
     url = 'https://github.com/tree-sitter/tree-sitter-regex',
     filetype = 'regex',
-    location = '',
   },
   {
     name = 'rust',
     url = 'https://github.com/tree-sitter/tree-sitter-rust',
     filetype = 'rust',
-    location = '',
   },
   {
     name = 'sql',
     url = 'https://github.com/derekstride/tree-sitter-sql',
     filetype = 'sql',
-    location = '',
   },
   {
     name = 'toml',
     url = 'https://github.com/tree-sitter-grammars/tree-sitter-toml',
     filetype = 'toml',
-    location = '',
   },
   {
     name = 'typescript',
     url = 'https://github.com/tree-sitter/tree-sitter-typescript',
     filetype = 'typescript',
     location = '/typescript',
+    parser_name = 'parser',
+    queries_location = ' ',
   },
   {
     name = 'tsx',
     url = 'https://github.com/tree-sitter/tree-sitter-typescript',
     filetype = 'typescriptreact',
     location = '/tsx',
+    parser_name = 'parser',
+    queries_location = ' ',
   },
   {
     name = 'zig',
     url = 'https://github.com/tree-sitter-grammars/tree-sitter-zig',
     filetype = 'zig',
-    location = '',
   },
 }
 
@@ -181,7 +187,7 @@ end
 ---@return integer
 M.build_parsers = function(parser_info)
   local npm_result = M.npm_install(parser_info)
-  local treesitter_result = M.treesitter_generate(parser_info)
+  local treesitter_result = M.treesitter_build(parser_info)
 
   if npm_result ~= 0 or treesitter_result ~= 0 then
     return 1
@@ -195,7 +201,7 @@ end
 M.npm_install = function(parser_info)
   local cmd = run_command(
     'cd '
-      .. get_path_to_d_parser(absolute_parser_path, parser_info)
+      .. get_path_to_d_parser(absolute_parser_path, parser_info, nil, false)
       .. '&&  npm install'
   )
 
@@ -205,11 +211,10 @@ end
 -- Generate .so o .dyalib
 ---@param parser_info Parser
 ---@return integer
-M.treesitter_generate = function(parser_info)
+M.treesitter_build = function(parser_info)
   local cmd = run_command(
     'cd '
       .. get_path_to_d_parser(absolute_parser_path, parser_info)
-      .. parser_info.location
       .. ' && tree-sitter generate && tree-sitter build'
   )
 
@@ -220,9 +225,8 @@ end
 ---@param parser_info Parser
 M.move_parsers = function(parser_info)
   local path_to_parser = get_path_to_d_parser(absolute_parser_path, parser_info)
-  local parser_name = u.split(parser_info.url, '/')[4] == parser_info.name
-      and parser_info.name
-    or u.split(parser_info.url, '/')[4]
+  local parser_name = parser_info.parser_name and parser_info.parser_name
+    or parser_info.name
 
   local cmd = run_command(
     'cd '
@@ -230,7 +234,8 @@ M.move_parsers = function(parser_info)
       .. ' && mv '
       .. parser_name
       .. parser_extension
-      .. ' ../'
+      .. ' '
+      .. absolute_parser_path
       .. parser_info.name
       .. parser_extension
   )
@@ -241,7 +246,19 @@ end
 -- Move Builded Parser
 ---@param parser_info Parser
 M.move_queries = function(parser_info)
-  local path_to_parser = get_path_to_d_parser(absolute_parser_path, parser_info)
+  local location = nil
+  local need_location = false
+  if parser_info.queries_location ~= nil then
+    location = parser_info.queries_location
+    need_location = true
+  end
+
+  local path_to_parser = get_path_to_d_parser(
+    absolute_parser_path,
+    parser_info,
+    location,
+    need_location
+  )
 
   local cmd = run_command(
     'cd '
@@ -267,24 +284,58 @@ M.install_tree_sitters_parsers = function()
   for i = 1, #M.parsers, 1 do
     local parser_info = M.parsers[i]
 
-    vim.notify_once('Downloading Parser for ' .. parser_info.name)
+    vim.schedule(function()
+      vim.notify(
+        'Downloading Parser for ' .. parser_info.name,
+        vim.log.levels.INFO
+      )
+    end)
     if M.download_parsers(parser_info) == 0 then
-      vim.notify_once('Succesfully Downloaded Parser ' .. parser_info.name)
+      vim.schedule(function()
+        vim.notify(
+          'Succesfully Downloaded Parser ' .. parser_info.name,
+          vim.log.levels.INFO
+        )
+      end)
     end
 
-    vim.notify_once('Building Parser For ' .. parser_info.name)
+    vim.schedule(function()
+      vim.notify(
+        'Building Parser For ' .. parser_info.name,
+        vim.log.levels.INFO
+      )
+    end)
     if M.build_parsers(parser_info) == 0 then
-      vim.notify_once('Succesfully Build Parser ' .. parser_info.name)
+      vim.schedule(function()
+        vim.notify(
+          'Succesfully Build Parser ' .. parser_info.name,
+          vim.log.levels.INFO
+        )
+      end)
     end
 
-    vim.notify_once('Moving Parser For ' .. parser_info.name)
+    vim.schedule(function()
+      vim.notify('Moving Parser For ' .. parser_info.name, vim.log.levels.INFO)
+    end)
     if M.move_parsers(parser_info) == 0 then
-      vim.notify_once('Succesfully Moved Parser ' .. parser_info.name)
+      vim.schedule(function()
+        vim.notify(
+          'Succesfully Moved Parser ' .. parser_info.name,
+          vim.log.levels.INFO
+        )
+      end)
     end
 
-    vim.notify_once('Moving Queries for ' .. parser_info.name)
+    vim.schedule(function()
+      vim.notify('Moving Queries for ' .. parser_info.name, vim.log.levels.INFO)
+    end)
     if M.move_queries(parser_info) == 0 then
-      vim.notify_once('Succesfully Moved Queries ' .. parser_info.name)
+      vim.schedule(function()
+        vim.notify(
+          'Succesfully Moved Queries ' .. parser_info.name,
+          vim.log.levels.INFO
+        )
+      end)
     end
     --
     -- for i = 1, #M.parsers, 1 do
