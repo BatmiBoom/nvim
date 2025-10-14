@@ -1,48 +1,57 @@
 local u = require 'utils.init'
 
-local M = {}
-
-local absolute_parser_path = '~/.config/nvim/parser/'
-local absolute_queries_path = '~/.config/nvim/queries/'
-local parser_extension = vim.fn.has 'mac' and '.dylib' or '.so'
+local PARSER_DIR = vim.fn.expand '~/.config/nvim/parser/'
+local QUERIES_DIR = vim.fn.expand '~/.config/nvim/queries/'
+local PARSER_LIB_EXTENSION = vim.fn.has 'linux' == 1 and '.so' or '.dylib'
 
 --- @class Parser
 --- @field name string
 --- @field url string
 --- @field filetype string
---- @field location string?
+--- @field parser_location string?
 --- @field parser_name string?
 --- @field queries_location string?
 
 ---@param path string
 ---@param parser_info Parser
----@param location string?
 ---@param need_location boolean?
 ---@return string
-local get_path_to_d_parser = function(
-  path,
-  parser_info,
-  location,
-  need_location
-)
+local construct_path_to_parser = function(path, parser_info, need_location)
   if need_location == nil then
     need_location = true
   end
 
-  if location == nil then
-    location = need_location and parser_info.location or ''
+  local repo_name = u.extract_repo_name(parser_info.url)
+
+  local location = ''
+  if need_location and parser_info.parser_location ~= nil then
+    location = parser_info.parser_location
   end
 
-  local folder_name = u.split(parser_info.url, '/')[4]
+  return path .. repo_name .. location
+end
 
-  return path .. folder_name .. location
+---@param path string
+---@param parser_info Parser
+---@return string
+local construct_path_to_queries = function(path, parser_info)
+  local repo_name = u.extract_repo_name(parser_info.url)
+
+  local location = ''
+  if parser_info.queries_location ~= nil then
+    location = parser_info.queries_location
+  end
+
+  return path .. repo_name .. location
 end
 
 ---@param cmd string
 ---@return vim.SystemCompleted
 local function run_command(cmd)
-  return vim.system({ 'fish', '-c', cmd }, { text = true }):wait()
+  return vim.system({ 'sh', '-c', cmd }, { text = true }):wait()
 end
+
+local M = {}
 
 ---@type Parser[]
 M.parsers = {
@@ -62,11 +71,6 @@ M.parsers = {
     filetype = 'cpp',
   },
   {
-    name = 'gitignore',
-    url = 'https://github.com/shunsambongi/tree-sitter-gitignore',
-    filetype = 'gitignore',
-  },
-  {
     name = 'css',
     url = 'https://github.com/tree-sitter/tree-sitter-css',
     filetype = 'css',
@@ -75,6 +79,11 @@ M.parsers = {
     name = 'diff',
     url = 'https://github.com/the-mikedavis/tree-sitter-diff',
     filetype = 'diff',
+  },
+  {
+    name = 'gitignore',
+    url = 'https://github.com/shunsambongi/tree-sitter-gitignore',
+    filetype = 'gitignore',
   },
   {
     name = 'gleam',
@@ -97,12 +106,6 @@ M.parsers = {
     filetype = 'javascript',
   },
   {
-    name = 'javascriptreact',
-    url = 'https://github.com/tree-sitter/tree-sitter-javascript',
-    filetype = 'javascriptreact',
-    parser_name = 'javascript',
-  },
-  {
     name = 'json',
     url = 'https://github.com/tree-sitter/tree-sitter-json',
     filetype = 'json',
@@ -111,9 +114,9 @@ M.parsers = {
     name = 'markdown_inline',
     url = 'https://github.com/MDeiml/tree-sitter-markdown',
     filetype = 'markdown',
-    location = '/tree-sitter-markdown-inline',
+    parser_location = '/tree-sitter-markdown-inline',
     parser_name = 'markdown-inline',
-    queries_location = '/tree-sitter-markdown',
+    queries_location = '/tree-sitter-markdown-inline',
   },
   {
     name = 'odin',
@@ -124,6 +127,11 @@ M.parsers = {
     name = 'python',
     url = 'https://github.com/tree-sitter/tree-sitter-python',
     filetype = 'python',
+  },
+  {
+    name = 'query',
+    url = 'https://github.com/nvim-treesitter/tree-sitter-query',
+    filetype = 'query',
   },
   {
     name = 'regex',
@@ -149,7 +157,7 @@ M.parsers = {
     name = 'typescript',
     url = 'https://github.com/tree-sitter/tree-sitter-typescript',
     filetype = 'typescript',
-    location = '/typescript',
+    parser_location = '/typescript',
     parser_name = 'parser',
     queries_location = ' ',
   },
@@ -157,7 +165,7 @@ M.parsers = {
     name = 'tsx',
     url = 'https://github.com/tree-sitter/tree-sitter-typescript',
     filetype = 'typescriptreact',
-    location = '/tsx',
+    parser_location = '/tsx',
     parser_name = 'parser',
     queries_location = ' ',
   },
@@ -172,9 +180,14 @@ M.parsers = {
 ---@param parser_info Parser
 ---@return integer
 M.download_parsers = function(parser_info)
-  local cmd = run_command(
-    'cd ' .. absolute_parser_path .. ' && git clone ' .. parser_info.url
-  )
+  local parsed_url = u.split(parser_info.url, '/')
+  local repo_name = parsed_url[#parsed_url]
+  if vim.fn.isabsolutepath(PARSER_DIR .. repo_name) == false then
+    return 0
+  end
+
+  local cmd =
+    run_command('cd ' .. PARSER_DIR .. ' && git clone ' .. parser_info.url)
   if cmd.stderr then
     vim.notify_once(cmd.stderr)
   end
@@ -201,20 +214,20 @@ end
 M.npm_install = function(parser_info)
   local cmd = run_command(
     'cd '
-      .. get_path_to_d_parser(absolute_parser_path, parser_info, nil, false)
+      .. construct_path_to_parser(PARSER_DIR, parser_info, false)
       .. '&&  npm install'
   )
 
   return cmd.code
 end
 
--- Generate .so o .dyalib
+-- Generate .so o .dylib
 ---@param parser_info Parser
 ---@return integer
 M.treesitter_build = function(parser_info)
   local cmd = run_command(
     'cd '
-      .. get_path_to_d_parser(absolute_parser_path, parser_info)
+      .. construct_path_to_parser(PARSER_DIR, parser_info)
       .. ' && tree-sitter generate && tree-sitter build'
   )
 
@@ -224,7 +237,7 @@ end
 -- Move Builded Parser
 ---@param parser_info Parser
 M.move_parsers = function(parser_info)
-  local path_to_parser = get_path_to_d_parser(absolute_parser_path, parser_info)
+  local path_to_parser = construct_path_to_parser(PARSER_DIR, parser_info, true)
   local parser_name = parser_info.parser_name and parser_info.parser_name
     or parser_info.name
 
@@ -233,11 +246,11 @@ M.move_parsers = function(parser_info)
       .. path_to_parser
       .. ' && mv '
       .. parser_name
-      .. parser_extension
+      .. PARSER_LIB_EXTENSION
       .. ' '
-      .. absolute_parser_path
+      .. PARSER_DIR
       .. parser_info.name
-      .. parser_extension
+      .. PARSER_LIB_EXTENSION
   )
 
   return cmd.code
@@ -246,25 +259,13 @@ end
 -- Move Builded Parser
 ---@param parser_info Parser
 M.move_queries = function(parser_info)
-  local location = nil
-  local need_location = false
-  if parser_info.queries_location ~= nil then
-    location = parser_info.queries_location
-    need_location = true
-  end
-
-  local path_to_parser = get_path_to_d_parser(
-    absolute_parser_path,
-    parser_info,
-    location,
-    need_location
-  )
+  local path_to_queries = construct_path_to_queries(PARSER_DIR, parser_info)
 
   local cmd = run_command(
     'cd '
-      .. path_to_parser
-      .. ' && mv queries '
-      .. absolute_queries_path
+      .. path_to_queries
+      .. ' && cp -r queries '
+      .. QUERIES_DIR
       .. parser_info.name
   )
 
@@ -275,15 +276,13 @@ end
 ---@param parser_info Parser
 M.clean_up = function(parser_info)
   run_command(
-    'rm -rf ' .. get_path_to_d_parser(absolute_parser_path, parser_info)
+    'rm -rf ' .. construct_path_to_parser(PARSER_DIR, parser_info, false)
   )
 end
 
 ---@return boolean
 M.install_tree_sitters_parsers = function()
-  for i = 1, #M.parsers, 1 do
-    local parser_info = M.parsers[i]
-
+  for _, parser_info in ipairs(M.parsers) do
     vim.schedule(function()
       vim.notify(
         'Downloading Parser for ' .. parser_info.name,
@@ -337,47 +336,41 @@ M.install_tree_sitters_parsers = function()
         )
       end)
     end
-    --
-    -- for i = 1, #M.parsers, 1 do
-    --   M.clean_up(M.parsers[i])
+
+    for j = 1, #M.parsers, 1 do
+      M.clean_up(M.parsers[j])
+    end
   end
   return true
 end
 
 M.setup = function()
+  if vim.fn.isdirectory(vim.fn.expand '~/.config/nvim/parser') == false then
+    vim.fn.mkdir(vim.fn.expand '~/.config/nvim/parser')
+  end
+
+  if vim.fn.isdirectory(vim.fn.expand '~/.config/nvim/queries') == false then
+    vim.fn.mkdir(vim.fn.expand '~/.config/nvim/queries')
+  end
+
   vim.api.nvim_create_user_command('InstallGrammars', function()
     M.install_tree_sitters_parsers()
   end, { desc = 'Install Treesitter Grammars and Queries' })
 
-  vim.treesitter.language.add 'bash'
-  vim.treesitter.language.add 'cmake'
-  vim.treesitter.language.add 'cpp'
-  vim.treesitter.language.add 'css'
-  vim.treesitter.language.add 'diff'
-  vim.treesitter.language.add 'gleam'
-  vim.treesitter.language.add 'go'
-  vim.treesitter.language.add 'html'
-  vim.treesitter.language.add 'javascript'
-  vim.treesitter.language.add 'json'
-  vim.treesitter.language.add 'markdown_inline'
-  vim.treesitter.language.add 'odin'
-  vim.treesitter.language.add 'python'
-  vim.treesitter.language.add 'query'
-  vim.treesitter.language.add 'regex'
-  vim.treesitter.language.add 'rust'
-  vim.treesitter.language.add 'sql'
-  vim.treesitter.language.add 'tsx'
-  vim.treesitter.language.add 'toml'
-  vim.treesitter.language.add 'typescript'
-  vim.treesitter.language.add 'zig'
+  vim.treesitter.language.register('javascript', 'javascriptreact')
 
-  for i = 1, #M.parsers, 1 do
-    vim.api.nvim_create_autocmd('FileType', {
-      pattern = { M.parsers[i].filetype },
-      callback = function(args)
-        vim.treesitter.start(args.buf, M.parsers[i].name)
-      end,
-    })
+  for _, p in ipairs(M.parsers) do
+    vim.treesitter.language.add(p.name)
+
+    -- markdown_inline is an embedded language, don't auto-start it
+    if p.name ~= 'markdown_inline' or p.name ~= 'query' then
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { p.filetype },
+        callback = function(args)
+          vim.treesitter.start(args.buf, p.name)
+        end,
+      })
+    end
   end
 end
 

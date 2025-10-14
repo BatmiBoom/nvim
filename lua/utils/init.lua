@@ -12,4 +12,11 @@ M.split = function(s, sep)
   return t
 end
 
+---@param url string
+---@return string
+M.extract_repo_name = function(url)
+  local path = url:match 'github%.com/[^/]+/([^/]+)' or url:match '/([^/]+)$'
+  return path:gsub('%.git$', '') -- Remove .git suffix if present
+end
+
 return M
