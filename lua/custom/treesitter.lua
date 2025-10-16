@@ -11,6 +11,7 @@ local PARSER_LIB_EXTENSION = vim.fn.has 'linux' == 1 and '.so' or '.dylib'
 --- @field parser_location string?
 --- @field parser_name string?
 --- @field queries_location string?
+--- @field injected boolean?
 
 ---@param path string
 ---@param parser_info Parser
@@ -117,6 +118,7 @@ M.parsers = {
     parser_location = '/tree-sitter-markdown-inline',
     parser_name = 'markdown-inline',
     queries_location = '/tree-sitter-markdown-inline',
+    injected = true,
   },
   {
     name = 'odin',
@@ -132,11 +134,13 @@ M.parsers = {
     name = 'query',
     url = 'https://github.com/nvim-treesitter/tree-sitter-query',
     filetype = 'query',
+    injected = true,
   },
   {
     name = 'regex',
     url = 'https://github.com/tree-sitter/tree-sitter-regex',
     filetype = 'regex',
+    injected = true,
   },
   {
     name = 'rust',
@@ -362,8 +366,7 @@ M.setup = function()
   for _, p in ipairs(M.parsers) do
     vim.treesitter.language.add(p.name)
 
-    -- markdown_inline is an embedded language, don't auto-start it
-    if p.name ~= 'markdown_inline' or p.name ~= 'query' then
+    if p.injected ~= false then
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { p.filetype },
         callback = function(args)
