@@ -1,7 +1,8 @@
 {
   "plugins": {
     "blink.cmp": {
-      "version": "'v1.6.0'"
+      "rev": "327fff9",
+      "version": "'v1.7.0'"
     },
     "conform.nvim": {
       "rev": "fbcb4fa"
@@ -29,17 +30,17 @@
       "rev": "40f0ec8"
     },
     "neogit": {
-      "rev": "90dcfa7b"
+      "rev": "0f48491a"
     },
     "nvim-lint": {
       "rev": "9da1fb9"
     },
     "nvim-lspconfig": {
-      "rev": "cc2f5f2"
+      "rev": "ac98db2"
     },
     "plenary.nvim": [],
     "tokyonight.nvim": {
-      "rev": "00d92e6"
+      "rev": "d14614c"
     }
   }
 }

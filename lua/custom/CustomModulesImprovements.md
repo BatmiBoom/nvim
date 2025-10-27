@@ -334,8 +334,6 @@ end
 - Network operations (git clone) can fail temporarily
 - Add retry with exponential backoff for transient failures
 
----
-
 ## Implementation TODO List
 
 ### Quick Wins (Easy + High Benefit) 🎯

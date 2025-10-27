@@ -352,9 +352,9 @@ M.setup = function()
   vim.treesitter.language.register('javascript', 'javascriptreact')
 
   for _, p in ipairs(M.parsers) do
-    vim.treesitter.language.add(p.name)
+    if p.injected ~= true then
+      vim.treesitter.language.add(p.name)
 
-    if p.injected ~= false then
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { p.filetype },
         callback = function(args)
