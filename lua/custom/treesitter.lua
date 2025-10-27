@@ -12,6 +12,7 @@ local PARSER_LIB_EXTENSION = vim.fn.has 'linux' == 1 and '.so' or '.dylib'
 --- @field parser_name string?
 --- @field queries_location string?
 --- @field injected boolean?
+--- @field need_download boolean?
 
 ---@param path string
 ---@param parser_info Parser
@@ -44,6 +45,16 @@ local construct_path_to_queries = function(path, parser_info)
   end
 
   return path .. repo_name .. location
+end
+
+local notify = function(msg, level)
+  if level == nil then
+    level = vim.log.levels.INFO
+  end
+
+  vim.schedule(function()
+    vim.notify(msg, level)
+  end)
 end
 
 ---@param cmd string
@@ -110,6 +121,12 @@ M.parsers = {
     name = 'json',
     url = 'https://github.com/tree-sitter/tree-sitter-json',
     filetype = 'json',
+  },
+  {
+    name = 'markdown',
+    url = 'https://github.com/MDeiml/tree-sitter-markdown',
+    filetype = 'markdown',
+    need_download = false,
   },
   {
     name = 'markdown_inline',
@@ -180,10 +197,20 @@ M.parsers = {
   },
 }
 
+-- Install Parsers in folder ~/.config/nvim/parser
+---@param parser_info Parser
+---@param fn function
+M.install_parsers = function(parser_info, fn)
+  notify('Installing parser for ' .. parser_info.name)
+
+  return fn()
+end
+
 -- Download Parsers in folder ~/.config/nvim/parser
 ---@param parser_info Parser
 ---@return integer
 M.download_parsers = function(parser_info)
+  notify('Succesfully Downloaded Parser ' .. parser_info.name)
   local parsed_url = u.split(parser_info.url, '/')
   local repo_name = parsed_url[#parsed_url]
   if vim.fn.isabsolutepath(PARSER_DIR .. repo_name) == false then
@@ -203,6 +230,7 @@ end
 ---@param parser_info Parser
 ---@return integer
 M.build_parsers = function(parser_info)
+  notify('Building Parser For ' .. parser_info.name)
   local npm_result = M.npm_install(parser_info)
   local treesitter_result = M.treesitter_build(parser_info)
 
@@ -241,6 +269,7 @@ end
 -- Move Builded Parser
 ---@param parser_info Parser
 M.move_parsers = function(parser_info)
+  notify('Moving Parser For ' .. parser_info.name)
   local path_to_parser = construct_path_to_parser(PARSER_DIR, parser_info, true)
   local parser_name = parser_info.parser_name and parser_info.parser_name
     or parser_info.name
@@ -263,6 +292,7 @@ end
 -- Move Builded Parser
 ---@param parser_info Parser
 M.move_queries = function(parser_info)
+  notify('Moving Queries for ' .. parser_info.name, vim.log.levels.INFO)
   local path_to_queries = construct_path_to_queries(PARSER_DIR, parser_info)
 
   local cmd = run_command(
@@ -287,64 +317,22 @@ end
 ---@return boolean
 M.install_tree_sitters_parsers = function()
   for _, parser_info in ipairs(M.parsers) do
-    vim.schedule(function()
-      vim.notify(
-        'Downloading Parser for ' .. parser_info.name,
-        vim.log.levels.INFO
-      )
-    end)
-    if M.download_parsers(parser_info) == 0 then
-      vim.schedule(function()
-        vim.notify(
-          'Succesfully Downloaded Parser ' .. parser_info.name,
-          vim.log.levels.INFO
-        )
+    if parser_info.need_download == nil then
+      M.install_parsers(parser_info, function()
+        M.download_parsers(parser_info)
+        M.build_parsers(parser_info)
+        M.move_parsers(parser_info)
+        M.move_queries(parser_info)
       end)
-    end
-
-    vim.schedule(function()
-      vim.notify(
-        'Building Parser For ' .. parser_info.name,
-        vim.log.levels.INFO
-      )
-    end)
-    if M.build_parsers(parser_info) == 0 then
-      vim.schedule(function()
-        vim.notify(
-          'Succesfully Build Parser ' .. parser_info.name,
-          vim.log.levels.INFO
-        )
-      end)
-    end
-
-    vim.schedule(function()
-      vim.notify('Moving Parser For ' .. parser_info.name, vim.log.levels.INFO)
-    end)
-    if M.move_parsers(parser_info) == 0 then
-      vim.schedule(function()
-        vim.notify(
-          'Succesfully Moved Parser ' .. parser_info.name,
-          vim.log.levels.INFO
-        )
-      end)
-    end
-
-    vim.schedule(function()
-      vim.notify('Moving Queries for ' .. parser_info.name, vim.log.levels.INFO)
-    end)
-    if M.move_queries(parser_info) == 0 then
-      vim.schedule(function()
-        vim.notify(
-          'Succesfully Moved Queries ' .. parser_info.name,
-          vim.log.levels.INFO
-        )
-      end)
-    end
-
-    for j = 1, #M.parsers, 1 do
-      M.clean_up(M.parsers[j])
     end
   end
+
+  for _, parser_info in ipairs(M.parsers) do
+    if parser_info.need_download == nil then
+      M.clean_up(parser_info)
+    end
+  end
+
   return true
 end
 
