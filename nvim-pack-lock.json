@@ -5,42 +5,42 @@
       "version": "'v1.7.0'"
     },
     "conform.nvim": {
-      "rev": "fbcb4fa"
+      "rev": "26c02e1"
     },
     "diffview.nvim": [],
     "mason.nvim": {
       "rev": "ad7146a"
     },
     "mini.files": {
-      "rev": "51db5de"
+      "rev": "d5c1337"
     },
     "mini.icons": {
       "rev": "2847986"
     },
     "mini.pick": {
-      "rev": "96ee37d"
+      "rev": "bb764a5"
     },
     "mini.statusline": {
       "rev": "faa3977"
     },
     "mini.surround": {
-      "rev": "444e155"
+      "rev": "da5a221"
     },
     "mini.tabline": {
       "rev": "40f0ec8"
     },
     "neogit": {
-      "rev": "0f48491a"
+      "rev": "1cedfc3f"
     },
     "nvim-lint": {
-      "rev": "9da1fb9"
+      "rev": "8c694e1"
     },
     "nvim-lspconfig": {
-      "rev": "ac98db2"
+      "rev": "a89bfcf"
     },
     "plenary.nvim": [],
     "tokyonight.nvim": {
-      "rev": "d14614c"
+      "rev": "b13cfc1"
     }
   }
 }
