@@ -5,42 +5,46 @@
       "version": "'v1.7.0'"
     },
     "conform.nvim": {
-      "rev": "26c02e1"
+      "rev": "cde4da5"
     },
     "diffview.nvim": [],
     "mason.nvim": {
       "rev": "ad7146a"
     },
     "mini.files": {
-      "rev": "d5c1337"
+      "rev": "dce9a4e"
     },
     "mini.icons": {
-      "rev": "2847986"
+      "rev": "ff2e4f1"
     },
     "mini.pick": {
-      "rev": "bb764a5"
+      "rev": "08a7220"
     },
     "mini.statusline": {
-      "rev": "faa3977"
+      "rev": "1491990"
     },
     "mini.surround": {
-      "rev": "da5a221"
+      "rev": "88c5229"
     },
     "mini.tabline": {
-      "rev": "40f0ec8"
+      "rev": "caf2361"
     },
     "neogit": {
-      "rev": "1cedfc3f"
+      "rev": "2cc5daff"
     },
     "nvim-lint": {
-      "rev": "8c694e1"
+      "rev": "8b349e8"
     },
     "nvim-lspconfig": {
-      "rev": "a89bfcf"
+      "rev": "2010fc6"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "plenary.nvim": [],
     "tokyonight.nvim": {
-      "rev": "b13cfc1"
+      "rev": "5da1b76"
     }
   }
 }

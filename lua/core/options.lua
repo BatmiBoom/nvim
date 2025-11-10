@@ -40,6 +40,7 @@ vim.opt.splitbelow = true
 
 -- Save Undo History
 vim.opt.undofile = true
+
 -- Visual settings
 vim.opt.termguicolors = true
 vim.opt.signcolumn = 'yes'
@@ -63,11 +64,3 @@ vim.opt.autochdir = false
 vim.opt.iskeyword:append '-'
 vim.opt.path:append '**'
 vim.opt.encoding = 'UTF-8'
-
-vim.g.netrw_banner = 0
-vim.g.netrw_altv = 1
-vim.g.netrw_browse_split = 4
-vim.g.netrw_liststyle = 0
-vim.g.netrw_winsize = 14
-vim.g.netrw_hide = 1
-vim.g.netrw_liststyle = 3
