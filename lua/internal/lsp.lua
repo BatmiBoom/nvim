@@ -7,7 +7,6 @@ vim.lsp.enable {
   'lua_ls',
   'markdown_oxide',
   'ols',
-  'ruff',
   'pyrefly',
   'rust_analyzer',
   'sqlls',
@@ -18,7 +17,12 @@ vim.lsp.enable {
   'zls',
 }
 
+vim.lsp.config('pyrefly', {
+  root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt' },
+})
+
 vim.lsp.config('lua_ls', {
+  root_markers = { '.git', '.luarc.json', '.stylua.toml' },
   settings = {
     Lua = {
       runtime = {
@@ -28,7 +32,9 @@ vim.lsp.config('lua_ls', {
         globals = { 'vim' },
       },
       workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
+        library = {
+          vim.env.VIMRUNTIME,
+        },
         checkThirdParty = false,
       },
       telemetry = {
