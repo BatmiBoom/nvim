@@ -5,3 +5,5 @@ spell/
 
 parser/*
 queries/*
+
+nvim-pack-lock.json
