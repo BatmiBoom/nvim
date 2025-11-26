@@ -1,22 +1,3 @@
-vim.lsp.enable {
-  'clangd',
-  'cssls',
-  'gopls',
-  'html',
-  'jsonls',
-  'lua_ls',
-  'markdown_oxide',
-  'ols',
-  'pyrefly',
-  'rust_analyzer',
-  'sqlls',
-  'taplo',
-  'ts_ls',
-  'tailwindcss',
-  'yamlls',
-  'zls',
-}
-
 vim.lsp.config('pyrefly', {
   root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt' },
 })
@@ -43,6 +24,25 @@ vim.lsp.config('lua_ls', {
     },
   },
 })
+
+vim.lsp.enable {
+  'clangd',
+  'cssls',
+  'gopls',
+  'html',
+  'jsonls',
+  'lua_ls',
+  'markdown_oxide',
+  'ols',
+  'pyrefly',
+  'rust_analyzer',
+  'sqlls',
+  'taplo',
+  'ts_ls',
+  'tailwindcss',
+  'yamlls',
+  'zls',
+}
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('LSP', { clear = true }),

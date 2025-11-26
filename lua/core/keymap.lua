@@ -88,3 +88,10 @@ vim.keymap.set('v', '>', '>gv', { desc = 'Indent right and reselect' })
 vim.keymap.set('n', '<C-]>', ':bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<C-[>', ':bprev<CR>', { desc = 'Prev buffer' })
 vim.keymap.set('n', '<C-x>', ':bdelete<CR>', { desc = 'Close buffer' })
+
+-- LSP
+vim.keymap.set('n', '<leader>lsp', function()
+  vim.iter(vim.lsp.get_clients()):each(function(client)
+    client:stop()
+  end)
+end, { desc = 'Stop Lsp Servers' })
