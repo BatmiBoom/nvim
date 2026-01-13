@@ -1,6 +1,6 @@
-vim.lsp.config('pyrefly', {
-  root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt' },
-})
+-- vim.lsp.config('pyrefly', {
+--   root_markers = { '.git', 'pyproject.toml', 'setup.py', 'requirements.txt' },
+-- })
 
 vim.lsp.config('lua_ls', {
   root_markers = { '.git', '.luarc.json', '.stylua.toml' },
@@ -34,7 +34,8 @@ vim.lsp.enable {
   'lua_ls',
   'markdown_oxide',
   'ols',
-  'pyrefly',
+  -- 'pyrefly',
+  'basedpyright',
   'rust_analyzer',
   'sqlls',
   'taplo',
